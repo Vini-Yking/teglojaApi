@@ -31,4 +31,6 @@ public class Cliente {
 	
 	@Column(nullable=false)
 	private String email;
+	@Column(name="teste_teste")
+	private String teste;
 }
