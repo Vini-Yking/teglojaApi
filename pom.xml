@@ -16,6 +16,7 @@
 	<description>Trabalho Em Grupo TEGloja</description>
 	<properties>
 		<java.version>11</java.version>
+		<spring-cloud.version>2020.0.5</spring-cloud.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -60,9 +61,9 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<!-- foi pego em https://medium.com/@hala3k/setting-up-swagger-3-with-spring-boot-2-a7c1c3151545 
-		http://localhost:8080/swagger-ui/index.html-->
+			http://localhost:8080/swagger-ui/index.html -->
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-boot-starter</artifactId>
@@ -72,6 +73,12 @@
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>3.0.0</version>
+		</dependency>
+		<!-- pego em https://dev.to/daienelima/como-consumir-uma-api-na-sua-aplicacao-spring-boot-3p3a 
+			adicionar o feign para consumir API externa = viacep -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
 	</dependencies>
 
@@ -92,4 +99,15 @@
 		</plugins>
 	</build>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 </project>
