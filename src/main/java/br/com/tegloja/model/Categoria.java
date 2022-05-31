@@ -14,13 +14,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Categoria {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_categoria")
 	private Long id;
-	
-	@Column(name = "nm_categoria",nullable = false)
-	@Size(max=100)
+
+	@Column(name = "nm_categoria", nullable = false)
+	@Size(max = 100)
 	private String categoria;
 }

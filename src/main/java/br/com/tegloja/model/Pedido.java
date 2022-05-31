@@ -24,18 +24,18 @@ public class Pedido {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_pedido")
 	private Long id;
-	
+
 	@Enumerated(EnumType.STRING)
-	@Column(name="status_pedido", nullable=false)
+	@Column(name = "status_pedido", nullable = false)
 	private StatusCompra status;
-	
-	@Column(name="dt_compra")
+
+	@Column(name = "dt_compra")
 	private LocalDate dataCompra;
-	@Column(name="dt_entrega")
+	@Column(name = "dt_entrega")
 	private LocalDate dataEntrega;
-	
-	@Column(name="valor_total")
-	private BigDecimal valortotal;;
-	
-//	private Cliente cliente;
+
+	@Column(name = "valor_total")
+	private BigDecimal valortotal;
+
+	private Cliente cliente;
 }
