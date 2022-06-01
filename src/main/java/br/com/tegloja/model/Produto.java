@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import br.com.tegloja.dto.produto.ProdutoRequestDTO;
+import br.com.tegloja.dto.ProdutoRequestDTO;
 
 @Entity
 public class Produto {

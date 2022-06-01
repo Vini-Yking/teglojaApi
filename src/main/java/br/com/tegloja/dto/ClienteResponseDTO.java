@@ -1,4 +1,4 @@
-package br.com.tegloja.dto.cliente;
+package br.com.tegloja.dto;
 
 public class ClienteResponseDTO {
 

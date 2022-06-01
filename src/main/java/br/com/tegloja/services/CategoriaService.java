@@ -7,8 +7,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.tegloja.dto.categoria.CategoriaRequestDTO;
-import br.com.tegloja.dto.categoria.CategoriaResponseDTO;
+import br.com.tegloja.dto.CategoriaRequestDTO;
+import br.com.tegloja.dto.CategoriaResponseDTO;
 import br.com.tegloja.model.Categoria;
 import br.com.tegloja.repository.CategoriaRepository;
 

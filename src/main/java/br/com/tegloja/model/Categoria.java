@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Size;
 
-import br.com.tegloja.dto.categoria.CategoriaRequestDTO;
+import br.com.tegloja.dto.CategoriaRequestDTO;
 
 @Entity
 public class Categoria {

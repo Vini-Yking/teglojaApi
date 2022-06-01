@@ -1,4 +1,4 @@
-package br.com.tegloja.dto.cliente;
+package br.com.tegloja.dto;
 
 public class ClienteRequestDTO {
 
@@ -6,6 +6,10 @@ public class ClienteRequestDTO {
 	private String cep;
 	private String nome;
 	private String email;
+
+	public ClienteRequestDTO() {
+
+	}
 
 	public ClienteRequestDTO(String cpf, String cep, String nome, String email) {
 		super();

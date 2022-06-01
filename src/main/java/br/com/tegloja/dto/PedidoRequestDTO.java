@@ -1,10 +1,14 @@
-package br.com.tegloja.dto.pedido;
+package br.com.tegloja.dto;
 
 import br.com.tegloja.model.Cliente;
 
 public class PedidoRequestDTO {
 
 	private Cliente cliente;
+
+	public PedidoRequestDTO() {
+
+	}
 
 	public PedidoRequestDTO(Cliente cliente) {
 		super();

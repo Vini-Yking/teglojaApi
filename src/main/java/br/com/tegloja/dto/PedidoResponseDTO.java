@@ -1,4 +1,4 @@
-package br.com.tegloja.dto.pedido;
+package br.com.tegloja.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -13,6 +13,10 @@ public class PedidoResponseDTO {
 	private LocalDate dataEntrega;
 	private BigDecimal valortotal;
 	private Long idCliente;
+
+	public PedidoResponseDTO() {
+
+	}
 
 	public PedidoResponseDTO(Long idPedido, StatusCompra status, LocalDate dataCompra, LocalDate dataEntrega,
 			BigDecimal valortotal, Long idCliente) {

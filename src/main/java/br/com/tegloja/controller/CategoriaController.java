@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.tegloja.dto.categoria.CategoriaRequestDTO;
-import br.com.tegloja.dto.categoria.CategoriaResponseDTO;
+import br.com.tegloja.dto.CategoriaRequestDTO;
+import br.com.tegloja.dto.CategoriaResponseDTO;
 import br.com.tegloja.services.CategoriaService;
 
 @RestController

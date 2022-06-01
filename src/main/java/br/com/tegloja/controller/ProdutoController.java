@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.tegloja.dto.produto.ProdutoRequestDTO;
-import br.com.tegloja.dto.produto.ProdutoResponseDTO;
+import br.com.tegloja.dto.ProdutoRequestDTO;
+import br.com.tegloja.dto.ProdutoResponseDTO;
 import br.com.tegloja.services.ProdutoService;
 
 @RestController

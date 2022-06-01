@@ -1,4 +1,4 @@
-package br.com.tegloja.dto.pedidoitem;
+package br.com.tegloja.dto;
 
 import java.math.BigDecimal;
 
@@ -9,6 +9,10 @@ public class PedidoItemResponseDTO {
 	private Long idProduto;
 	private Integer qtdproduto;
 	private BigDecimal desconto;
+
+	public PedidoItemResponseDTO() {
+
+	}
 
 	public PedidoItemResponseDTO(Long idPedidoItem, Long idPedido, Long idProduto, Integer qtdproduto,
 			BigDecimal desconto) {

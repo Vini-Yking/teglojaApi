@@ -1,4 +1,4 @@
-package br.com.tegloja.dto.produto;
+package br.com.tegloja.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
