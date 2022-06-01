@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import br.com.tegloja.dto.produto.ProdutoRequestDTO;
+
 @Entity
 public class Produto {
 
@@ -32,7 +34,7 @@ public class Produto {
 
 	@JsonBackReference
 	@ManyToOne
-	@JoinColumn(name = "id_produto")
+	@JoinColumn(name = "id_categoria")
 	private Categoria categoria;
 
 	public Produto() {
@@ -48,6 +50,14 @@ public class Produto {
 		this.quantidadeEstoq = quantidadeEstoq;
 		this.dataAlteracao = dataAlteracao;
 		this.categoria = categoria;
+	}
+
+	public Produto(ProdutoRequestDTO produtoRequest) {
+		this.categoria = produtoRequest.getCategoria();
+		this.dataAlteracao = LocalDate.now();
+		this.nomeProduto = produtoRequest.getNomeProduto();
+		this.quantidadeEstoq = produtoRequest.getQuantidadeEstoq();
+		this.valorUnit = produtoRequest.getValorUnit();
 	}
 
 	public Long getId() {

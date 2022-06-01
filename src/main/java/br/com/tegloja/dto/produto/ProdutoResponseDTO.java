@@ -3,22 +3,37 @@ package br.com.tegloja.dto.produto;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import br.com.tegloja.model.Categoria;
+import br.com.tegloja.model.Produto;
+
 public class ProdutoResponseDTO {
 
 	private Long idProduto;
+	private Categoria categoria;
 	private String nomeProduto;
 	private BigDecimal valorUnit;
 	private Integer quantidadeEstoq;
 	private LocalDate dataAlteracao;
 
-	public ProdutoResponseDTO(Long idProduto, String nomeProduto, BigDecimal valorUnit, Integer quantidadeEstoq,
-			LocalDate dataAlteracao) {
-		super();
-		this.idProduto = idProduto;
-		this.nomeProduto = nomeProduto;
-		this.valorUnit = valorUnit;
-		this.quantidadeEstoq = quantidadeEstoq;
-		this.dataAlteracao = dataAlteracao;
+	public ProdutoResponseDTO() {
+
+	}
+
+	public ProdutoResponseDTO(Produto produto) {
+		this.dataAlteracao = produto.getDataAlteracao();
+		this.categoria = produto.getCategoria();
+		this.idProduto = produto.getId();
+		this.nomeProduto = produto.getNomeProduto();
+		this.quantidadeEstoq = produto.getQuantidadeEstoq();
+		this.valorUnit = produto.getValorUnit();
+	}
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
 
 	public Long getIdProduto() {
