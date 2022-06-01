@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -19,12 +19,15 @@ public class PedidoItens {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_item")
 	private Long id;
-	private Produto produto;
+	
 	@Column(nullable = false)
 	private Integer qtdproduto;
 	private BigDecimal valorDesconto;
-
-	@OneToMany
+	
+	@ManyToOne
+	@JoinColumn(name = "id_produto")
+	private Produto produto;
+	@ManyToOne
 	@JoinColumn(name = "id_pedido")
 	private Pedido pedido;
 

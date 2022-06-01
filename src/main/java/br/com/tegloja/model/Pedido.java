@@ -2,13 +2,11 @@ package br.com.tegloja.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -46,7 +44,7 @@ public class Pedido {
 	
 
 	public Pedido(Long id, StatusCompra status, LocalDate dataCompra, LocalDate dataEntrega, BigDecimal valortotal,
-			List<Cliente> cliente) {
+			Cliente cliente) {
 		super();
 		this.id = id;
 		this.status = status;
@@ -57,11 +55,11 @@ public class Pedido {
 	}
 
 
-	public List<Cliente> getCliente() {
+	public Cliente getCliente() {
 		return cliente;
 	}
 
-	public void setCliente(List<Cliente> cliente) {
+	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
 
