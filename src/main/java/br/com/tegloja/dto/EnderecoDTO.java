@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CepDTO {
+public class EnderecoDTO {
 
 	private String cep;
 	private String logradouro;
@@ -17,7 +17,7 @@ public class CepDTO {
 	private String localidade;
 	private String uf;
 
-	public CepDTO(Endereco endereco) {
+	public EnderecoDTO(Endereco endereco) {
 		this.cep = endereco.getCep();
 		this.logradouro = endereco.getLogradouro();
 		this.complemento = endereco.getComplemento();

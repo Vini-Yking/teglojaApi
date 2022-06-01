@@ -7,22 +7,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.tegloja.dto.CepDTO;
+import br.com.tegloja.dto.EnderecoDTO;
 import br.com.tegloja.model.Endereco;
-import br.com.tegloja.services.CepService;
+import br.com.tegloja.services.EnderecoService;
 
 @RestController
 @RequestMapping("/tegloja/cep")
-public class CepController {
+public class EnderecoController {
 	
 	@Autowired
-	private CepService _cepService;
+	private EnderecoService _cepService;
 	
 	@GetMapping("/{cep}")
-	public ResponseEntity<CepDTO> localizarCep(@PathVariable String cep){
+	public ResponseEntity<EnderecoDTO> localizarCep(@PathVariable String cep){
 	
 		Endereco endereco = _cepService.buscaEnderecoCep(cep);
-		CepDTO enderecoCep = new CepDTO(endereco);
+		EnderecoDTO enderecoCep = new EnderecoDTO(endereco);
 		return enderecoCep != null ? ResponseEntity.ok().body(enderecoCep) : ResponseEntity.notFound().build();
 		
 	}

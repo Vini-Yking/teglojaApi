@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import br.com.tegloja.model.Endereco;
 
 @FeignClient(url= "https://viacep.com.br/ws/" , name = "viacep")
-public interface CepService {
+public interface EnderecoService {
 
 	@GetMapping("{cep}/json")
 	Endereco buscaEnderecoCep(@PathVariable("cep") String cep);
