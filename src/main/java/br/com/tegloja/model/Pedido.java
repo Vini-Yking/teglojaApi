@@ -2,14 +2,18 @@ package br.com.tegloja.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 import br.com.tegloja.enums.StatusCompra;
 
@@ -32,20 +36,32 @@ public class Pedido {
 
 	@Column(name = "valor_total")
 	private BigDecimal valortotal;
-
-	private Cliente cliente;
+	
+	@OneToMany
+	@JoinColumn(name="categoria_id")
+	private List<Cliente> cliente;
 
 	public Pedido() {
 	}
+	
 
 	public Pedido(Long id, StatusCompra status, LocalDate dataCompra, LocalDate dataEntrega, BigDecimal valortotal,
-			Cliente cliente) {
+			List<Cliente> cliente) {
 		super();
 		this.id = id;
 		this.status = status;
 		this.dataCompra = dataCompra;
 		this.dataEntrega = dataEntrega;
 		this.valortotal = valortotal;
+		this.cliente = cliente;
+	}
+
+
+	public List<Cliente> getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(List<Cliente> cliente) {
 		this.cliente = cliente;
 	}
 
@@ -89,12 +105,5 @@ public class Pedido {
 		this.valortotal = valortotal;
 	}
 
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
 
 }
