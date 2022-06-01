@@ -30,7 +30,6 @@ public class Produto {
 	@Column(name = "dt_ultima_alteracao")
 	private LocalDate dataAlteracao;
 
-	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "id_produto")
 	private Categoria categoria;
