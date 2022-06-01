@@ -1,10 +1,14 @@
 package br.com.tegloja.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Endereco {
@@ -21,20 +25,41 @@ public class Endereco {
 	private String bairro;
 	private String localidade;
 	private String uf;
-
+	
+	@OneToMany
+	@JoinColumn(name="categoria_id")
+	private List<Cliente> cliente;
+	
+	
 	public Endereco() {
 
 	}
 
 	public Endereco(String cep, String logradouro, String complemento, String bairro, String localidade, String uf,
 			String ibge, String gia, String ddd, String siafi) {
-		super();
 		this.cep = cep;
 		this.logradouro = logradouro;
 		this.complemento = complemento;
 		this.bairro = bairro;
 		this.localidade = localidade;
 		this.uf = uf;
+	}
+
+	public List<Cliente> getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(List<Cliente> cliente) {
+		this.cliente = cliente;
+	}
+
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getCep() {
