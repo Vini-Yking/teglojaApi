@@ -1,47 +1,23 @@
-package br.com.tegloja.model;
+package br.com.tegloja.dto.pedidoitem;
 
 import java.math.BigDecimal;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import br.com.tegloja.model.Pedido;
+import br.com.tegloja.model.Produto;
 
-@Entity
-@Table(name = "pedido_itens")
-public class PedidoItens {
+public class PedidoItemRequestDTO {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_item")
-	private Long id;
 	private Produto produto;
-	@Column(nullable = false)
 	private Integer qtdproduto;
 	private BigDecimal valorDesconto;
 	private Pedido pedido;
 
-	public PedidoItens() {
-
-	}
-
-	public PedidoItens(Long id, Produto produto, Integer qtdproduto, BigDecimal valorDesconto, Pedido pedido) {
+	public PedidoItemRequestDTO(Produto produto, Integer qtdproduto, BigDecimal valorDesconto, Pedido pedido) {
 		super();
-		this.id = id;
 		this.produto = produto;
 		this.qtdproduto = qtdproduto;
 		this.valorDesconto = valorDesconto;
 		this.pedido = pedido;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public Produto getProduto() {
