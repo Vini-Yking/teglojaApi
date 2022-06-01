@@ -3,12 +3,15 @@ package br.com.tegloja.controller;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,11 +39,19 @@ public class CategoriaController {
 	}
 
 	@PostMapping
-	public ResponseEntity<CategoriaResponseDTO> adicionar(@RequestBody CategoriaRequestDTO request) {
+	public ResponseEntity<CategoriaResponseDTO> adicionar(@Valid @RequestBody CategoriaRequestDTO request) {
 		CategoriaResponseDTO categoriaResponseDTO = categoriaService.adicionar(request);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(categoriaResponseDTO.getId()).toUri();
 		return ResponseEntity.created(uri).body(categoriaResponseDTO);
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<CategoriaResponseDTO> atualizar(@Valid @RequestBody CategoriaRequestDTO request,
+			@PathVariable Long id) {
+		CategoriaResponseDTO responseBody = categoriaService.atualizar(request, id);
+
+		return ResponseEntity.ok(responseBody);
 	}
 
 	@DeleteMapping("/{id}")

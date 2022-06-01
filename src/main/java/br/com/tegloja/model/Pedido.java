@@ -13,7 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 import br.com.tegloja.enums.StatusCompra;
 
@@ -36,10 +36,10 @@ public class Pedido {
 
 	@Column(name = "valor_total")
 	private BigDecimal valortotal;
-	
-	@OneToMany
-	@JoinColumn(name="categoria_id")
-	private List<Cliente> cliente;
+
+	@ManyToOne
+	@JoinColumn(name = "id_cliente")
+	private Cliente cliente;
 
 	public Pedido() {
 	}

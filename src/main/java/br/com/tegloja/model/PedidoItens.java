@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -21,6 +23,9 @@ public class PedidoItens {
 	@Column(nullable = false)
 	private Integer qtdproduto;
 	private BigDecimal valorDesconto;
+
+	@OneToMany
+	@JoinColumn(name = "id_pedido")
 	private Pedido pedido;
 
 	public PedidoItens() {
