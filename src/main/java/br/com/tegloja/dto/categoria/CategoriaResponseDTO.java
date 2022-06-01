@@ -1,5 +1,7 @@
 package br.com.tegloja.dto.categoria;
 
+import br.com.tegloja.model.Categoria;
+
 public class CategoriaResponseDTO {
 
 	private Long id;
@@ -9,6 +11,11 @@ public class CategoriaResponseDTO {
 		super();
 		this.id = id;
 		this.categoria = categoria;
+	}
+
+	public CategoriaResponseDTO(Categoria categoria) {
+		this.id = categoria.getId();
+		this.categoria = categoria.getCategoria();
 	}
 
 	public Long getId() {
