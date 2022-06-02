@@ -10,6 +10,7 @@ public class ProdutoRequestDTO {
 	private Categoria categoria;
 	private BigDecimal valorUnit;
 	private Integer quantidadeEstoq;
+	private String urlFoto;
 
 	public ProdutoRequestDTO() {
 	}
@@ -20,6 +21,25 @@ public class ProdutoRequestDTO {
 		this.categoria = categoria;
 		this.valorUnit = valorUnit;
 		this.quantidadeEstoq = quantidadeEstoq;
+	}
+	
+	public ProdutoRequestDTO(String nomeProduto, Categoria categoria, BigDecimal valorUnit, Integer quantidadeEstoq,String urlFoto) {
+		super();
+		this.nomeProduto = nomeProduto;
+		this.categoria = categoria;
+		this.valorUnit = valorUnit;
+		this.quantidadeEstoq = quantidadeEstoq;
+		this.urlFoto = urlFoto;
+		
+	}
+	
+	
+	public String getUrlFoto() {
+		return urlFoto;
+	}
+
+	public void setUrlFoto(String urlFoto) {
+		this.urlFoto = urlFoto;
 	}
 
 	public String getNomeProduto() {
