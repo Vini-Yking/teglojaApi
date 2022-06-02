@@ -1,5 +1,9 @@
 package br.com.tegloja.handler;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(code = HttpStatus.NOT_FOUND)
 public class IdNotFoundException extends RuntimeException {
 
 	/**
@@ -9,12 +13,11 @@ public class IdNotFoundException extends RuntimeException {
 
 	public IdNotFoundException() {
 		super("Não encontrado");
-		
+
 		// TODO Auto-generated constructor stub
 	}
 
-	public IdNotFoundException(String message, Throwable cause, boolean enableSuppression,
-			boolean writableStackTrace) {
+	public IdNotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 		// TODO Auto-generated constructor stub
 	}
@@ -33,7 +36,5 @@ public class IdNotFoundException extends RuntimeException {
 		super(cause);
 		// TODO Auto-generated constructor stub
 	}
-	
-	
 
 }
