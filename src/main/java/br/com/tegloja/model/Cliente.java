@@ -16,6 +16,7 @@ public class Cliente {
 	private Long id;
 
 	@CPF
+	@Column(nullable = false,unique=true)
 	private String cpf;
 
 	@Column(nullable = false)
@@ -24,22 +25,19 @@ public class Cliente {
 	@Column(name = "nm_cliente", nullable = false)
 	private String nome;
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique=true)
 	private String email;
-	@Column(name = "teste_teste")
-	private String teste;
 
 	public Cliente() {
 	}
 
-	public Cliente(Long id, @CPF String cpf, String cep, String nome, String email, String teste) {
+	public Cliente(Long id, @CPF String cpf, String cep, String nome, String email) {
 		super();
 		this.id = id;
 		this.cpf = cpf;
 		this.cep = cep;
 		this.nome = nome;
 		this.email = email;
-		this.teste = teste;
 	}
 
 	public Long getId() {
@@ -82,12 +80,5 @@ public class Cliente {
 		this.email = email;
 	}
 
-	public String getTeste() {
-		return teste;
-	}
-
-	public void setTeste(String teste) {
-		this.teste = teste;
-	}
 
 }
