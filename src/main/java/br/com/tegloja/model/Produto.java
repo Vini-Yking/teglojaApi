@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import br.com.tegloja.dto.ProdutoRequestDTO;
+import br.com.tegloja.dto.ProdutoResponseDTO;
 
 @Entity
 public class Produto {
@@ -58,6 +59,15 @@ public class Produto {
 		this.nomeProduto = produtoRequest.getNomeProduto();
 		this.quantidadeEstoq = produtoRequest.getQuantidadeEstoq();
 		this.valorUnit = produtoRequest.getValorUnit();
+	}
+
+	public Produto(ProdutoResponseDTO produtoResponseDTO) {
+		this.categoria = produtoResponseDTO.getCategoria();
+		this.dataAlteracao = produtoResponseDTO.getDataAlteracao();
+		this.id = produtoResponseDTO.getIdProduto();
+		this.nomeProduto = produtoResponseDTO.getNomeProduto();
+		this.quantidadeEstoq = produtoResponseDTO.getQuantidadeEstoq();
+		this.valorUnit = produtoResponseDTO.getValorUnit();
 	}
 
 	public Long getId() {

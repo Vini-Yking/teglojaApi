@@ -20,10 +20,17 @@ public class ProdutoService {
 
 	@Autowired
 	private ProdutoRepository produtoRepository;
+
 	@Autowired
 	private CategoriaService categoriaService;
 
-	// Ao listar os produtos, deverá exibir a categoria referente a esse produto
+	// obterTodos obterPorId
+
+	/**
+	 * Ao listar os produtos, deverá exibir a categoria referente a esse produto
+	 * 
+	 * @return
+	 */
 	public List<ProdutoResponseDTO> listar() {
 		List<Produto> produtos = produtoRepository.findAll();
 		// @formatter:off
@@ -33,12 +40,19 @@ public class ProdutoService {
 		// @formatter:on
 	}
 
-	// Ao inserir um novo produto, obrigatoriamente deverá estar atrelado a uma
-	// categoria
+	/**
+	 * Ao inserir um novo produto, obrigatoriamente deverá estar atrelado a uma
+	 * categoria
+	 * 
+	 * @param produtoRequest
+	 * @return
+	 */
 	public ProdutoResponseDTO adicionar(ProdutoRequestDTO produtoRequest) {
-		CategoriaResponseDTO categoriaResponseDTO = categoriaService.buscarId(produtoRequest.getCategoria().getId());
+		CategoriaResponseDTO categoriaResponseDTO = categoriaService.buscarPorId(produtoRequest.getCategoria().getId());
+
 		Categoria categoria = new Categoria(categoriaResponseDTO);
 		Produto produto = new Produto(produtoRequest);
+
 		produto.setCategoria(categoria);
 		produto = produtoRepository.save(produto);
 
@@ -54,23 +68,19 @@ public class ProdutoService {
 	}
 
 	public ProdutoResponseDTO atualizar(ProdutoRequestDTO produtoRequest, Long id) {
-		if (produtoRepository.findById(id).isEmpty()) {
-			throw new IdNotFoundException("Não existe um produto com esse id.");
-		}
-		CategoriaResponseDTO categoriaResponseDTO = categoriaService
-				.buscarNome(produtoRequest.getCategoria().getCategoria());
+		ProdutoResponseDTO produtoDTO = buscar(id);
+		CategoriaResponseDTO categoriaResponseDTO = categoriaService.buscarPorId(produtoRequest.getCategoria().getId());
+
 		Categoria categoria = new Categoria(categoriaResponseDTO);
-		Produto produto = new Produto(produtoRequest);
-		produto.setId(id);
+		Produto produto = new Produto(produtoDTO);
 		produto.setCategoria(categoria);
 		produtoRepository.save(produto);
+
 		return new ProdutoResponseDTO(produto);
 	}
 
 	public void deletar(Long id) {
-		if (produtoRepository.findById(id).isEmpty()) {
-			throw new IdNotFoundException("Não existe um produto com esse id.");
-		}
+		buscar(id);
 		produtoRepository.deleteById(id);
 	}
 

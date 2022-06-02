@@ -20,10 +20,9 @@ public class CategoriaService {
 	private CategoriaRepository _categoriarepository;
 
 	public CategoriaResponseDTO adicionar(CategoriaRequestDTO categoriaRequest) {
-		// Conversão de CategoriaRequestDTO para Categoria
 		Categoria categoria = new Categoria(categoriaRequest);
 		categoria = _categoriarepository.save(categoria);
-		// Conversão de Categoria para CategoriaResponseDTO
+
 		return new CategoriaResponseDTO(categoria);
 	}
 
@@ -36,7 +35,7 @@ public class CategoriaService {
 		// @formatter:on
 	}
 
-	public CategoriaResponseDTO buscarId(Long id) {
+	public CategoriaResponseDTO buscarPorId(Long id) {
 		Optional<Categoria> categoria = _categoriarepository.findById(id);
 		if (categoria.isEmpty()) {
 			throw new IdNotFoundException("Não existe uma categoria com esse id.");
@@ -44,28 +43,15 @@ public class CategoriaService {
 		return new CategoriaResponseDTO(categoria.get());
 	}
 
-	public CategoriaResponseDTO buscarNome(String nome) {
-		Optional<Categoria> categoria = _categoriarepository.findByCategoria(nome);
-		if (categoria.isEmpty()) {
-			throw new IdNotFoundException();
-		}
-		return new CategoriaResponseDTO(categoria.get());
-	}
-
 	public CategoriaResponseDTO atualizar(CategoriaRequestDTO categoriaRequest, Long id) {
-		if (_categoriarepository.findById(id).isEmpty()) {
-			throw new IdNotFoundException("Não existe uma categoria com esse id.");
-		}
-		Categoria categoria = new Categoria(categoriaRequest);
-		categoria.setId(id);
+		CategoriaResponseDTO categoriaResponseDTO = buscarPorId(id);
+		Categoria categoria = new Categoria(categoriaResponseDTO);
 		categoria = _categoriarepository.save(categoria);
 		return new CategoriaResponseDTO(categoria);
 	}
 
 	public void deletar(Long id) {
-		if (_categoriarepository.findById(id).isEmpty()) {
-			throw new IdNotFoundException("Não existe uma categoria com esse id.");
-		}
+		buscarPorId(id);
 		_categoriarepository.deleteById(id);
 	}
 

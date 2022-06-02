@@ -4,13 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.tegloja.handler.IdNotFoundException;
-import br.com.tegloja.repository.PedidoItensRepository;
+import br.com.tegloja.repository.PedidoItemRepository;
 
 @Service
-public class PedidoItensService {
+public class PedidoItemService {
 
 	@Autowired
-	private PedidoItensRepository _pedidoItensRepository;
+	private PedidoItemRepository _pedidoItensRepository;
 	@Autowired
 	private PedidoService pedidoService;
 	

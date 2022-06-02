@@ -20,12 +20,16 @@ public class PedidoItem {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_item")
 	private Long id;
+	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "id_produto")
 	private Produto produto;
+	
 	@Column(nullable = false)
-	private Integer qtdproduto;
+	private Integer quantidadeProduto;
+	
 	private BigDecimal valorDesconto;
+	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "id_pedido")
 	private Pedido pedido;
@@ -37,7 +41,7 @@ public class PedidoItem {
 		super();
 		this.id = id;
 		this.produto = produto;
-		this.qtdproduto = qtdproduto;
+		this.quantidadeProduto = qtdproduto;
 		this.valorDesconto = valorDesconto;
 		this.pedido = pedido;
 	}
@@ -59,11 +63,11 @@ public class PedidoItem {
 	}
 
 	public Integer getQtdproduto() {
-		return qtdproduto;
+		return quantidadeProduto;
 	}
 
 	public void setQtdproduto(Integer qtdproduto) {
-		this.qtdproduto = qtdproduto;
+		this.quantidadeProduto = qtdproduto;
 	}
 
 	public BigDecimal getValorDesconto() {

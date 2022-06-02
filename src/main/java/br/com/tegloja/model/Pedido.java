@@ -32,6 +32,7 @@ public class Pedido {
 
 	@Column(name = "dt_compra")
 	private LocalDate dataCompra;
+	
 	@Column(name = "dt_entrega")
 	private LocalDate dataEntrega;
 
