@@ -35,8 +35,7 @@ public class ProdutoService {
 	// Ao inserir um novo produto, obrigatoriamente deverá estar atrelado a uma
 	// categoria
 	public ProdutoResponseDTO adicionar(ProdutoRequestDTO produtoRequest) {
-		CategoriaResponseDTO categoriaResponseDTO = categoriaService
-				.buscarNome(produtoRequest.getCategoria().getCategoria());
+		CategoriaResponseDTO categoriaResponseDTO = categoriaService.buscarId(produtoRequest.getCategoria().getId());
 		Categoria categoria = new Categoria(categoriaResponseDTO.getId(), categoriaResponseDTO.getCategoria());
 		Produto produto = new Produto(produtoRequest);
 		produto.setCategoria(categoria);
@@ -57,8 +56,12 @@ public class ProdutoService {
 		if (_produtoRepository.findById(id).isEmpty()) {
 			// throw new NOT FOUND
 		}
+		CategoriaResponseDTO categoriaResponseDTO = categoriaService
+				.buscarNome(produtoRequest.getCategoria().getCategoria());
+		Categoria categoria = new Categoria(categoriaResponseDTO.getId(), categoriaResponseDTO.getCategoria());
 		Produto produto = new Produto(produtoRequest);
 		produto.setId(id);
+		produto.setCategoria(categoria);
 		_produtoRepository.save(produto);
 		return new ProdutoResponseDTO(produto);
 	}
