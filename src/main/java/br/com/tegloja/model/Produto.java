@@ -2,7 +2,9 @@ package br.com.tegloja.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,8 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import javax.persistence.OneToMany;
 
 import br.com.tegloja.dto.ProdutoRequestDTO;
 
@@ -22,7 +23,6 @@ public class Produto {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_produto")
 	private Long id;
-
 	@Column(name = "nm_produto")
 	private String nomeProduto;
 	@Column(name = "valor_unit")
@@ -31,7 +31,8 @@ public class Produto {
 	private Integer quantidadeEstoq;
 	@Column(name = "dt_ultima_alteracao")
 	private LocalDate dataAlteracao;
-
+	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
+	private List<PedidoItem> itens;
 	@ManyToOne
 	@JoinColumn(name = "id_categoria")
 	private Categoria categoria;

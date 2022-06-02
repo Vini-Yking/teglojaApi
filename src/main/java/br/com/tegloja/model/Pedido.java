@@ -2,7 +2,9 @@ package br.com.tegloja.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import br.com.tegloja.enums.StatusCompra;
 
@@ -39,6 +42,14 @@ public class Pedido {
 	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
 
+	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+	private List<PedidoItem> itens;
+	
+	// @ManyToMany
+	// @JoinTable(name = "pedido_item", joinColumns = @JoinColumn(name =
+	// "id_pedido"), inverseJoinColumns = @JoinColumn(name = "id_produto"))
+	// private List<Produto> produtos;
+
 	public Pedido() {
 	}
 
@@ -52,12 +63,11 @@ public class Pedido {
 		this.valortotal = valortotal;
 		this.cliente = cliente;
 	}
-	
-	
 
-	@Override//envio de email do pedido
+	@Override // envio de email do pedido
 	public String toString() {
-		return "/nPedido Realizado no dia" + dataCompra + "\nSerá entregue em " + dataEntrega + "\nvalortotal R$" + valortotal + "";
+		return "/nPedido Realizado no dia" + dataCompra + "\nSerá entregue em " + dataEntrega + "\nvalortotal R$"
+				+ valortotal + "";
 	}
 
 	public Cliente getCliente() {
