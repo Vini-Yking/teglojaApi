@@ -7,29 +7,28 @@ import org.springframework.stereotype.Service;
 
 import br.com.tegloja.dto.CategoriaResponseDTO;
 import br.com.tegloja.dto.ClienteResponseDTO;
-import br.com.tegloja.handler.ExceptionById;
+import br.com.tegloja.handler.IdNotFoundException;
 import br.com.tegloja.model.Cliente;
 import br.com.tegloja.repository.ClienteRepository;
 
 @Service
 public class ClienteService {
-	
+
 	@Autowired
 	private ClienteRepository _clienterepository;
-	
+
 	public void deletar(Long id) {
 		if (_clienterepository.findById(id).isEmpty()) {
-			throw new ExceptionById();
+			throw new IdNotFoundException("Não existe um cliente com esse id.");
 		}
 		_clienterepository.deleteById(id);
 	}
 
 	public ClienteResponseDTO buscarId(Long id) {
-			Optional<Cliente> cliente = _clienterepository.findById(id);
-			if (cliente.isEmpty()) {
-				throw new ExceptionById();
-			}
-			return new ClienteResponseDTO(cliente.get());
+		Optional<Cliente> cliente = _clienterepository.findById(id);
+		if (cliente.isEmpty()) {
+			throw new IdNotFoundException("Não existe um cliente com esse id.");
 		}
+		return new ClienteResponseDTO(cliente.get());
 	}
-
+}

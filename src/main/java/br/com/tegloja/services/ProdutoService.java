@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import br.com.tegloja.dto.CategoriaResponseDTO;
 import br.com.tegloja.dto.ProdutoRequestDTO;
 import br.com.tegloja.dto.ProdutoResponseDTO;
-import br.com.tegloja.handler.ExceptionById;
+import br.com.tegloja.handler.IdNotFoundException;
 import br.com.tegloja.model.Categoria;
 import br.com.tegloja.model.Produto;
 import br.com.tegloja.repository.ProdutoRepository;
@@ -48,14 +48,14 @@ public class ProdutoService {
 	public ProdutoResponseDTO buscar(Long id) {
 		Optional<Produto> produto = produtoRepository.findById(id);
 		if (produto.isEmpty()) {
-			// throw new NOT FOUND produto não encontrado
+			throw new IdNotFoundException("Não existe um produto com esse id.");
 		}
 		return new ProdutoResponseDTO(produto.get());
 	}
 
 	public ProdutoResponseDTO atualizar(ProdutoRequestDTO produtoRequest, Long id) {
 		if (produtoRepository.findById(id).isEmpty()) {
-			// throw new NOT FOUND
+			throw new IdNotFoundException("Não existe um produto com esse id.");
 		}
 		CategoriaResponseDTO categoriaResponseDTO = categoriaService
 				.buscarNome(produtoRequest.getCategoria().getCategoria());
@@ -69,7 +69,7 @@ public class ProdutoService {
 
 	public void deletar(Long id) {
 		if (produtoRepository.findById(id).isEmpty()) {
-			throw new ExceptionById();
+			throw new IdNotFoundException("Não existe um produto com esse id.");
 		}
 		produtoRepository.deleteById(id);
 	}

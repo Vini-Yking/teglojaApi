@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import br.com.tegloja.dto.EnderecoDTO;
-import br.com.tegloja.handler.ExceptionById;
+import br.com.tegloja.handler.IdNotFoundException;
 import br.com.tegloja.model.Endereco;
 import br.com.tegloja.repository.EnderecoRepository;
 
@@ -30,7 +30,7 @@ public class EnderecoService {
 				enderecoViaCep.get().setCep(cepSemTraco);
 				return inserir(enderecoViaCep.get());
 			} else {
-				return null;
+				return null; // exceção
 			}
 		}
 
@@ -40,10 +40,10 @@ public class EnderecoService {
 		endereco = enderecoRepository.save(endereco);
 		return new EnderecoDTO(endereco);
 	}
-	
+
 	public void deletar(Long id) {
 		if (enderecoRepository.findById(id).isEmpty()) {
-			throw new ExceptionById();
+			throw new IdNotFoundException("Não existe um endereço com esse id.");
 		}
 		enderecoRepository.deleteById(id);
 	}

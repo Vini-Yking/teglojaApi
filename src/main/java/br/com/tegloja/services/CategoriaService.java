@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.tegloja.dto.CategoriaRequestDTO;
 import br.com.tegloja.dto.CategoriaResponseDTO;
-import br.com.tegloja.handler.ExceptionById;
+import br.com.tegloja.handler.IdNotFoundException;
 import br.com.tegloja.model.Categoria;
 import br.com.tegloja.repository.CategoriaRepository;
 
@@ -39,7 +39,7 @@ public class CategoriaService {
 	public CategoriaResponseDTO buscarId(Long id) {
 		Optional<Categoria> categoria = _categoriarepository.findById(id);
 		if (categoria.isEmpty()) {
-			throw new ExceptionById();
+			throw new IdNotFoundException("Não existe uma categoria com esse id.");
 		}
 		return new CategoriaResponseDTO(categoria.get());
 	}
@@ -47,14 +47,14 @@ public class CategoriaService {
 	public CategoriaResponseDTO buscarNome(String nome) {
 		Optional<Categoria> categoria = _categoriarepository.findByCategoria(nome);
 		if (categoria.isEmpty()) {
-			throw new ExceptionById();
+			throw new IdNotFoundException();
 		}
 		return new CategoriaResponseDTO(categoria.get());
 	}
 
 	public CategoriaResponseDTO atualizar(CategoriaRequestDTO categoriaRequest, Long id) {
 		if (_categoriarepository.findById(id).isEmpty()) {
-			throw new ExceptionById();
+			throw new IdNotFoundException("Não existe uma categoria com esse id.");
 		}
 		Categoria categoria = new Categoria(categoriaRequest);
 		categoria.setId(id);
@@ -64,7 +64,7 @@ public class CategoriaService {
 
 	public void deletar(Long id) {
 		if (_categoriarepository.findById(id).isEmpty()) {
-			throw new ExceptionById();
+			throw new IdNotFoundException("Não existe uma categoria com esse id.");
 		}
 		_categoriarepository.deleteById(id);
 	}
