@@ -35,7 +35,7 @@ public class CategoriaController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<CategoriaResponseDTO> buscar(@PathVariable Long id) {
-		return ResponseEntity.ok(categoriaService.buscar(id));
+		return ResponseEntity.ok(categoriaService.buscarId(id));
 	}
 
 	@PostMapping

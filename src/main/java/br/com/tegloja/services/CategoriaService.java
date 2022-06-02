@@ -35,10 +35,18 @@ public class CategoriaService {
 		// @formatter:on
 	}
 
-	public CategoriaResponseDTO buscar(Long id) {
+	public CategoriaResponseDTO buscarId(Long id) {
 		Optional<Categoria> categoria = _categoriarepository.findById(id);
 		if (categoria.isEmpty()) {
-			// throw new NOT FOUND
+			// throw new NOT FOUND categoria não encontrada
+		}
+		return new CategoriaResponseDTO(categoria.get());
+	}
+
+	public CategoriaResponseDTO buscarNome(String nome) {
+		Optional<Categoria> categoria = _categoriarepository.findByCategoria(nome);
+		if (categoria.isEmpty()) {
+			// throw new NOT FOUND categoria não encontrada
 		}
 		return new CategoriaResponseDTO(categoria.get());
 	}
