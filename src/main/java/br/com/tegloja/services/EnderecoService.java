@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import br.com.tegloja.dto.EnderecoDTO;
+import br.com.tegloja.handler.ExceptionById;
 import br.com.tegloja.model.Endereco;
 import br.com.tegloja.repository.EnderecoRepository;
 
@@ -38,5 +39,12 @@ public class EnderecoService {
 	private EnderecoDTO inserir(Endereco endereco) {
 		endereco = enderecoRepository.save(endereco);
 		return new EnderecoDTO(endereco);
+	}
+	
+	public void deletar(Long id) {
+		if (enderecoRepository.findById(id).isEmpty()) {
+			throw new ExceptionById();
+		}
+		enderecoRepository.deleteById(id);
 	}
 }

@@ -31,13 +31,19 @@ public class Cliente {
 	public Cliente() {
 	}
 
-	public Cliente(Long id, @CPF String cpf, String cep, String nome, String email) {
-		super();
+	public Cliente(Long id, String cpf, String cep, String nome, String email) {
 		this.id = id;
 		this.cpf = cpf;
 		this.cep = cep;
 		this.nome = nome;
 		this.email = email;
+	}
+	
+	
+
+	@Override //Usado para enviar email
+	public String toString() {
+		return "Cliente "+ nome + "\ncpf=" + cpf + "\ncep=" + cep + "\nemail=" + email + "";
 	}
 
 	public Long getId() {

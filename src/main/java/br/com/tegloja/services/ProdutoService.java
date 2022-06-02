@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import br.com.tegloja.dto.CategoriaResponseDTO;
 import br.com.tegloja.dto.ProdutoRequestDTO;
 import br.com.tegloja.dto.ProdutoResponseDTO;
+import br.com.tegloja.handler.ExceptionById;
 import br.com.tegloja.model.Categoria;
 import br.com.tegloja.model.Produto;
 import br.com.tegloja.repository.ProdutoRepository;
@@ -18,13 +19,13 @@ import br.com.tegloja.repository.ProdutoRepository;
 public class ProdutoService {
 
 	@Autowired
-	private ProdutoRepository _produtoRepository;
+	private ProdutoRepository produtoRepository;
 	@Autowired
 	private CategoriaService categoriaService;
 
 	// Ao listar os produtos, deverá exibir a categoria referente a esse produto
 	public List<ProdutoResponseDTO> listar() {
-		List<Produto> produtos = _produtoRepository.findAll();
+		List<Produto> produtos = produtoRepository.findAll();
 		// @formatter:off
 		return produtos.stream()
 				.map(p -> new ProdutoResponseDTO(p))
@@ -39,13 +40,13 @@ public class ProdutoService {
 		Categoria categoria = new Categoria(categoriaResponseDTO);
 		Produto produto = new Produto(produtoRequest);
 		produto.setCategoria(categoria);
-		produto = _produtoRepository.save(produto);
+		produto = produtoRepository.save(produto);
 
 		return new ProdutoResponseDTO(produto);
 	}
 
 	public ProdutoResponseDTO buscar(Long id) {
-		Optional<Produto> produto = _produtoRepository.findById(id);
+		Optional<Produto> produto = produtoRepository.findById(id);
 		if (produto.isEmpty()) {
 			// throw new NOT FOUND produto não encontrado
 		}
@@ -53,7 +54,7 @@ public class ProdutoService {
 	}
 
 	public ProdutoResponseDTO atualizar(ProdutoRequestDTO produtoRequest, Long id) {
-		if (_produtoRepository.findById(id).isEmpty()) {
+		if (produtoRepository.findById(id).isEmpty()) {
 			// throw new NOT FOUND
 		}
 		CategoriaResponseDTO categoriaResponseDTO = categoriaService
@@ -62,15 +63,15 @@ public class ProdutoService {
 		Produto produto = new Produto(produtoRequest);
 		produto.setId(id);
 		produto.setCategoria(categoria);
-		_produtoRepository.save(produto);
+		produtoRepository.save(produto);
 		return new ProdutoResponseDTO(produto);
 	}
 
 	public void deletar(Long id) {
-		if (_produtoRepository.findById(id).isEmpty()) {
-			// throw new NOT FOUND
+		if (produtoRepository.findById(id).isEmpty()) {
+			throw new ExceptionById();
 		}
-		_produtoRepository.deleteById(id);
+		produtoRepository.deleteById(id);
 	}
 
 }

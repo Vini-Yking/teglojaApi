@@ -25,7 +25,13 @@ public class Categoria {
 	public Categoria() {
 
 	}
+	
 
+	public Categoria(CategoriaResponseDTO categoriaResponseDTO) {
+		this.id = categoriaResponseDTO.getId();
+		this.categoria = categoriaResponseDTO.getCategoria();
+	}
+	
 	public Categoria(CategoriaRequestDTO request) {
 		this.categoria = request.getCategoria();
 	}
