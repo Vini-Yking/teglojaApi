@@ -16,7 +16,7 @@ public class Cliente {
 	private Long id;
 
 	@CPF
-	@Column(nullable = false,unique=true)
+	@Column(nullable = false, unique = true)
 	private String cpf;
 
 	@Column(nullable = false)
@@ -25,7 +25,7 @@ public class Cliente {
 	@Column(name = "nome_cliente", nullable = false)
 	private String nome;
 
-	@Column(nullable = false, unique=true)
+	@Column(nullable = false, unique = true)
 	private String email;
 
 	public Cliente() {
@@ -38,12 +38,10 @@ public class Cliente {
 		this.nome = nome;
 		this.email = email;
 	}
-	
-	
 
-	@Override //Usado para enviar email
+	@Override // Usado para enviar email
 	public String toString() {
-		return "Cliente "+ nome + "\ncpf=" + cpf + "\ncep=" + cep + "\nemail=" + email + "";
+		return "Cliente " + nome + "\ncpf=" + cpf + "\ncep=" + cep + "\nemail=" + email + "";
 	}
 
 	public Long getId() {
@@ -85,6 +83,5 @@ public class Cliente {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 
 }

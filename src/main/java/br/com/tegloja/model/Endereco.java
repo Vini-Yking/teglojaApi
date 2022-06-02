@@ -12,25 +12,25 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Endereco {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id_endereco")
+	@Column(name = "id_endereco")
 	private Long id;
-	
-	@Column(nullable=false, unique = true)
+
+	@Column(nullable = false, unique = true)
 	private String cep;
+
 	private String logradouro;
 	private String complemento;
 	private String bairro;
 	private String localidade;
 	private String uf;
-	
+
 	@OneToMany
-	@JoinColumn(name="id_categoria")
+	@JoinColumn(name = "id_categoria")
 	private List<Cliente> cliente;
-	
-	
+
 	public Endereco() {
 
 	}
@@ -53,7 +53,6 @@ public class Endereco {
 		this.cliente = cliente;
 	}
 
-	
 	public Long getId() {
 		return id;
 	}

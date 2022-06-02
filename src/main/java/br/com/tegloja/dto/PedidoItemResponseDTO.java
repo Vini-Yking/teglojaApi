@@ -2,26 +2,38 @@ package br.com.tegloja.dto;
 
 import java.math.BigDecimal;
 
+import br.com.tegloja.model.Pedido;
+import br.com.tegloja.model.PedidoItem;
+import br.com.tegloja.model.Produto;
+
 public class PedidoItemResponseDTO {
 
 	private Long idPedidoItem;
-	private Long idPedido;
-	private Long idProduto;
-	private Integer qtdproduto;
+	private Pedido pedido;
+	private Produto produto;
+	private Integer quantidadeProduto;
 	private BigDecimal desconto;
 
 	public PedidoItemResponseDTO() {
 
 	}
 
-	public PedidoItemResponseDTO(Long idPedidoItem, Long idPedido, Long idProduto, Integer qtdproduto,
+	public PedidoItemResponseDTO(Long idPedidoItem, Pedido pedido, Produto produto, Integer quantidadeProduto,
 			BigDecimal desconto) {
 		super();
 		this.idPedidoItem = idPedidoItem;
-		this.idPedido = idPedido;
-		this.idProduto = idProduto;
-		this.qtdproduto = qtdproduto;
+		this.pedido = pedido;
+		this.produto = produto;
+		this.quantidadeProduto = quantidadeProduto;
 		this.desconto = desconto;
+	}
+
+	public PedidoItemResponseDTO(PedidoItem pedidoItem) {
+		this.desconto = pedidoItem.getValorDesconto();
+		this.idPedidoItem = pedidoItem.getId();
+		this.pedido = pedidoItem.getPedido();
+		this.produto = pedidoItem.getProduto();
+		this.quantidadeProduto = pedidoItem.getQtdproduto();
 	}
 
 	public Long getIdPedidoItem() {
@@ -32,28 +44,28 @@ public class PedidoItemResponseDTO {
 		this.idPedidoItem = idPedidoItem;
 	}
 
-	public Long getIdPedido() {
-		return idPedido;
+	public Pedido getPedido() {
+		return pedido;
 	}
 
-	public void setIdPedido(Long idPedido) {
-		this.idPedido = idPedido;
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
 	}
 
-	public Long getIdProduto() {
-		return idProduto;
+	public Produto getProduto() {
+		return produto;
 	}
 
-	public void setIdProduto(Long idProduto) {
-		this.idProduto = idProduto;
+	public void setProduto(Produto produto) {
+		this.produto = produto;
 	}
 
-	public Integer getQtdproduto() {
-		return qtdproduto;
+	public Integer getQuantidadeProduto() {
+		return quantidadeProduto;
 	}
 
-	public void setQtdproduto(Integer qtdproduto) {
-		this.qtdproduto = qtdproduto;
+	public void setQuantidadeProduto(Integer quantidadeProduto) {
+		this.quantidadeProduto = quantidadeProduto;
 	}
 
 	public BigDecimal getDesconto() {

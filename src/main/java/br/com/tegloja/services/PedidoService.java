@@ -21,6 +21,7 @@ public class PedidoService {
 
 	@Autowired
 	private PedidoRepository _pedidorepository;
+
 	@Autowired
 	private ClienteService clienteService;
 
@@ -55,9 +56,7 @@ public class PedidoService {
 	// cliente.toString(),pedido.toString());
 
 	public void deletar(Long id) {
-		if (_pedidorepository.findById(id).isEmpty()) {
-			throw new IdNotFoundException("Não existe um pedido com esse id.");
-		}
+		buscarPorId(id);
 		_pedidorepository.deleteById(id);
 	}
 }
