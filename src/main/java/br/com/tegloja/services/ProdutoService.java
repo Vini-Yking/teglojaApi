@@ -7,11 +7,11 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.tegloja.dto.CategoriaResponseDTO;
 import br.com.tegloja.dto.ProdutoRequestDTO;
 import br.com.tegloja.dto.ProdutoResponseDTO;
 import br.com.tegloja.model.Categoria;
 import br.com.tegloja.model.Produto;
-import br.com.tegloja.repository.CategoriaRepository;
 import br.com.tegloja.repository.ProdutoRepository;
 
 @Service
@@ -20,7 +20,7 @@ public class ProdutoService {
 	@Autowired
 	private ProdutoRepository _produtoRepository;
 	@Autowired
-	private CategoriaRepository _categoriaRepository;
+	private CategoriaService categoriaService;
 
 	// Ao listar os produtos, deverá exibir a categoria referente a esse produto
 	public List<ProdutoResponseDTO> listar() {
@@ -35,12 +35,11 @@ public class ProdutoService {
 	// Ao inserir um novo produto, obrigatoriamente deverá estar atrelado a uma
 	// categoria
 	public ProdutoResponseDTO adicionar(ProdutoRequestDTO produtoRequest) {
-		Optional<Categoria> categoria = _categoriaRepository
-				.findByCategoria(produtoRequest.getCategoria().getCategoria());
-		if (categoria.isEmpty()) {
-			// throw new BAD REQUEST categoria inválida
-		}
+		CategoriaResponseDTO categoriaResponseDTO = categoriaService
+				.buscarNome(produtoRequest.getCategoria().getCategoria());
+		Categoria categoria = new Categoria(categoriaResponseDTO.getId(), categoriaResponseDTO.getCategoria());
 		Produto produto = new Produto(produtoRequest);
+		produto.setCategoria(categoria);
 		produto = _produtoRepository.save(produto);
 
 		return new ProdutoResponseDTO(produto);
