@@ -26,7 +26,7 @@ public class CategoriaService {
 		return new CategoriaResponseDTO(categoria);
 	}
 
-	public List<CategoriaResponseDTO> listar() {
+	public List<CategoriaResponseDTO> buscarTodos() {
 		List<Categoria> categorias = _categoriarepository.findAll();
 		// @formatter:off
 		return categorias.stream()

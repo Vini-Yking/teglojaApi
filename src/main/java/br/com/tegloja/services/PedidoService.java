@@ -24,7 +24,7 @@ public class PedidoService {
 	@Autowired
 	private ClienteService clienteService;
 
-	public List<PedidoResponseDTO> listar() {
+	public List<PedidoResponseDTO> buscarTodos() {
 		List<Pedido> pedidos = _pedidorepository.findAll();
 		// @formatter:off
 		return pedidos.stream()
@@ -33,7 +33,7 @@ public class PedidoService {
 		// @formatter:on
 	}
 
-	public PedidoResponseDTO buscar(Long id) {
+	public PedidoResponseDTO buscarPorId(Long id) {
 		Optional<Pedido> pedido = _pedidorepository.findById(id);
 		if (pedido.isEmpty()) {
 			throw new IdNotFoundException("Não existe um pedido com esse id.");

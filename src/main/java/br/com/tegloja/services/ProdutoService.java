@@ -28,9 +28,9 @@ public class ProdutoService {
 
 	@Autowired
 	private FotoService fotoService;
-	
+
 	// Ao listar os produtos, deverá exibir a categoria referente a esse produto
-	public List<ProdutoResponseDTO> listar() {
+	public List<ProdutoResponseDTO> buscarTodos() {
 		List<Produto> produtos = produtoRepository.findAll();
 		// @formatter:off
 		return produtos.stream()
@@ -58,16 +58,17 @@ public class ProdutoService {
 		return new ProdutoResponseDTO(produto);
 	}
 
-	public ProdutoResponseDTO adicionarComFoto(ProdutoRequestDTO produtoRequest,MultipartFile file)  throws IOException {
-		CategoriaResponseDTO categoriaResponseDTO = categoriaService.buscarId(produtoRequest.getCategoria().getId());
+	public ProdutoResponseDTO adicionarComFoto(ProdutoRequestDTO produtoRequest, MultipartFile file)
+			throws IOException {
+		CategoriaResponseDTO categoriaResponseDTO = categoriaService.buscarPorId(produtoRequest.getCategoria().getId());
 		Categoria categoria = new Categoria(categoriaResponseDTO);
 		Produto produto = new Produto(produtoRequest);
 		produto.setCategoria(categoria);
-		fotoService.inserir(produtoRepository.save(produto),file);
+		fotoService.inserir(produtoRepository.save(produto), file);
 		return new ProdutoResponseDTO(produto);
 	}
-	
-	public ProdutoResponseDTO buscar(Long id) {
+
+	public ProdutoResponseDTO buscarPorId(Long id) {
 		Optional<Produto> produto = produtoRepository.findById(id);
 		if (produto.isEmpty()) {
 			throw new IdNotFoundException("Não existe um produto com esse id.");
@@ -76,7 +77,7 @@ public class ProdutoService {
 	}
 
 	public ProdutoResponseDTO atualizar(ProdutoRequestDTO produtoRequest, Long id) {
-		ProdutoResponseDTO produtoDTO = buscar(id);
+		ProdutoResponseDTO produtoDTO = buscarPorId(id);
 		CategoriaResponseDTO categoriaResponseDTO = categoriaService.buscarPorId(produtoRequest.getCategoria().getId());
 
 		Categoria categoria = new Categoria(categoriaResponseDTO);
@@ -88,7 +89,7 @@ public class ProdutoService {
 	}
 
 	public void deletar(Long id) {
-		buscar(id);
+		buscarPorId(id);
 		produtoRepository.deleteById(id);
 	}
 

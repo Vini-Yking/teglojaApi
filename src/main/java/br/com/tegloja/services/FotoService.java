@@ -23,7 +23,7 @@ public class FotoService {
 		return fotoRepository.save(foto);
 	}
 
-	public Foto buscar(Long id) {
+	public Foto buscarPorId(Long id) {
 		Optional<Foto> foto = fotoRepository.findById(id);
 		return foto.isPresent() ? foto.get() : null;
 	}

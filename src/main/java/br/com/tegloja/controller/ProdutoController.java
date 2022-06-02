@@ -36,33 +36,34 @@ public class ProdutoController {
 
 	@Autowired
 	private ProdutoService produtoService;
-	
+
 	@Autowired
 	private FotoService fotoService;
 
 	@GetMapping
 	public ResponseEntity<List<ProdutoResponseDTO>> listar() {
-		return ResponseEntity.ok(produtoService.listar());
+		return ResponseEntity.ok(produtoService.buscarTodos());
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<ProdutoResponseDTO> buscar(@PathVariable Long id) {
-		return ResponseEntity.ok(produtoService.buscar(id));
+		return ResponseEntity.ok(produtoService.buscarPorId(id));
 	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<ProdutoResponseDTO> atualizar(@RequestBody ProdutoRequestDTO produtoRequest, Long id) {
 		return ResponseEntity.ok(produtoService.atualizar(produtoRequest, id));
 	}
-	
+
 	@GetMapping("/{id}/foto")
-	public ResponseEntity<byte[]> buscarPorFoto(@PathVariable Long id){
-		Foto foto = fotoService.buscar(id); // busco a foto no banco
-		HttpHeaders headers = new HttpHeaders();//crio o cabeçalho
-		headers.add("content-type", foto.getTipo());//tipo do arquivo png,jpge
-		headers.add("content-length", String.valueOf(foto.getDados().length));//tamanho do arquivo 1kb 2mb
-		return new ResponseEntity<>(foto.getDados(),headers,HttpStatus.OK);//retorno na resposta a foto, o cabeçalho e a resposta do servidor
-		
+	public ResponseEntity<byte[]> buscarPorFoto(@PathVariable Long id) {
+		Foto foto = fotoService.buscarPorId(id); // busco a foto no banco
+		HttpHeaders headers = new HttpHeaders();// crio o cabeçalho
+		headers.add("content-type", foto.getTipo());// tipo do arquivo png,jpge
+		headers.add("content-length", String.valueOf(foto.getDados().length));// tamanho do arquivo 1kb 2mb
+		return new ResponseEntity<>(foto.getDados(), headers, HttpStatus.OK);// retorno na resposta a foto, o cabeçalho
+																				// e a resposta do servidor
+
 	}
 
 //	@PostMapping
@@ -73,20 +74,21 @@ public class ProdutoController {
 //				.buildAndExpand(produtoResponseDTO.getIdProduto()).toUri();
 //		return ResponseEntity.created(uri).body(produtoResponseDTO);
 //	}
-	
+
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<ProdutoResponseDTO> adicionarComFoto (@Valid @RequestParam MultipartFile file, @RequestPart ProdutoRequestDTO produtoRequest) throws IOException{
-		ProdutoResponseDTO produtoResponseDTO = produtoService.adicionarComFoto(produtoRequest,file);
+	public ResponseEntity<ProdutoResponseDTO> adicionarComFoto(@Valid @RequestParam MultipartFile file,
+			@RequestPart ProdutoRequestDTO produtoRequest) throws IOException {
+		ProdutoResponseDTO produtoResponseDTO = produtoService.adicionarComFoto(produtoRequest, file);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(produtoResponseDTO.getIdProduto()).toUri();
 		return ResponseEntity.created(uri).body(produtoResponseDTO);
 	}
-	
+
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> apagar(@PathVariable Long id) {
-			produtoService.deletar(id);
-			return ResponseEntity.noContent().build();
+		produtoService.deletar(id);
+		return ResponseEntity.noContent().build();
 	}
 
 }

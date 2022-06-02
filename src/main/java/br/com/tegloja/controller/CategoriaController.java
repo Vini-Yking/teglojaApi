@@ -30,7 +30,7 @@ public class CategoriaController {
 
 	@GetMapping
 	public ResponseEntity<List<CategoriaResponseDTO>> listar() {
-		return ResponseEntity.ok(categoriaService.listar());
+		return ResponseEntity.ok(categoriaService.buscarTodos());
 	}
 
 	@GetMapping("/{id}")

@@ -69,6 +69,7 @@ public class Produto {
 		this.nomeProduto = produtoResponseDTO.getNomeProduto();
 		this.quantidadeEstoq = produtoResponseDTO.getQuantidadeEstoq();
 		this.valorUnit = produtoResponseDTO.getValorUnit();
+	}
 
 	public List<PedidoItem> getItens() {
 		return itens;

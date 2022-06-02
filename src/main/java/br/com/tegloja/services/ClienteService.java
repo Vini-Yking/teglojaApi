@@ -18,13 +18,11 @@ public class ClienteService {
 	private ClienteRepository _clienterepository;
 
 	public void deletar(Long id) {
-		if (_clienterepository.findById(id).isEmpty()) {
-			throw new IdNotFoundException("Não existe um cliente com esse id.");
-		}
+		buscarPorId(id);
 		_clienterepository.deleteById(id);
 	}
 
-	public ClienteResponseDTO buscarId(Long id) {
+	public ClienteResponseDTO buscarPorId(Long id) {
 		Optional<Cliente> cliente = _clienterepository.findById(id);
 		if (cliente.isEmpty()) {
 			throw new IdNotFoundException("Não existe um cliente com esse id.");
