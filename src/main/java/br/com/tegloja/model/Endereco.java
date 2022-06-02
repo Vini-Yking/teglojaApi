@@ -27,7 +27,7 @@ public class Endereco {
 	private String uf;
 	
 	@OneToMany
-	@JoinColumn(name="categoria_id")
+	@JoinColumn(name="id_categoria")
 	private List<Cliente> cliente;
 	
 	

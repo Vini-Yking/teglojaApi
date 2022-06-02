@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import br.com.tegloja.model.Categoria;
+import br.com.tegloja.model.Foto;
 import br.com.tegloja.model.Produto;
 
 public class ProdutoResponseDTO {
@@ -14,18 +15,37 @@ public class ProdutoResponseDTO {
 	private BigDecimal valorUnit;
 	private Integer quantidadeEstoq;
 	private LocalDate dataAlteracao;
+	private String urlFoto;
 
 	public ProdutoResponseDTO() {
 
 	}
 
+	public ProdutoResponseDTO(Produto produto,String urlFoto) {
+		this.dataAlteracao = produto.getDataAlteracao();
+		this.categoria = produto.getCategoria();
+		this.idProduto = produto.getId();
+		this.nomeProduto = produto.getNomeProduto();
+		this.quantidadeEstoq = produto.getQuantidadeEstoq();
+		this.valorUnit = produto.getValorUnit();	
+	}
+	
 	public ProdutoResponseDTO(Produto produto) {
 		this.dataAlteracao = produto.getDataAlteracao();
 		this.categoria = produto.getCategoria();
 		this.idProduto = produto.getId();
 		this.nomeProduto = produto.getNomeProduto();
 		this.quantidadeEstoq = produto.getQuantidadeEstoq();
-		this.valorUnit = produto.getValorUnit();
+		this.valorUnit = produto.getValorUnit();		
+	}
+	
+	
+	public String getUrlFoto() {
+		return urlFoto;
+	}
+
+	public void setUrlFoto(String urlFoto) {
+		this.urlFoto = urlFoto;
 	}
 
 	public Categoria getCategoria() {

@@ -18,7 +18,7 @@ public class Categoria {
 	@Column(name = "id_categoria")
 	private Long id;
 
-	@Column(name = "nm_categoria", nullable = false, unique = true)
+	@Column(name = "nome_categoria", nullable = false, unique = true)
 	@Size(max = 100)
 	private String categoria;
 

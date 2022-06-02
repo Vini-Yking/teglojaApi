@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import br.com.tegloja.dto.ProdutoRequestDTO;
 
@@ -58,6 +59,15 @@ public class Produto {
 		this.nomeProduto = produtoRequest.getNomeProduto();
 		this.quantidadeEstoq = produtoRequest.getQuantidadeEstoq();
 		this.valorUnit = produtoRequest.getValorUnit();
+	}
+
+
+	public List<PedidoItem> getItens() {
+		return itens;
+	}
+
+	public void setItens(List<PedidoItem> itens) {
+		this.itens = itens;
 	}
 
 	public Long getId() {
