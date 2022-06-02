@@ -36,7 +36,7 @@ public class ProdutoService {
 	// categoria
 	public ProdutoResponseDTO adicionar(ProdutoRequestDTO produtoRequest) {
 		CategoriaResponseDTO categoriaResponseDTO = categoriaService.buscarId(produtoRequest.getCategoria().getId());
-		Categoria categoria = new Categoria(categoriaResponseDTO.getId(), categoriaResponseDTO.getCategoria());
+		Categoria categoria = new Categoria(categoriaResponseDTO);
 		Produto produto = new Produto(produtoRequest);
 		produto.setCategoria(categoria);
 		produto = _produtoRepository.save(produto);
@@ -58,7 +58,7 @@ public class ProdutoService {
 		}
 		CategoriaResponseDTO categoriaResponseDTO = categoriaService
 				.buscarNome(produtoRequest.getCategoria().getCategoria());
-		Categoria categoria = new Categoria(categoriaResponseDTO.getId(), categoriaResponseDTO.getCategoria());
+		Categoria categoria = new Categoria(categoriaResponseDTO);
 		Produto produto = new Produto(produtoRequest);
 		produto.setId(id);
 		produto.setCategoria(categoria);

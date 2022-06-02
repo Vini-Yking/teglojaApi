@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.Size;
 
 import br.com.tegloja.dto.CategoriaRequestDTO;
+import br.com.tegloja.dto.CategoriaResponseDTO;
 
 @Entity
 public class Categoria {
@@ -27,6 +28,11 @@ public class Categoria {
 
 	public Categoria(CategoriaRequestDTO request) {
 		this.categoria = request.getCategoria();
+	}
+
+	public Categoria(CategoriaResponseDTO response) {
+		this.id = response.getId();
+		this.categoria = response.getCategoria();
 	}
 
 	public Categoria(Long id, @Size(max = 100) String categoria) {
