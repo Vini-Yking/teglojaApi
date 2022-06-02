@@ -38,6 +38,13 @@ public class Cliente {
 		this.nome = nome;
 		this.email = email;
 	}
+	
+	
+
+	@Override //Usado para enviar email
+	public String toString() {
+		return "Cliente "+ nome + "\ncpf=" + cpf + "\ncep=" + cep + "\nemail=" + email + "";
+	}
 
 	public Long getId() {
 		return id;

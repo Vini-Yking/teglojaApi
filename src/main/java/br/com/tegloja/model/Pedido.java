@@ -52,6 +52,13 @@ public class Pedido {
 		this.valortotal = valortotal;
 		this.cliente = cliente;
 	}
+	
+	
+
+	@Override//envio de email do pedido
+	public String toString() {
+		return "/nPedido Realizado no dia" + dataCompra + "\nSerá entregue em " + dataEntrega + "\nvalortotal R$" + valortotal + "";
+	}
 
 	public Cliente getCliente() {
 		return cliente;
