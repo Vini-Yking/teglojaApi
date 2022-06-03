@@ -40,12 +40,20 @@ public class ClienteService {
 		}
 		return new ClienteResponseDTO(cliente.get());
 	}
-	
+
+	public ClienteResponseDTO adicionar(ClienteRequestDTO clienteRequest) {
+		Cliente cliente = new Cliente(clienteRequest);
+		cliente = _clienterepository.save(cliente);
+
+		return new ClienteResponseDTO(cliente);
+	}
+
 	public ClienteResponseDTO atualizar(ClienteRequestDTO clienteRequest, Long id) {
 		buscarPorId(id);
 		Cliente cliente = new Cliente(clienteRequest);
 		cliente = _clienterepository.save(cliente);
-		return new ClienteResponseDTO(_clienterepository.save(cliente));
+
+		return new ClienteResponseDTO(cliente);
 	}
 
 }

@@ -47,6 +47,7 @@ public class CategoriaService {
 		buscarPorId(id);
 		Categoria categoria = new Categoria(categoriaRequest);
 		categoria = _categoriarepository.save(categoria);
+
 		return new CategoriaResponseDTO(categoria);
 	}
 
