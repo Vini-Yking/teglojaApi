@@ -31,10 +31,10 @@ public class Pedido {
 	@Column(name = "status_pedido", nullable = false)
 	private StatusCompra status;
 
-	@Column(name = "dt_compra")
+	@Column(name = "data_compra")
 	private LocalDate dataCompra;
-	
-	@Column(name = "dt_entrega")
+
+	@Column(name = "data_entrega")
 	private LocalDate dataEntrega;
 
 	@Column(name = "valor_total")
@@ -46,7 +46,7 @@ public class Pedido {
 
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
 	private List<PedidoItem> itens;
-	
+
 	// @ManyToMany
 	// @JoinTable(name = "pedido_item", joinColumns = @JoinColumn(name =
 	// "id_pedido"), inverseJoinColumns = @JoinColumn(name = "id_produto"))

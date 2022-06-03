@@ -32,7 +32,10 @@ public class PedidoItem {
 	@Transient
 	private BigDecimal subTotal;
 
+	@Column(name = "valor_desconto")
 	private BigDecimal valorDesconto;
+
+	@Column(name = "valor_venda")
 	private BigDecimal valorVenda;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)

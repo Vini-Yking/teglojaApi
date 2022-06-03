@@ -55,7 +55,7 @@ public class PedidoService {
 		pedido.setCliente(cliente);
 		pedido = _pedidorepository.save(pedido);
 		mailConfig.enviarEmail(cliente.getEmail(), "Compra Concluida!",
-				cliente.toString(),pedido.toString());
+				pedido.toString());
 		return new PedidoResponseDTO(pedido);
 	}
 

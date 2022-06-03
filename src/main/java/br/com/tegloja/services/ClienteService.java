@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.tegloja.backend.config.MailConfig;
 import br.com.tegloja.dto.ClienteRequestDTO;
 import br.com.tegloja.dto.ClienteResponseDTO;
 import br.com.tegloja.handler.IdNotFoundException;
@@ -18,6 +19,9 @@ public class ClienteService {
 
 	@Autowired
 	private ClienteRepository _clienterepository;
+	
+	@Autowired
+	private MailConfig mailConfig;
 
 	public void deletar(Long id) {
 		buscarPorId(id);
@@ -44,7 +48,8 @@ public class ClienteService {
 	public ClienteResponseDTO adicionar(ClienteRequestDTO clienteRequest) {
 		Cliente cliente = new Cliente(clienteRequest);
 		cliente = _clienterepository.save(cliente);
-
+		mailConfig.enviarEmail(cliente.getEmail(), "Cadastrado efetuado com sucesso",
+				cliente.toString());
 		return new ClienteResponseDTO(cliente);
 	}
 

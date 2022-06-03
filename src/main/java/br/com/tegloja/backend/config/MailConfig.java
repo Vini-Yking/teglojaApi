@@ -13,7 +13,7 @@ public class MailConfig {
 	
 	public void enviarEmail(String para, String assunto, String texto) {
 		SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-		simpleMailMessage.setFrom("marcos.v.freitas@aluno.senai.br");
+		simpleMailMessage.setFrom("hitalo.silva@aluno.senai.br");
 		simpleMailMessage.setTo(para);
 		simpleMailMessage.setSubject(assunto);
 		simpleMailMessage.setText("Dados da Compra"+texto+ "\n\n\n Serratec - TEGLOJA - 2022");
@@ -22,7 +22,7 @@ public class MailConfig {
 	
 	public void enviarEmail(String para, String assunto, String texto,String texto1) {
 		SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-		simpleMailMessage.setFrom("marcos.v.freitas@aluno.senai.br");
+		simpleMailMessage.setFrom("hitalo.silva@aluno.senai.br");
 		simpleMailMessage.setTo(para);
 		simpleMailMessage.setSubject(assunto);
 		simpleMailMessage.setText("Dados da Compra"+texto+ "\n\n\n Serratec - TEGLOJA - 2022");
