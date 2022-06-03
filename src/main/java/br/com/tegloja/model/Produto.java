@@ -25,16 +25,16 @@ public class Produto {
 	@Column(name = "id_produto")
 	private Long id;
 
-	@Column(name = "nm_produto")
+	@Column(name = "nome_produto")
 	private String nomeProduto;
 
 	@Column(name = "valor_unit")
 	private BigDecimal valorUnit;
 
-	@Column(name = "qtd_estoque")
+	@Column(name = "quantidade_estoque")
 	private Integer quantidadeEstoq;
 
-	@Column(name = "dt_ultima_alteracao")
+	@Column(name = "data_ultima_alteracao")
 	private LocalDate dataAlteracao;
 
 	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
