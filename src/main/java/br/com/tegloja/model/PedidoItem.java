@@ -11,7 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+
+import br.com.tegloja.dto.PedidoItemRequestDTO;
 
 @Entity
 @Table(name = "pedido_itens")
@@ -29,8 +30,8 @@ public class PedidoItem {
 	@Column(nullable = false)
 	private Integer quantidadeProduto;
 
-	@Transient
-	private BigDecimal subTotal;
+	// @Transient
+	// private BigDecimal subTotal;
 
 	private BigDecimal valorDesconto;
 	private BigDecimal valorVenda;
@@ -42,16 +43,21 @@ public class PedidoItem {
 	public PedidoItem() {
 	}
 
-	public PedidoItem(Long id, Produto produto, Integer quantidadeProduto, BigDecimal subTotal,
-			BigDecimal valorDesconto, BigDecimal valorVenda, Pedido pedido) {
+	public PedidoItem(Long id, Produto produto, Integer quantidadeProduto, BigDecimal valorDesconto,
+			BigDecimal valorVenda, Pedido pedido) {
 		super();
 		this.id = id;
 		this.produto = produto;
 		this.quantidadeProduto = quantidadeProduto;
-		this.subTotal = subTotal;
 		this.valorDesconto = valorDesconto;
 		this.valorVenda = valorVenda;
 		this.pedido = pedido;
+	}
+
+	public PedidoItem(PedidoItemRequestDTO pedidoItemRequest) {
+		this.pedido = pedidoItemRequest.getPedido();
+		this.produto = pedidoItemRequest.getProduto();
+		this.quantidadeProduto = pedidoItemRequest.getQtdproduto();
 	}
 
 	public Long getId() {
@@ -100,14 +106,6 @@ public class PedidoItem {
 
 	public void setQuantidadeProduto(Integer quantidadeProduto) {
 		this.quantidadeProduto = quantidadeProduto;
-	}
-
-	public BigDecimal getSubTotal() {
-		return subTotal;
-	}
-
-	public void setSubTotal(BigDecimal subTotal) {
-		this.subTotal = subTotal;
 	}
 
 	public BigDecimal getValorVenda() {

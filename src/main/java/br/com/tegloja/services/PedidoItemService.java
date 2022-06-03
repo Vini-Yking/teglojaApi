@@ -5,8 +5,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.tegloja.dto.PedidoItemRequestDTO;
 import br.com.tegloja.dto.PedidoItemResponseDTO;
-import br.com.tegloja.dto.PedidoResponseDTO;
 import br.com.tegloja.handler.IdNotFoundException;
 import br.com.tegloja.model.PedidoItem;
 import br.com.tegloja.repository.PedidoItemRepository;
@@ -36,4 +36,18 @@ public class PedidoItemService {
 		_pedidoItemRepository.deleteById(id);
 	}
 
+	public PedidoItemResponseDTO adicionar(PedidoItemRequestDTO pedidoItemRequest) {
+		PedidoItem pedidoItem = new PedidoItem(pedidoItemRequest);
+		pedidoItem = _pedidoItemRepository.save(pedidoItem);
+
+		return new PedidoItemResponseDTO(pedidoItem);
+	}
+
+	public PedidoItemResponseDTO atualizar(PedidoItemRequestDTO pedidoItemRequest, Long id) {
+		buscarPorId(id);
+		PedidoItem pedidoItem = new PedidoItem(pedidoItemRequest);
+		pedidoItem = _pedidoItemRepository.save(pedidoItem);
+
+		return new PedidoItemResponseDTO(pedidoItem);
+	}
 }
