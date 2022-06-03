@@ -49,8 +49,7 @@ public class ProdutoController {
 					sort = "nomeProduto",
 					direction = Sort.Direction.ASC,
 					page = 0,
-					size = 8
-					)Pageable pageable) {
+					size = 8)Pageable pageable) {
 		// @formatter:on
 		return ResponseEntity.ok(produtoService.buscarPagina(pageable));
 	}

@@ -23,6 +23,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.tegloja.dto.CategoriaRequestDTO;
 import br.com.tegloja.dto.CategoriaResponseDTO;
+import br.com.tegloja.model.Categoria;
 import br.com.tegloja.services.CategoriaService;
 
 @RestController
@@ -43,11 +44,11 @@ public class CategoriaController {
 	}
 
 	@GetMapping("/pagina")
-	public ResponseEntity<Page<CategoriaResponseDTO>> buscarPagina(@PageableDefault(
+	public ResponseEntity<Page<Categoria>> buscarPagina(@PageableDefault(
 	// @formatter:off
-					sort = "nome_categoria",
+					sort = "categoria",
 					direction = Sort.Direction.ASC,
-					page = 1,
+					page = 0,
 					size = 8
 					)Pageable pageable) {
 		// @formatter:on

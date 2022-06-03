@@ -1,5 +1,8 @@
 package br.com.tegloja.services;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -11,8 +14,10 @@ import org.springframework.stereotype.Service;
 
 import br.com.tegloja.backend.config.MailConfig;
 import br.com.tegloja.dto.ClienteResponseDTO;
+import br.com.tegloja.dto.PedidoItemResponseDTO;
 import br.com.tegloja.dto.PedidoRequestDTO;
 import br.com.tegloja.dto.PedidoResponseDTO;
+import br.com.tegloja.enums.StatusCompra;
 import br.com.tegloja.handler.IdNotFoundException;
 import br.com.tegloja.model.Cliente;
 import br.com.tegloja.model.Pedido;
@@ -26,6 +31,9 @@ public class PedidoService {
 
 	@Autowired
 	private ClienteService clienteService;
+
+	@Autowired
+	private PedidoItemService pedidoItemService;
 
 	@Autowired
 	private MailConfig mailConfig;
@@ -69,10 +77,44 @@ public class PedidoService {
 		return new PedidoResponseDTO(pedido);
 	}
 
+	public PedidoResponseDTO iniciarPedidoVazio(Long idCliente) {
+		ClienteResponseDTO cliente = clienteService.buscarPorId(idCliente);
+		Pedido pedido = new Pedido();
+		pedido.setCliente(new Cliente(cliente));
+		pedido.setStatus(StatusCompra.NAO_FINALIZADO);
+		pedido.setValortotal(BigDecimal.ZERO);
+		pedido = _pedidorepository.save(pedido);
+		return new PedidoResponseDTO(pedido);
+	}
+
+	public PedidoResponseDTO finalizarPedido(Long idPedido) {
+		PedidoResponseDTO pedidoResponse = buscarPorId(idPedido);
+		List<PedidoItemResponseDTO> itens = pedidoItemService.buscarPorIdPedido(idPedido);
+
+		Pedido pedido = new Pedido(pedidoResponse);
+		// @formatter:off
+		BigDecimal total = itens.stream()
+				.map(x -> x.getValorVenda())
+				.reduce(BigDecimal.ZERO, BigDecimal::add);
+		// @formatter:on
+		total.setScale(2, RoundingMode.HALF_UP);
+		pedido.setValortotal(total);
+		pedido.setDataCompra(LocalDate.now());
+		pedido.setDataEntrega(LocalDate.now().plusDays(7));
+		pedido.setStatus(StatusCompra.FINALIZADO);
+		pedido = _pedidorepository.save(pedido);
+
+		return new PedidoResponseDTO(pedido);
+	}
+
 	public PedidoResponseDTO atualizar(PedidoRequestDTO pedidoRequest, Long id) {
 		buscarPorId(id);
+		ClienteResponseDTO clienteResponseDTO = clienteService.buscarPorId(pedidoRequest.getCliente().getId());
 
+		Cliente cliente = new Cliente(clienteResponseDTO);
 		Pedido pedido = new Pedido(pedidoRequest);
+
+		pedido.setCliente(cliente);
 		pedido.setId(id);
 		pedido = _pedidorepository.save(pedido);
 

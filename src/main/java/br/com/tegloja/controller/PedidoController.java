@@ -45,9 +45,9 @@ public class PedidoController {
 	@GetMapping("/pagina")
 	public ResponseEntity<Page<PedidoResponseDTO>> buscarPagina(@PageableDefault(
 	// @formatter:off
-					sort = "data_compra",
+					sort = "dataCompra",
 					direction = Sort.Direction.DESC,
-					page = 1,
+					page = 0,
 					size = 8
 					)Pageable pageable) {
 		// @formatter:on
