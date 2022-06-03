@@ -72,7 +72,7 @@ public class PedidoItemController {
 	public ResponseEntity<Object> excluir(@PathVariable Long id) {
 		pedidoItemService.deletar(id);
 
-		return ResponseEntity.ok().build();
+		return ResponseEntity.noContent().build();
 	}
 
 }

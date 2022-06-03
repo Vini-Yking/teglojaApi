@@ -53,11 +53,11 @@ public class Pedido {
 	// private List<Produto> produtos;
 
 	public Pedido() {
+		
 	}
 
 	public Pedido(Long id, StatusCompra status, LocalDate dataCompra, LocalDate dataEntrega, BigDecimal valortotal,
 			Cliente cliente) {
-		super();
 		this.id = id;
 		this.status = status;
 		this.dataCompra = dataCompra;

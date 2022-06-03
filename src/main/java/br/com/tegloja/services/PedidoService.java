@@ -61,7 +61,11 @@ public class PedidoService {
 
 		pedido.setCliente(cliente);
 		pedido = _pedidorepository.save(pedido);
-		mailConfig.enviarEmail(cliente.getEmail(), "Compra Concluida!", pedido.toString());
+		/**
+		 *  Não foi possivel enviar email por limitação do google
+		 *  mailConfig.enviarEmail(cliente.getEmail(), "Compra Concluida!", pedido.toString());
+		 */
+		
 		return new PedidoResponseDTO(pedido);
 	}
 

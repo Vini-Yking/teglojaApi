@@ -77,7 +77,7 @@ public class ClienteController {
 	public ResponseEntity<Object> excluir(@PathVariable Long id) {
 		clienteService.deletar(id);
 
-		return ResponseEntity.ok().build();
+		return ResponseEntity.noContent().build();
 	}
 
 }

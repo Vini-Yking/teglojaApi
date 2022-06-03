@@ -75,7 +75,7 @@ public class CategoriaController {
 	public ResponseEntity<Object> excluir(@PathVariable Long id) {
 		categoriaService.deletar(id);
 
-		return ResponseEntity.ok().build();
+		return ResponseEntity.noContent().build();
 	}
 
 }

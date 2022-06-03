@@ -55,8 +55,13 @@ public class ClienteService {
 
 	public ClienteResponseDTO adicionar(ClienteRequestDTO clienteRequest) {
 		Cliente cliente = new Cliente(clienteRequest);
+		
 		cliente = _clienterepository.save(cliente);
-		mailConfig.enviarEmail(cliente.getEmail(), "Cadastrado efetuado com sucesso", cliente.toString());
+		/**
+		 * Não foi possivel enviar email por limitação do google
+		 * mailConfig.enviarEmail(cliente.getEmail(), "Cadastrado efetuado com sucesso", cliente.toString());
+		 */
+		
 		return new ClienteResponseDTO(cliente);
 	}
 
