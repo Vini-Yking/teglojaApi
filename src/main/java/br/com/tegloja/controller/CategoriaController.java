@@ -45,7 +45,7 @@ public class CategoriaController {
 	@GetMapping("/pagina")
 	public ResponseEntity<Page<CategoriaResponseDTO>> buscarPagina(@PageableDefault(
 	// @formatter:off
-					sort = "nm_produto",
+					sort = "nome_categoria",
 					direction = Sort.Direction.ASC,
 					page = 1,
 					size = 8
