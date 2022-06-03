@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.tegloja.backend.config.MailConfig;
@@ -32,9 +34,15 @@ public class PedidoService {
 		List<Pedido> pedidos = _pedidorepository.findAll();
 		// @formatter:off
 		return pedidos.stream()
-				.map(p -> new PedidoResponseDTO(p))
+				.map(pedido -> new PedidoResponseDTO(pedido))
 				.collect(Collectors.toList());
 		// @formatter:on
+	}
+
+	public Page<PedidoResponseDTO> buscarPagina(Pageable page) {
+		Page<Pedido> pedidos = _pedidorepository.findAll(page);
+
+		return pedidos.map(pedido -> new PedidoResponseDTO(pedido));
 	}
 
 	public PedidoResponseDTO buscarPorId(Long id) {

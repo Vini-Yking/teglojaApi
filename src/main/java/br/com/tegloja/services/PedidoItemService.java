@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.tegloja.dto.PedidoItemRequestDTO;
@@ -21,17 +23,23 @@ public class PedidoItemService {
 
 	public PedidoItemResponseDTO buscarPorId(Long id) {
 		Optional<PedidoItem> item = _pedidoItemRepository.findById(id);
-		if (item.isEmpty()) {
+		if (item.isEmpty())
 			throw new IdNotFoundException("Não existe um item com esse id.");
-		}
+
 		return new PedidoItemResponseDTO(item.get());
+	}
+
+	public Page<PedidoItemResponseDTO> buscarPagina(Pageable page) {
+		Page<PedidoItem> itens = _pedidoItemRepository.findAll(page);
+
+		return itens.map(item -> new PedidoItemResponseDTO(item));
 	}
 
 	public List<PedidoItemResponseDTO> buscarTodos() {
 		List<PedidoItem> itens = _pedidoItemRepository.findAll();
 		// @formatter:off
 		return itens.stream()
-				.map(p -> new PedidoItemResponseDTO(p))
+				.map(item -> new PedidoItemResponseDTO(item))
 				.collect(Collectors.toList());
 		// @formatter:on
 	}

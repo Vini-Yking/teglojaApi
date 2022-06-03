@@ -6,6 +6,10 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +40,18 @@ public class PedidoItemController {
 	@GetMapping("/{id}")
 	public ResponseEntity<PedidoItemResponseDTO> buscarPorId(@PathVariable Long id) {
 		return ResponseEntity.ok(pedidoItemService.buscarPorId(id));
+	}
+
+	@GetMapping("/pagina")
+	public ResponseEntity<Page<PedidoItemResponseDTO>> buscarPagina(@PageableDefault(
+	// @formatter:off
+					sort = "nm_produto",
+					direction = Sort.Direction.ASC,
+					page = 1,
+					size = 8
+					)Pageable pageable) {
+		// @formatter:on
+		return ResponseEntity.ok(pedidoItemService.buscarPagina(pageable));
 	}
 
 	@PostMapping
