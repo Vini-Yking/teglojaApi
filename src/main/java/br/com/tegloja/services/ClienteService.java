@@ -1,11 +1,13 @@
 package br.com.tegloja.services;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.tegloja.dto.CategoriaResponseDTO;
+import br.com.tegloja.dto.ClienteRequestDTO;
 import br.com.tegloja.dto.ClienteResponseDTO;
 import br.com.tegloja.handler.IdNotFoundException;
 import br.com.tegloja.model.Cliente;
@@ -21,6 +23,15 @@ public class ClienteService {
 		buscarPorId(id);
 		_clienterepository.deleteById(id);
 	}
+	
+	public List<ClienteResponseDTO> buscarTodos() {
+		List<Cliente> clientes = _clienterepository.findAll();
+		// @formatter:off
+		return clientes.stream()
+				.map(c -> new ClienteResponseDTO(c))
+				.collect(Collectors.toList());
+		// @formatter:on
+	}
 
 	public ClienteResponseDTO buscarPorId(Long id) {
 		Optional<Cliente> cliente = _clienterepository.findById(id);
@@ -29,4 +40,12 @@ public class ClienteService {
 		}
 		return new ClienteResponseDTO(cliente.get());
 	}
+	
+	public ClienteResponseDTO atualizar(ClienteRequestDTO clienteRquest, Long id) {
+		ClienteResponseDTO ClienteResponseDTO = buscarPorId(id);
+		Cliente cliente = new Cliente(ClienteResponseDTO);
+		cliente = _clienterepository.save(cliente);
+		return new ClienteResponseDTO(cliente);
+	}
+
 }
