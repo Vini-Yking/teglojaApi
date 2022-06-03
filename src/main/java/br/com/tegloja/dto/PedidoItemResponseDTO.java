@@ -13,19 +13,21 @@ public class PedidoItemResponseDTO {
 	private Produto produto;
 	private Integer quantidadeProduto;
 	private BigDecimal desconto;
+	private BigDecimal valorVenda;
 
 	public PedidoItemResponseDTO() {
 
 	}
 
 	public PedidoItemResponseDTO(Long idPedidoItem, Pedido pedido, Produto produto, Integer quantidadeProduto,
-			BigDecimal desconto) {
+			BigDecimal desconto, BigDecimal valorVenda) {
 		super();
 		this.idPedidoItem = idPedidoItem;
 		this.pedido = pedido;
 		this.produto = produto;
 		this.quantidadeProduto = quantidadeProduto;
 		this.desconto = desconto;
+		this.valorVenda = valorVenda;
 	}
 
 	public PedidoItemResponseDTO(PedidoItem pedidoItem) {
@@ -74,6 +76,14 @@ public class PedidoItemResponseDTO {
 
 	public void setDesconto(BigDecimal desconto) {
 		this.desconto = desconto;
+	}
+
+	public BigDecimal getValorVenda() {
+		return valorVenda;
+	}
+
+	public void setValorVenda(BigDecimal valorVenda) {
+		this.valorVenda = valorVenda;
 	}
 
 }

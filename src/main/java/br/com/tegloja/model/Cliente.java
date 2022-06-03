@@ -12,6 +12,7 @@ import br.com.tegloja.dto.ClienteRequestDTO;
 import br.com.tegloja.dto.ClienteResponseDTO;
 
 @Entity
+
 public class Cliente {
 
 	@Id
