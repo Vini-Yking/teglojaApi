@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import br.com.tegloja.dto.PedidoRequestDTO;
 import br.com.tegloja.enums.StatusCompra;
 
 @Entity
@@ -59,6 +60,14 @@ public class Pedido {
 		super();
 		this.id = id;
 		this.status = status;
+		this.dataCompra = dataCompra;
+		this.dataEntrega = dataEntrega;
+		this.valortotal = valortotal;
+		this.cliente = cliente;
+	}
+
+	public Pedido(PedidoRequestDTO pedidoRequest) {
+		this.status = pedidoRequest.status;
 		this.dataCompra = dataCompra;
 		this.dataEntrega = dataEntrega;
 		this.valortotal = valortotal;

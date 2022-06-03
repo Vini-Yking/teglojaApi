@@ -7,12 +7,11 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.tegloja.dto.ClienteResponseDTO;
-import br.com.tegloja.dto.PedidoRequestDTO;
+import br.com.tegloja.dto.CategoriaRequestDTO;
+import br.com.tegloja.dto.CategoriaResponseDTO;
 import br.com.tegloja.dto.PedidoResponseDTO;
-import br.com.tegloja.dto.ProdutoResponseDTO;
 import br.com.tegloja.handler.IdNotFoundException;
-import br.com.tegloja.model.Cliente;
+import br.com.tegloja.model.Categoria;
 import br.com.tegloja.model.Pedido;
 import br.com.tegloja.repository.PedidoRepository;
 
@@ -55,6 +54,13 @@ public class PedidoService {
 	// mailConfig.enviarEmail(cliente.getEmail(), "Compra Concluida!",
 	// cliente.toString(),pedido.toString());
 
+	public PedidoResponseDTO atualizar(CategoriaRequestDTO pedidoRequest, Long id) {
+		buscarPorId(id);
+		Pedido pedido = new Pedido(pedidoRequest);
+		pedido = _pedidorepository.save(pedido);
+		return new PedidoResponseDTO(pedido);
+	}
+	
 	public void deletar(Long id) {
 		buscarPorId(id);
 		_pedidorepository.deleteById(id);

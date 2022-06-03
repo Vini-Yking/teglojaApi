@@ -32,8 +32,11 @@ public class Cliente {
 	private String email;
 
 	public Cliente(ClienteRequestDTO clienteRequest) {
-	}
-
+        this.cep = clienteRequest.getCep();
+        this.cpf = clienteRequest.getCpf();
+        this.email = clienteRequest.getEmail();
+        this.nome = clienteRequest.getNome();
+    }
 	public Cliente(Long id, String cpf, String cep, String nome, String email) {
 		this.id = id;
 		this.cpf = cpf;
