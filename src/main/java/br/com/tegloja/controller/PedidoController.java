@@ -84,7 +84,7 @@ public class PedidoController {
 	public ResponseEntity<Object> excluir(@PathVariable Long id) {
 		pedidoService.deletar(id);
 
-		return ResponseEntity.ok().build();
+		return ResponseEntity.noContent().build();
 	}
 
 }

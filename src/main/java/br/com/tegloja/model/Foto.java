@@ -32,6 +32,10 @@ public class Foto {
 	@JoinColumn(name = "id_produto")
 	private Produto produto;
 
+	public Foto() {
+
+	}
+
 	public Foto(byte[] dados, String tipo, String nome, Produto produto) {
 		this.dados = dados;
 		this.tipo = tipo;

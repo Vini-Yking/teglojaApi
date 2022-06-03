@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.validator.constraints.UniqueElements;
 import org.hibernate.validator.constraints.br.CPF;
 
 import br.com.tegloja.dto.ClienteRequestDTO;
@@ -32,7 +33,10 @@ public class Cliente {
 
 	@Column(nullable = false, unique = true)
 	private String email;
-
+	
+	public Cliente() {
+	}
+	
 	public Cliente(ClienteRequestDTO clienteRequest) {
         this.cep = clienteRequest.getCep();
         this.cpf = clienteRequest.getCpf();
