@@ -15,7 +15,6 @@ public class ProdutoResponseDTO {
 	private BigDecimal valorUnit;
 	private Integer quantidadeEstoq;
 	private LocalDate dataAlteracao;
-	private String urlFoto;
 
 	public ProdutoResponseDTO() {
 
@@ -39,15 +38,6 @@ public class ProdutoResponseDTO {
 		this.valorUnit = produto.getValorUnit();		
 	}
 	
-	
-	public String getUrlFoto() {
-		return urlFoto;
-	}
-
-	public void setUrlFoto(String urlFoto) {
-		this.urlFoto = urlFoto;
-	}
-
 	public Categoria getCategoria() {
 		return categoria;
 	}

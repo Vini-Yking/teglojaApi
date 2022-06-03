@@ -19,12 +19,14 @@ public class EnderecoService {
 
 	public EnderecoDTO buscar(String cep) {
 		Optional<Endereco> endereco = enderecoRepository.findByCep(cep);
+
 		if (endereco.isPresent()) {
 			return new EnderecoDTO(endereco.get());
 		} else {
 			RestTemplate rs = new RestTemplate();
 			String url = "http://viacep.com.br/ws/" + cep + "/json";
 			Optional<Endereco> enderecoViaCep = Optional.ofNullable(rs.getForObject(url, Endereco.class));
+
 			if (!enderecoViaCep.get().getCep().isEmpty()) {
 				String cepSemTraco = enderecoViaCep.get().getCep().replaceAll("-", "");
 				enderecoViaCep.get().setCep(cepSemTraco);
@@ -38,6 +40,7 @@ public class EnderecoService {
 
 	private EnderecoDTO inserir(Endereco endereco) {
 		endereco = enderecoRepository.save(endereco);
+
 		return new EnderecoDTO(endereco);
 	}
 
@@ -45,6 +48,7 @@ public class EnderecoService {
 		if (enderecoRepository.findById(id).isEmpty()) {
 			throw new IdNotFoundException("Não existe um endereço com esse id.");
 		}
+
 		enderecoRepository.deleteById(id);
 	}
 }

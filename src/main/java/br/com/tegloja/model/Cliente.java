@@ -32,7 +32,7 @@ public class Cliente {
 	@Column(nullable = false, unique = true)
 	private String email;
 
-	public Cliente() {
+	public Cliente(ClienteRequestDTO clienteRequest) {
 	}
 
 	public Cliente(Long id, String cpf, String cep, String nome, String email) {

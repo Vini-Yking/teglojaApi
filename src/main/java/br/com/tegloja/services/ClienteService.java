@@ -1,6 +1,8 @@
 package br.com.tegloja.services;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,15 @@ public class ClienteService {
 	public void deletar(Long id) {
 		buscarPorId(id);
 		_clienterepository.deleteById(id);
+	}
+	
+	public List<ClienteResponseDTO> buscarTodos() {
+		List<Cliente> clientes = _clienterepository.findAll();
+		// @formatter:off
+		return clientes.stream()
+				.map(c -> new ClienteResponseDTO(c))
+				.collect(Collectors.toList());
+		// @formatter:on
 	}
 
 	public ClienteResponseDTO buscarPorId(Long id) {
