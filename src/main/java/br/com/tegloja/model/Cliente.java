@@ -8,6 +8,9 @@ import javax.persistence.Id;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import br.com.tegloja.dto.ClienteRequestDTO;
+import br.com.tegloja.dto.ClienteResponseDTO;
+
 @Entity
 public class Cliente {
 	@Id
@@ -28,7 +31,7 @@ public class Cliente {
 	@Column(nullable = false, unique = true)
 	private String email;
 
-	public Cliente() {
+	public Cliente(ClienteRequestDTO clienteRequest) {
 	}
 
 	public Cliente(Long id, String cpf, String cep, String nome, String email) {
@@ -38,7 +41,6 @@ public class Cliente {
 		this.nome = nome;
 		this.email = email;
 	}
-
 	@Override // Usado para enviar email
 	public String toString() {
 		return "Cliente " + nome + "\ncpf=" + cpf + "\ncep=" + cep + "\nemail=" + email + "";
