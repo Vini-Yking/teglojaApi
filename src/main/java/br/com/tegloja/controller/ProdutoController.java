@@ -46,11 +46,10 @@ public class ProdutoController {
 	@GetMapping("/pagina")
 	public ResponseEntity<Page<ProdutoResponseDTO>> buscarPagina(@PageableDefault(
 	// @formatter:off
-					sort = "nm_produto",
+					sort = "nomeProduto",
 					direction = Sort.Direction.ASC,
-					page = 1,
-					size = 8
-					)Pageable pageable) {
+					page = 0,
+					size = 8)Pageable pageable) {
 		// @formatter:on
 		return ResponseEntity.ok(produtoService.buscarPagina(pageable));
 	}

@@ -45,7 +45,7 @@ public class PedidoItemController {
 	@GetMapping("/pagina")
 	public ResponseEntity<Page<PedidoItemResponseDTO>> buscarPagina(@PageableDefault(
 	// @formatter:off
-					page = 1,
+					page = 0,
 					size = 8) Pageable pageable) {
 		// @formatter:on
 		return ResponseEntity.ok(pedidoItemService.buscarPagina(pageable));

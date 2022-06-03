@@ -47,9 +47,9 @@ public class ClienteController {
 	@GetMapping("/pagina")
 	public ResponseEntity<Page<ClienteResponseDTO>> buscarPagina(@PageableDefault(
 	// @formatter:off
-					sort = "nome_cliente",
+					sort = "nome",
 					direction = Sort.Direction.ASC,
-					page = 1,
+					page = 0,
 					size = 8
 					)Pageable pageable) {
 		// @formatter:on
