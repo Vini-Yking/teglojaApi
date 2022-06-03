@@ -17,47 +17,47 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.tegloja.dto.CategoriaRequestDTO;
-import br.com.tegloja.dto.CategoriaResponseDTO;
-import br.com.tegloja.services.CategoriaService;
+import br.com.tegloja.dto.PedidoItemRequestDTO;
+import br.com.tegloja.dto.PedidoItemResponseDTO;
+import br.com.tegloja.services.PedidoItemService;
 
 @RestController
-@RequestMapping("/tegloja/categorias")
-public class CategoriaController {
+@RequestMapping("/tegloja/itens") // "/tegloja/pedidos/{id}"
+public class PedidoItemController {
 
 	@Autowired
-	private CategoriaService categoriaService;
+	private PedidoItemService pedidoItemService;
 
 	@GetMapping
-	public ResponseEntity<List<CategoriaResponseDTO>> buscarTodos() {
-		return ResponseEntity.ok(categoriaService.buscarTodos());
+	public ResponseEntity<List<PedidoItemResponseDTO>> buscarTodos() {
+		return ResponseEntity.ok(pedidoItemService.buscarTodos());
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<CategoriaResponseDTO> buscarPorId(@PathVariable Long id) {
-		return ResponseEntity.ok(categoriaService.buscarPorId(id));
+	public ResponseEntity<PedidoItemResponseDTO> buscarPorId(@PathVariable Long id) {
+		return ResponseEntity.ok(pedidoItemService.buscarPorId(id));
 	}
 
 	@PostMapping
-	public ResponseEntity<CategoriaResponseDTO> adicionar(@Valid @RequestBody CategoriaRequestDTO request) {
-		CategoriaResponseDTO categoriaResponseDTO = categoriaService.adicionar(request);
+	public ResponseEntity<PedidoItemResponseDTO> adicionar(@Valid @RequestBody PedidoItemRequestDTO request) {
+		PedidoItemResponseDTO itemResponseDTO = pedidoItemService.adicionar(request);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(categoriaResponseDTO.getId()).toUri();
+				.buildAndExpand(itemResponseDTO.getIdPedidoItem()).toUri();
 
-		return ResponseEntity.created(uri).body(categoriaResponseDTO);
+		return ResponseEntity.created(uri).body(itemResponseDTO);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<CategoriaResponseDTO> atualizar(@Valid @RequestBody CategoriaRequestDTO request,
+	public ResponseEntity<PedidoItemResponseDTO> atualizar(@Valid @RequestBody PedidoItemRequestDTO request,
 			@PathVariable Long id) {
-		CategoriaResponseDTO responseBody = categoriaService.atualizar(request, id);
+		PedidoItemResponseDTO responseBody = pedidoItemService.atualizar(request, id);
 
 		return ResponseEntity.ok(responseBody);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> excluir(@PathVariable Long id) {
-		categoriaService.deletar(id);
+		pedidoItemService.deletar(id);
 
 		return ResponseEntity.ok().build();
 	}

@@ -36,12 +36,12 @@ public class ProdutoController {
 	
 
 	@GetMapping
-	public ResponseEntity<List<ProdutoResponseDTO>> listar() {
+	public ResponseEntity<List<ProdutoResponseDTO>> buscarTodos() {
 		return ResponseEntity.ok(produtoService.buscarTodos());
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ProdutoResponseDTO> buscar(@PathVariable Long id) {
+	public ResponseEntity<ProdutoResponseDTO> buscarPorId(@PathVariable Long id) {
 		return ResponseEntity.ok(produtoService.buscarPorId(id));
 	}
 

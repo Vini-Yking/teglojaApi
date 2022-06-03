@@ -1,6 +1,8 @@
 package br.com.tegloja.services;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,18 +19,21 @@ public class PedidoItemService {
 	@Autowired
 	private PedidoItemRepository _pedidoItemRepository;
 
-	@Autowired
-	private PedidoService pedidoService;
-
-	@Autowired
-	private ProdutoService produtoService;
-
 	public PedidoItemResponseDTO buscarPorId(Long id) {
 		Optional<PedidoItem> item = _pedidoItemRepository.findById(id);
 		if (item.isEmpty()) {
 			throw new IdNotFoundException("Não existe um item com esse id.");
 		}
 		return new PedidoItemResponseDTO(item.get());
+	}
+
+	public List<PedidoItemResponseDTO> buscarTodos() {
+		List<PedidoItem> itens = _pedidoItemRepository.findAll();
+		// @formatter:off
+		return itens.stream()
+				.map(p -> new PedidoItemResponseDTO(p))
+				.collect(Collectors.toList());
+		// @formatter:on
 	}
 
 	public void deletar(Long id) {
