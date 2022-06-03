@@ -1,8 +1,12 @@
-package br.com.tegloja.dto.categoria;
+package br.com.tegloja.dto;
 
 public class CategoriaRequestDTO {
 
 	private String categoria;
+
+	public CategoriaRequestDTO() {
+
+	}
 
 	public CategoriaRequestDTO(String categoria) {
 		super();

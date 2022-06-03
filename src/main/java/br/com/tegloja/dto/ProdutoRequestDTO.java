@@ -1,32 +1,25 @@
-package br.com.tegloja.dto.produto;
+package br.com.tegloja.dto;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
-public class ProdutoResponseDTO {
+import br.com.tegloja.model.Categoria;
 
-	private Long idProduto;
+public class ProdutoRequestDTO {
+
 	private String nomeProduto;
+	private Categoria categoria;
 	private BigDecimal valorUnit;
 	private Integer quantidadeEstoq;
-	private LocalDate dataAlteracao;
 
-	public ProdutoResponseDTO(Long idProduto, String nomeProduto, BigDecimal valorUnit, Integer quantidadeEstoq,
-			LocalDate dataAlteracao) {
+	public ProdutoRequestDTO() {
+	}
+
+	public ProdutoRequestDTO(String nomeProduto, Categoria categoria, BigDecimal valorUnit, Integer quantidadeEstoq) {
 		super();
-		this.idProduto = idProduto;
 		this.nomeProduto = nomeProduto;
+		this.categoria = categoria;
 		this.valorUnit = valorUnit;
 		this.quantidadeEstoq = quantidadeEstoq;
-		this.dataAlteracao = dataAlteracao;
-	}
-
-	public Long getIdProduto() {
-		return idProduto;
-	}
-
-	public void setIdProduto(Long idProduto) {
-		this.idProduto = idProduto;
 	}
 
 	public String getNomeProduto() {
@@ -35,6 +28,14 @@ public class ProdutoResponseDTO {
 
 	public void setNomeProduto(String nomeProduto) {
 		this.nomeProduto = nomeProduto;
+	}
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
 
 	public BigDecimal getValorUnit() {
@@ -51,14 +52,6 @@ public class ProdutoResponseDTO {
 
 	public void setQuantidadeEstoq(Integer quantidadeEstoq) {
 		this.quantidadeEstoq = quantidadeEstoq;
-	}
-
-	public LocalDate getDataAlteracao() {
-		return dataAlteracao;
-	}
-
-	public void setDataAlteracao(LocalDate dataAlteracao) {
-		this.dataAlteracao = dataAlteracao;
 	}
 
 }

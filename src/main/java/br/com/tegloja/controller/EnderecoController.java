@@ -14,17 +14,17 @@ import br.com.tegloja.services.EnderecoService;
 @RestController
 @RequestMapping("/tegloja/cep")
 public class EnderecoController {
-	
 	@Autowired
-	private EnderecoService _cepService;
-	
-	@GetMapping("/{cep}")
-	public ResponseEntity<EnderecoDTO> localizarCep(@PathVariable String cep){
-	
-		Endereco endereco = _cepService.buscaEnderecoCep(cep);
-		EnderecoDTO enderecoCep = new EnderecoDTO(endereco);
-		return enderecoCep != null ? ResponseEntity.ok().body(enderecoCep) : ResponseEntity.notFound().build();
-		
+	private EnderecoService enderecoService;
+
+	@GetMapping("{cep}")
+	public ResponseEntity<EnderecoDTO> buscar(@PathVariable String cep) {
+		EnderecoDTO enderecoDTO = enderecoService.buscar(cep);
+		if (enderecoDTO == null) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(enderecoDTO);
 	}
-	//troquei para ao invés de retornar todos os dados da api Endereco só os que realmente a gente precisa no DTO
+	// troquei para ao invés de retornar todos os dados da api Endereco só os que
+	// realmente a gente precisa no DTO
 }

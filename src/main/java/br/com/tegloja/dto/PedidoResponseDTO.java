@@ -1,9 +1,11 @@
-package br.com.tegloja.dto.pedido;
+package br.com.tegloja.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import br.com.tegloja.enums.StatusCompra;
+import br.com.tegloja.model.Cliente;
+import br.com.tegloja.model.Pedido;
 
 public class PedidoResponseDTO {
 
@@ -12,17 +14,29 @@ public class PedidoResponseDTO {
 	private LocalDate dataCompra;
 	private LocalDate dataEntrega;
 	private BigDecimal valortotal;
-	private Long idCliente;
+	private Cliente Cliente;
+
+	public PedidoResponseDTO() {
+
+	}
 
 	public PedidoResponseDTO(Long idPedido, StatusCompra status, LocalDate dataCompra, LocalDate dataEntrega,
-			BigDecimal valortotal, Long idCliente) {
+			BigDecimal valortotal, Cliente cliente) {
 		super();
 		this.idPedido = idPedido;
 		this.status = status;
 		this.dataCompra = dataCompra;
 		this.dataEntrega = dataEntrega;
 		this.valortotal = valortotal;
-		this.idCliente = idCliente;
+		this.Cliente = cliente;
+	}
+
+	public PedidoResponseDTO(Pedido pedido) {
+		this.dataCompra = pedido.getDataCompra();
+		this.dataEntrega = pedido.getDataEntrega();
+		this.idPedido = pedido.getId();
+		this.status = pedido.getStatus();
+		this.valortotal = pedido.getValortotal();
 	}
 
 	public Long getIdPedido() {
@@ -65,12 +79,12 @@ public class PedidoResponseDTO {
 		this.valortotal = valortotal;
 	}
 
-	public Long getIdCliente() {
-		return idCliente;
+	public Cliente getCliente() {
+		return Cliente;
 	}
 
-	public void setIdCliente(Long idCliente) {
-		this.idCliente = idCliente;
+	public void setCliente(Cliente cliente) {
+		Cliente = cliente;
 	}
 
 }

@@ -2,7 +2,9 @@ package br.com.tegloja.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,8 +12,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import br.com.tegloja.dto.ProdutoRequestDTO;
+import br.com.tegloja.dto.ProdutoResponseDTO;
 
 @Entity
 public class Produto {
@@ -23,16 +28,21 @@ public class Produto {
 
 	@Column(name = "nm_produto")
 	private String nomeProduto;
+
 	@Column(name = "valor_unit")
 	private BigDecimal valorUnit;
+
 	@Column(name = "qtd_estoque")
 	private Integer quantidadeEstoq;
+
 	@Column(name = "dt_ultima_alteracao")
 	private LocalDate dataAlteracao;
 
-	@JsonBackReference
+	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
+	private List<PedidoItem> itens;
+
 	@ManyToOne
-	@JoinColumn(name = "id_produto")
+	@JoinColumn(name = "id_categoria")
 	private Categoria categoria;
 
 	public Produto() {
@@ -48,6 +58,31 @@ public class Produto {
 		this.quantidadeEstoq = quantidadeEstoq;
 		this.dataAlteracao = dataAlteracao;
 		this.categoria = categoria;
+	}
+
+	public Produto(ProdutoRequestDTO produtoRequest) {
+		this.categoria = produtoRequest.getCategoria();
+		this.dataAlteracao = LocalDate.now();
+		this.nomeProduto = produtoRequest.getNomeProduto();
+		this.quantidadeEstoq = produtoRequest.getQuantidadeEstoq();
+		this.valorUnit = produtoRequest.getValorUnit();
+	}
+
+	public Produto(ProdutoResponseDTO produtoResponseDTO) {
+		this.categoria = produtoResponseDTO.getCategoria();
+		this.dataAlteracao = produtoResponseDTO.getDataAlteracao();
+		this.id = produtoResponseDTO.getIdProduto();
+		this.nomeProduto = produtoResponseDTO.getNomeProduto();
+		this.quantidadeEstoq = produtoResponseDTO.getQuantidadeEstoq();
+		this.valorUnit = produtoResponseDTO.getValorUnit();
+	}
+
+	public List<PedidoItem> getItens() {
+		return itens;
+	}
+
+	public void setItens(List<PedidoItem> itens) {
+		this.itens = itens;
 	}
 
 	public Long getId() {

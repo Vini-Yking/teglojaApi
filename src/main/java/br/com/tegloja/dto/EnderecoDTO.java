@@ -11,6 +11,10 @@ public class EnderecoDTO {
 	private String localidade;
 	private String uf;
 
+	public EnderecoDTO() {
+
+	}
+
 	public EnderecoDTO(Endereco endereco) {
 		this.cep = endereco.getCep();
 		this.logradouro = endereco.getLogradouro();

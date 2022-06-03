@@ -6,7 +6,7 @@ CREATE SCHEMA if not exists tegloja ;
 /* Project name:                                                          */
 /* Author:                                                                */
 /* Script type:           Database creation script                        */
-/* Created on:            2022-05-29 21:02                                */
+/* Created on:            2022-06-01 17:02                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -45,9 +45,9 @@ CREATE TABLE tegloja.produto (
 CREATE TABLE tegloja.cliente (
     id_cliente SERIAL  NOT NULL,
     cpf CHARACTER VARYING(11)  NOT NULL,
-    cep CHARACTER VARYING(9)  NOT NULL,
     nm_cliente CHARACTER VARYING(100)  NOT NULL,
     email CHARACTER VARYING(100)  NOT NULL,
+    cep CHARACTER VARYING(9)  NOT NULL,
     CONSTRAINT PK_cliente PRIMARY KEY (id_cliente)
 );
 
@@ -79,6 +79,22 @@ CREATE TABLE tegloja.pedido_itens (
 );
 
 /* ---------------------------------------------------------------------- */
+/* Add table "tegloja.endereco"                                           */
+/* ---------------------------------------------------------------------- */
+
+CREATE TABLE tegloja.endereco (
+    id_endereco SERIAL  NOT NULL,
+    cep CHARACTER VARYING(9)  NOT NULL,
+    logradouro CHARACTER VARYING(100),
+    complemento CHARACTER VARYING(100),
+    bairro CHARACTER VARYING(100),
+    localidade CHARACTER VARYING(100),
+    uf CHARACTER VARYING(100),
+    id_cliente INTEGER  NOT NULL,
+    CONSTRAINT PK_endereco PRIMARY KEY (id_endereco)
+);
+
+/* ---------------------------------------------------------------------- */
 /* Add foreign key constraints                                            */
 /* ---------------------------------------------------------------------- */
 
@@ -93,3 +109,6 @@ ALTER TABLE tegloja.pedido_itens ADD CONSTRAINT produto_pedido_itens
 
 ALTER TABLE tegloja.pedido_itens ADD CONSTRAINT pedido_pedido_itens 
     FOREIGN KEY (id_pedido) REFERENCES tegloja.pedido (id_pedido);
+
+ALTER TABLE tegloja.endereco ADD CONSTRAINT cliente_endereco 
+    FOREIGN KEY (cep, id_cliente) REFERENCES tegloja.cliente (cep,id_cliente);

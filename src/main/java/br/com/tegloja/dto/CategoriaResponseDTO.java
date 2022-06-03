@@ -1,4 +1,4 @@
-package br.com.tegloja.dto.categoria;
+package br.com.tegloja.dto;
 
 import br.com.tegloja.model.Categoria;
 
@@ -6,6 +6,10 @@ public class CategoriaResponseDTO {
 
 	private Long id;
 	private String categoria;
+
+	public CategoriaResponseDTO() {
+
+	}
 
 	public CategoriaResponseDTO(Long id, String categoria) {
 		super();

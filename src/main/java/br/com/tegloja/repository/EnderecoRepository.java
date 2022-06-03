@@ -5,11 +5,9 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import br.com.tegloja.model.Categoria;
+import br.com.tegloja.model.Endereco;
 
 @Repository
-public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
-
-	Optional<Categoria> findByCategoria(String categoria);
-
+public interface EnderecoRepository extends JpaRepository<Endereco, Long> {
+	Optional<Endereco> findByCep(String cep);
 }

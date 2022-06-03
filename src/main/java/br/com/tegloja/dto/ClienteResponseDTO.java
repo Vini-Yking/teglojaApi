@@ -1,18 +1,29 @@
-package br.com.tegloja.dto.cliente;
+package br.com.tegloja.dto;
 
-public class ClienteRequestDTO {
+import br.com.tegloja.model.Cliente;
 
+public class ClienteResponseDTO {
+	
+	private Long id;
 	private String cpf;
 	private String cep;
 	private String nome;
 	private String email;
+	
+	public ClienteResponseDTO(Cliente cliente) {
+		this.id = cliente.getId();
+		this.cpf = cliente.getCpf();
+		this.cep = cliente.getCep();
+		this.nome = cliente.getNome();
+		this.email = cliente.getEmail();
+	}
 
-	public ClienteRequestDTO(String cpf, String cep, String nome, String email) {
-		super();
-		this.cpf = cpf;
-		this.cep = cep;
-		this.nome = nome;
-		this.email = email;
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getCpf() {
