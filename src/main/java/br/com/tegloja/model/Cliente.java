@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
+
 public class Cliente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +30,11 @@ public class Cliente {
 	@Column(name = "teste_teste")
 	private String teste;
 
-	public Cliente() {
+	
+	@Override
+	public String toString() {
+		return "Cliente [id=" + id + ", cpf=" + cpf + ", cep=" + cep + ", nome=" + nome + ", email=" + email
+				+ ", teste=" + teste + "]";
 	}
 
 	public Cliente(Long id, @CPF String cpf, String cep, String nome, String email, String teste) {
@@ -89,5 +94,7 @@ public class Cliente {
 	public void setTeste(String teste) {
 		this.teste = teste;
 	}
+
+	
 
 }
