@@ -46,13 +46,6 @@ public class Cliente {
 		this.email = email;
 	}
 
-	public Cliente(ClienteRequestDTO clienteRequest) {
-		this.cep = clienteRequest.getCep();
-		this.cpf = clienteRequest.getCpf();
-		this.email = clienteRequest.getEmail();
-		this.nome = clienteRequest.getNome();
-	}
-
 	public Cliente(ClienteResponseDTO clienteResponse) {
 		this.cep = clienteResponse.getCep();
 		this.cpf = clienteResponse.getCpf();
