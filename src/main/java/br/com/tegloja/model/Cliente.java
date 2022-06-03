@@ -8,8 +8,12 @@ import javax.persistence.Id;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import br.com.tegloja.dto.ClienteRequestDTO;
+import br.com.tegloja.dto.ClienteResponseDTO;
+
 @Entity
 public class Cliente {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_cliente")
@@ -37,6 +41,21 @@ public class Cliente {
 		this.cep = cep;
 		this.nome = nome;
 		this.email = email;
+	}
+
+	public Cliente(ClienteRequestDTO clienteRequest) {
+		this.cep = clienteRequest.getCep();
+		this.cpf = clienteRequest.getCpf();
+		this.email = clienteRequest.getEmail();
+		this.nome = clienteRequest.getNome();
+	}
+
+	public Cliente(ClienteResponseDTO clienteResponse) {
+		this.cep = clienteResponse.getCep();
+		this.cpf = clienteResponse.getCpf();
+		this.email = clienteResponse.getEmail();
+		this.id = clienteResponse.getId();
+		this.nome = clienteResponse.getNome();
 	}
 
 	@Override // Usado para enviar email

@@ -44,9 +44,10 @@ public class CategoriaService {
 	}
 
 	public CategoriaResponseDTO atualizar(CategoriaRequestDTO categoriaRequest, Long id) {
-		CategoriaResponseDTO categoriaResponseDTO = buscarPorId(id);
-		Categoria categoria = new Categoria(categoriaResponseDTO);
+		buscarPorId(id);
+		Categoria categoria = new Categoria(categoriaRequest);
 		categoria = _categoriarepository.save(categoria);
+
 		return new CategoriaResponseDTO(categoria);
 	}
 

@@ -77,11 +77,11 @@ public class ProdutoService {
 	}
 
 	public ProdutoResponseDTO atualizar(ProdutoRequestDTO produtoRequest, Long id) {
-		ProdutoResponseDTO produtoDTO = buscarPorId(id);
+		buscarPorId(id);
 		CategoriaResponseDTO categoriaResponseDTO = categoriaService.buscarPorId(produtoRequest.getCategoria().getId());
 
 		Categoria categoria = new Categoria(categoriaResponseDTO);
-		Produto produto = new Produto(produtoDTO);
+		Produto produto = new Produto(produtoRequest);
 		produto.setCategoria(categoria);
 		produtoRepository.save(produto);
 
