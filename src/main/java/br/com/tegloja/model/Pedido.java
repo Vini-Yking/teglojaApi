@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import br.com.tegloja.dto.PedidoRequestDTO;
 import br.com.tegloja.enums.StatusCompra;
 
 @Entity
@@ -63,6 +64,14 @@ public class Pedido {
 		this.dataEntrega = dataEntrega;
 		this.valortotal = valortotal;
 		this.cliente = cliente;
+	}
+
+	public Pedido(PedidoRequestDTO pedidoRequest) {
+		this.status = pedidoRequest.getStatus();
+		this.dataCompra = pedidoRequest.getDataCompra();
+		this.dataEntrega = pedidoRequest.getDataEntrega();
+		this.valortotal = pedidoRequest.getValorTotal();
+		this.cliente = pedidoRequest.getCliente();
 	}
 
 	@Override // envio de email do pedido

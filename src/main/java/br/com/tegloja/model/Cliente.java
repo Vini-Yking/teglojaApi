@@ -32,19 +32,18 @@ public class Cliente {
 	@Column(nullable = false, unique = true)
 	private String email;
 
+	public Cliente(ClienteRequestDTO clienteRequest) {
+        this.cep = clienteRequest.getCep();
+        this.cpf = clienteRequest.getCpf();
+        this.email = clienteRequest.getEmail();
+        this.nome = clienteRequest.getNome();
+    }
 	public Cliente(Long id, String cpf, String cep, String nome, String email) {
 		this.id = id;
 		this.cpf = cpf;
 		this.cep = cep;
 		this.nome = nome;
 		this.email = email;
-	}
-
-	public Cliente(ClienteRequestDTO clienteRequest) {
-		this.cep = clienteRequest.getCep();
-		this.cpf = clienteRequest.getCpf();
-		this.email = clienteRequest.getEmail();
-		this.nome = clienteRequest.getNome();
 	}
 
 	public Cliente(ClienteResponseDTO clienteResponse) {
