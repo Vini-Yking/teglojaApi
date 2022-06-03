@@ -46,6 +46,7 @@ public class CategoriaService {
 	public CategoriaResponseDTO atualizar(CategoriaRequestDTO categoriaRequest, Long id) {
 		buscarPorId(id);
 		Categoria categoria = new Categoria(categoriaRequest);
+		categoria.setId(id);
 		categoria = _categoriarepository.save(categoria);
 
 		return new CategoriaResponseDTO(categoria);

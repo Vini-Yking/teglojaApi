@@ -46,6 +46,7 @@ public class PedidoItemService {
 	public PedidoItemResponseDTO atualizar(PedidoItemRequestDTO pedidoItemRequest, Long id) {
 		buscarPorId(id);
 		PedidoItem pedidoItem = new PedidoItem(pedidoItemRequest);
+		pedidoItem.setId(id);
 		pedidoItem = _pedidoItemRepository.save(pedidoItem);
 
 		return new PedidoItemResponseDTO(pedidoItem);

@@ -14,14 +14,12 @@ import br.com.tegloja.handler.IdNotFoundException;
 import br.com.tegloja.model.Cliente;
 import br.com.tegloja.repository.ClienteRepository;
 
-
-
 @Service
 public class ClienteService {
 
 	@Autowired
 	private ClienteRepository _clienterepository;
-	
+
 	@Autowired
 	private MailConfig mailConfig;
 
@@ -29,7 +27,7 @@ public class ClienteService {
 		buscarPorId(id);
 		_clienterepository.deleteById(id);
 	}
-	
+
 	public List<ClienteResponseDTO> buscarTodos() {
 		List<Cliente> clientes = _clienterepository.findAll();
 		// @formatter:off
@@ -50,14 +48,14 @@ public class ClienteService {
 	public ClienteResponseDTO adicionar(ClienteRequestDTO clienteRequest) {
 		Cliente cliente = new Cliente(clienteRequest);
 		cliente = _clienterepository.save(cliente);
-		mailConfig.enviarEmail(cliente.getEmail(), "Cadastrado efetuado com sucesso",
-				cliente.toString());
+		mailConfig.enviarEmail(cliente.getEmail(), "Cadastrado efetuado com sucesso", cliente.toString());
 		return new ClienteResponseDTO(cliente);
 	}
 
 	public ClienteResponseDTO atualizar(ClienteRequestDTO clienteRequest, Long id) {
 		buscarPorId(id);
 		Cliente cliente = new Cliente(clienteRequest);
+		cliente.setId(id);
 		cliente = _clienterepository.save(cliente);
 
 		return new ClienteResponseDTO(cliente);

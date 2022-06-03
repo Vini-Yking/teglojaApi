@@ -24,7 +24,7 @@ public class PedidoService {
 
 	@Autowired
 	private ClienteService clienteService;
-	
+
 	@Autowired
 	private MailConfig mailConfig;
 
@@ -46,23 +46,24 @@ public class PedidoService {
 	}
 
 	public PedidoResponseDTO adicionar(PedidoRequestDTO pedidoRequest) {
-		ClienteResponseDTO clienteResponseDTO = clienteService.buscarPorId(pedidoRequest
-				.getCliente().getId());
+		ClienteResponseDTO clienteResponseDTO = clienteService.buscarPorId(pedidoRequest.getCliente().getId());
 
 		Cliente cliente = new Cliente(clienteResponseDTO);
 		Pedido pedido = new Pedido(pedidoRequest);
-		
+
 		pedido.setCliente(cliente);
 		pedido = _pedidorepository.save(pedido);
-		mailConfig.enviarEmail(cliente.getEmail(), "Compra Concluida!",
-				pedido.toString());
+		mailConfig.enviarEmail(cliente.getEmail(), "Compra Concluida!", pedido.toString());
 		return new PedidoResponseDTO(pedido);
 	}
 
 	public PedidoResponseDTO atualizar(PedidoRequestDTO pedidoRequest, Long id) {
 		buscarPorId(id);
+
 		Pedido pedido = new Pedido(pedidoRequest);
+		pedido.setId(id);
 		pedido = _pedidorepository.save(pedido);
+
 		return new PedidoResponseDTO(pedido);
 	}
 

@@ -84,6 +84,7 @@ public class ProdutoService {
 		Categoria categoria = new Categoria(categoriaResponseDTO);
 		Produto produto = new Produto(produtoRequest);
 		produto.setCategoria(categoria);
+		produto.setId(id);
 		produtoRepository.save(produto);
 
 		return new ProdutoResponseDTO(produto);
