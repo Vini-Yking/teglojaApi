@@ -2,11 +2,11 @@ CREATE SCHEMA if not exists tegloja ;
 /* ---------------------------------------------------------------------- */
 /* Script generated with: DeZign for Databases V10.0.2                    */
 /* Target DBMS:           PostgreSQL 9                                    */
-/* Project file:          Project1.dez                                    */
+/* Project file:          ERteglojaAPI.dez                                */
 /* Project name:                                                          */
 /* Author:                                                                */
 /* Script type:           Database creation script                        */
-/* Created on:            2022-06-01 17:02                                */
+/* Created on:            2022-06-03 00:01                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -20,7 +20,7 @@ CREATE SCHEMA if not exists tegloja ;
 
 CREATE TABLE tegloja.categoria (
     id_categoria SERIAL  NOT NULL,
-    nm_categoria CHARACTER VARYING(100)  NOT NULL,
+    nome_categoria CHARACTER VARYING(100)  NOT NULL,
     CONSTRAINT PK_categoria PRIMARY KEY (id_categoria)
 );
 
@@ -30,10 +30,10 @@ CREATE TABLE tegloja.categoria (
 
 CREATE TABLE tegloja.produto (
     id_produto SERIAL  NOT NULL,
-    nm_produto CHARACTER VARYING(100),
-    valor_unit DOUBLE PRECISION,
-    qtd_estoque INTEGER,
-    dt_ultima_alteracao TIMESTAMP,
+    nome_produto CHARACTER VARYING(100),
+    valor_unitario DOUBLE PRECISION,
+    quantidade_estoque INTEGER,
+    data_ultima_alteracao TIMESTAMP,
     id_categoria INTEGER  NOT NULL,
     CONSTRAINT PK_produto PRIMARY KEY (id_produto)
 );
@@ -45,7 +45,7 @@ CREATE TABLE tegloja.produto (
 CREATE TABLE tegloja.cliente (
     id_cliente SERIAL  NOT NULL,
     cpf CHARACTER VARYING(11)  NOT NULL,
-    nm_cliente CHARACTER VARYING(100)  NOT NULL,
+    nome_cliente CHARACTER VARYING(100)  NOT NULL,
     email CHARACTER VARYING(100)  NOT NULL,
     cep CHARACTER VARYING(9)  NOT NULL,
     CONSTRAINT PK_cliente PRIMARY KEY (id_cliente)
@@ -58,8 +58,8 @@ CREATE TABLE tegloja.cliente (
 CREATE TABLE tegloja.pedido (
     id_pedido SERIAL  NOT NULL,
     status_pedido CHARACTER(40)  NOT NULL,
-    dt_compra TIMESTAMP,
-    dt_entrega TIMESTAMP,
+    data_compra TIMESTAMP,
+    data_entrega TIMESTAMP,
     valor_total DOUBLE PRECISION,
     id_cliente INTEGER  NOT NULL,
     CONSTRAINT PK_pedido PRIMARY KEY (id_pedido)
@@ -72,8 +72,9 @@ CREATE TABLE tegloja.pedido (
 CREATE TABLE tegloja.pedido_itens (
     id_item SERIAL  NOT NULL,
     id_produto INTEGER  NOT NULL,
-    qtdproduto INTEGER  NOT NULL,
+    quantidade_produto INTEGER  NOT NULL,
     valor_desconto DOUBLE PRECISION,
+    valor_venda DOUBLE PRECISION,
     id_pedido INTEGER  NOT NULL,
     CONSTRAINT PK_pedido_itens PRIMARY KEY (id_item)
 );
@@ -95,6 +96,19 @@ CREATE TABLE tegloja.endereco (
 );
 
 /* ---------------------------------------------------------------------- */
+/* Add table "tegloja.foto"                                               */
+/* ---------------------------------------------------------------------- */
+
+CREATE TABLE tegloja.foto (
+    id_foto SERIAL  NOT NULL,
+    tipo CHARACTER VARYING(40),
+    nome CHARACTER VARYING(100),
+    metadados_foto BYTEA,
+    id_produto INTEGER  NOT NULL,
+    CONSTRAINT PK_foto PRIMARY KEY (id_foto)
+);
+
+/* ---------------------------------------------------------------------- */
 /* Add foreign key constraints                                            */
 /* ---------------------------------------------------------------------- */
 
@@ -111,4 +125,7 @@ ALTER TABLE tegloja.pedido_itens ADD CONSTRAINT pedido_pedido_itens
     FOREIGN KEY (id_pedido) REFERENCES tegloja.pedido (id_pedido);
 
 ALTER TABLE tegloja.endereco ADD CONSTRAINT cliente_endereco 
-    FOREIGN KEY (cep, id_cliente) REFERENCES tegloja.cliente (cep,id_cliente);
+    FOREIGN KEY (id_cliente) REFERENCES tegloja.cliente (id_cliente);
+
+ALTER TABLE tegloja.foto ADD CONSTRAINT produto_foto 
+    FOREIGN KEY (id_produto) REFERENCES tegloja.produto (id_produto);
