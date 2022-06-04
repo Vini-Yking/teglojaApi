@@ -9,6 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+
 
 @Entity
 public class Endereco {
@@ -18,6 +22,9 @@ public class Endereco {
 	@Column(name = "id_endereco")
 	private Long id;
 
+	
+	@Pattern(regexp="[0-9]",message="Número inválido")
+	@Size(max=8,message="Oito dígitos")
 	@Column(nullable = false, unique = true)
 	private String cep;
 
@@ -26,7 +33,8 @@ public class Endereco {
 	private String bairro;
 	private String localidade;
 	private String uf;
-
+    
+	
 	@OneToMany
 	@JoinColumn(name = "id_categoria")
 	private List<Cliente> cliente;

@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 import br.com.tegloja.dto.PedidoRequestDTO;
 import br.com.tegloja.enums.StatusCompra;
 
+
 @Entity
 public class Pedido {
 
@@ -31,15 +32,19 @@ public class Pedido {
 	@Column(name = "status_pedido", nullable = false)
 	private StatusCompra status;
 
+	
 	@Column(name = "dt_compra")
 	private LocalDate dataCompra;
 	
+	
 	@Column(name = "dt_entrega")
 	private LocalDate dataEntrega;
-
+    
+	
 	@Column(name = "valor_total")
 	private BigDecimal valortotal;
-
+    
+	
 	@ManyToOne
 	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;

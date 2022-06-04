@@ -3,7 +3,6 @@ package br.com.tegloja.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
 
 import br.com.tegloja.dto.ProdutoRequestDTO;
 import br.com.tegloja.dto.ProdutoResponseDTO;
@@ -28,13 +28,16 @@ public class Produto {
 
 	@Column(name = "nm_produto")
 	private String nomeProduto;
-
+    
+	@DecimalMin(value= "0.0", message= "Valor mínimo é zero")
 	@Column(name = "valor_unit")
 	private BigDecimal valorUnit;
-
+    
+	@Min(value= 0, message= "Quantidade mínima é zero")
 	@Column(name = "qtd_estoque")
 	private Integer quantidadeEstoq;
-
+    
+	
 	@Column(name = "dt_ultima_alteracao")
 	private LocalDate dataAlteracao;
 

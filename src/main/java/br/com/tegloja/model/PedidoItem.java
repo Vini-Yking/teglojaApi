@@ -1,7 +1,6 @@
 package br.com.tegloja.model;
 
 import java.math.BigDecimal;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
 
 import br.com.tegloja.dto.PedidoItemRequestDTO;
 
@@ -22,18 +23,25 @@ public class PedidoItem {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_item")
 	private Long id;
-
+    
+	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "id_produto")
 	private Produto produto;
-
+    
+	@Min(value= 1, message= "Quantidade mínima é um ")
 	@Column(nullable = false)
 	private Integer quantidadeProduto;
 
 	// @Transient
 	// private BigDecimal subTotal;
-
+    
+	@DecimalMin(value= "0.0")
+	@Column 
 	private BigDecimal valorDesconto;
+	
+	
+	@Column
 	private BigDecimal valorVenda;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)

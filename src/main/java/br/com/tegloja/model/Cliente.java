@@ -5,14 +5,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.UniqueElements;
 import org.hibernate.validator.constraints.br.CPF;
 
 import br.com.tegloja.dto.ClienteRequestDTO;
 import br.com.tegloja.dto.ClienteResponseDTO;
 
 @Entity
-
 public class Cliente {
 
 	@Id
@@ -20,19 +23,28 @@ public class Cliente {
 	@Column(name = "id_cliente")
 	private Long id;
 
-	@CPF
+	@CPF(message= "Insira um cpf válido")
+	@UniqueElements(message= "Esse cpf já foi cadastrado")
 	@Column(nullable = false, unique = true)
 	private String cpf;
-
+    
+	@Pattern(regexp="[0-9]",message="Número inválido")
+	@Size(max=8,message="Oito dígitos")
 	@Column(nullable = false)
 	private String cep;
-
+    
+	@NotNull(message= "Deve inserir um nome")
 	@Column(name = "nome_cliente", nullable = false)
 	private String nome;
-
+    
+	@Email(message=" Insira um e-mail válido")
+	@UniqueElements(message= "Esse e-mail já foi cadastrado")
 	@Column(nullable = false, unique = true)
 	private String email;
 
+	public Cliente() {
+	}
+	
 	public Cliente(ClienteRequestDTO clienteRequest) {
         this.cep = clienteRequest.getCep();
         this.cpf = clienteRequest.getCpf();

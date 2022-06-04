@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import br.com.tegloja.dto.CategoriaRequestDTO;
@@ -17,7 +18,9 @@ public class Categoria {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_categoria")
 	private Long id;
+     
 
+	@NotNull(message= "Entre um nome para categoria")
 	@Column(name = "nome_categoria", nullable = false, unique = true)
 	@Size(max = 100)
 	private String categoria;
