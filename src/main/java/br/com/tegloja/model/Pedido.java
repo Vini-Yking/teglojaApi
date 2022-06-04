@@ -68,10 +68,6 @@ public class Pedido {
 	}
 
 	public Pedido(PedidoRequestDTO pedidoRequest) {
-		this.status = pedidoRequest.getStatus();
-		this.dataCompra = pedidoRequest.getDataCompra();
-		this.dataEntrega = pedidoRequest.getDataEntrega();
-		this.valortotal = pedidoRequest.getValorTotal();
 		this.cliente = pedidoRequest.getCliente();
 	}
 

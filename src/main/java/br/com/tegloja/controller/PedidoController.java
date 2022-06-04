@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.com.tegloja.dto.PedidoItemRequestDTO;
 import br.com.tegloja.dto.PedidoItemResponseDTO;
 import br.com.tegloja.dto.PedidoRequestDTO;
 import br.com.tegloja.dto.PedidoResponseDTO;
@@ -46,7 +47,7 @@ public class PedidoController {
 	public ResponseEntity<PedidoResponseDTO> buscarPorId(@PathVariable Long id) {
 		return ResponseEntity.ok(pedidoService.buscarPorId(id));
 	}
-
+	
 	@GetMapping("/{id}/itens")
 	public ResponseEntity<List<PedidoItemResponseDTO>> listarItensPorIdPedido(@PathVariable Long id) {
 		return ResponseEntity.ok(pedidoItemService.buscarPorIdPedido(id));
@@ -66,19 +67,27 @@ public class PedidoController {
 
 	@PostMapping
 	public ResponseEntity<PedidoResponseDTO> iniciarPedido(@Valid @RequestBody PedidoRequestDTO request) {
-		PedidoResponseDTO pedidoResponseDTO = pedidoService.iniciarPedidoVazio(request.getCliente().getId());
+		PedidoResponseDTO pedidoResponseDTO = pedidoService.iniciarPedidoVazio(request);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(pedidoResponseDTO.getIdPedido()).toUri();
 
 		return ResponseEntity.created(uri).body(pedidoResponseDTO);
 	}
 	
+	@PostMapping("/{id}")
+	public ResponseEntity<PedidoItemResponseDTO> adicionarItem(@PathVariable Long id, @RequestBody PedidoItemRequestDTO requestItem){
+		PedidoItemResponseDTO pedidoItemResponseDTO = pedidoItemService.adicionar(id, requestItem);
+//		URI uri =ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+//				.buildAndExpand(pedidoItemResponseDTO.getIdPedidoItem()).toUri();
+		return ResponseEntity.ok().body(pedidoItemResponseDTO);
+	}
+	
 	@PutMapping("/{id}")
-	public ResponseEntity<PedidoResponseDTO> atualizar(@PathVariable Long id) {
+	public ResponseEntity<PedidoResponseDTO> encerrarPedido(@PathVariable Long id) {
 		PedidoResponseDTO responseBody = pedidoService.finalizarPedido(id);
-
 		return ResponseEntity.ok(responseBody);
 	}
+		
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> excluir(@PathVariable Long id) {

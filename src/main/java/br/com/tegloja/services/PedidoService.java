@@ -77,10 +77,10 @@ public class PedidoService {
 		return new PedidoResponseDTO(pedido);
 	}
 
-	public PedidoResponseDTO iniciarPedidoVazio(Long idCliente) {
-		ClienteResponseDTO cliente = clienteService.buscarPorId(idCliente);
+	public PedidoResponseDTO iniciarPedidoVazio(PedidoRequestDTO requestDTO) {
+		ClienteResponseDTO clienteDTO = clienteService.buscarPorId(requestDTO.getCliente().getId());
 		Pedido pedido = new Pedido();
-		pedido.setCliente(new Cliente(cliente));
+		pedido.setCliente(new Cliente(clienteDTO));
 		pedido.setStatus(StatusCompra.NAO_FINALIZADO);
 		pedido.setValortotal(BigDecimal.ZERO);
 		pedido = _pedidorepository.save(pedido);

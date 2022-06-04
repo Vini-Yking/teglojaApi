@@ -18,6 +18,7 @@ import br.com.tegloja.enums.StatusCompra;
 import br.com.tegloja.handler.IdNotFoundException;
 import br.com.tegloja.model.Pedido;
 import br.com.tegloja.model.PedidoItem;
+import br.com.tegloja.model.Produto;
 import br.com.tegloja.repository.PedidoItemRepository;
 
 @Service
@@ -74,19 +75,34 @@ public class PedidoItemService {
 		_pedidoItemRepository.deleteById(id);
 	}
 
-	public PedidoItemResponseDTO adicionar(PedidoItemRequestDTO pedidoItemRequest) {
+	/**
+	 * @param idPedido          é o id do pedido da url
+	 * @param pedidoItemRequest é o nosso body pedidoItem vai no body valor é o
+	 *                          valor do calculo da multiplicação da quantidade do
+	 *                          produto x valor unitário do produto subtraindo o
+	 *                          desconto
+	 * @return
+	 */
+	public PedidoItemResponseDTO adicionar(Long idPedido, PedidoItemRequestDTO pedidoItemRequest) {
 		// Checa o pedido
-		PedidoResponseDTO pedidoResponse = pedidoService.buscarPorId(pedidoItemRequest.getPedido().getId());
+		PedidoResponseDTO pedidoResponse = pedidoService.buscarPorId(idPedido);
 		if (pedidoResponse.getStatus().equals(StatusCompra.FINALIZADO)) {
 			// throw new PedidoFinalizadoException("Pedido já finalizado.");
 		}
+
+		// se funcionar transformar para receber uma lista
 		PedidoItem pedidoItem = new PedidoItem(pedidoItemRequest);
-		ProdutoResponseDTO produto = produtoService.buscarPorId(pedidoItem.getPedido().getId());
+		Pedido pedido = new Pedido(pedidoResponse);
 
-		BigDecimal valor = produto.getValorUnit().multiply(BigDecimal.valueOf(pedidoItem.getQtdproduto()));
-		if (!pedidoItem.getValorDesconto().equals(null))
-			valor = valor.subtract(pedidoItem.getValorDesconto());
+		ProdutoResponseDTO produtoDTO = produtoService.buscarPorId(pedidoItem.getProduto().getId());
+		Produto produto = new Produto(produtoDTO);
 
+		BigDecimal quantidadeProduto = new BigDecimal(pedidoItem.getQuantidadeProduto());
+		BigDecimal valor = produto.getValorUnitario().multiply(quantidadeProduto);
+		valor = valor.subtract(pedidoItem.getValorDesconto());
+
+		pedidoItem.setProduto(produto);
+		pedidoItem.setPedido(pedido);
 		pedidoItem.setValorVenda(valor);
 		pedidoItem = _pedidoItemRepository.save(pedidoItem);
 

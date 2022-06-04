@@ -58,9 +58,9 @@ public class PedidoItem {
 	}
 
 	public PedidoItem(PedidoItemRequestDTO pedidoItemRequest) {
-		this.pedido = pedidoItemRequest.getPedido();
 		this.produto = pedidoItemRequest.getProduto();
-		this.quantidadeProduto = pedidoItemRequest.getQtdproduto();
+		this.quantidadeProduto = pedidoItemRequest.getQuantidadeProduto();
+		this.valorDesconto = pedidoItemRequest.getValorDesconto();
 	}
 
 	public Long getId() {
@@ -79,12 +79,12 @@ public class PedidoItem {
 		this.produto = produto;
 	}
 
-	public Integer getQtdproduto() {
+	public Integer getQuantidadeProduto() {
 		return quantidadeProduto;
 	}
 
-	public void setQtdproduto(Integer qtdproduto) {
-		this.quantidadeProduto = qtdproduto;
+	public void setQuantidadeProduto(Integer quantidadeProduto) {
+		this.quantidadeProduto = quantidadeProduto;
 	}
 
 	public BigDecimal getValorDesconto() {
@@ -95,22 +95,6 @@ public class PedidoItem {
 		this.valorDesconto = valorDesconto;
 	}
 
-	public Pedido getPedido() {
-		return pedido;
-	}
-
-	public void setPedido(Pedido pedido) {
-		this.pedido = pedido;
-	}
-
-	public Integer getQuantidadeProduto() {
-		return quantidadeProduto;
-	}
-
-	public void setQuantidadeProduto(Integer quantidadeProduto) {
-		this.quantidadeProduto = quantidadeProduto;
-	}
-
 	public BigDecimal getValorVenda() {
 		return valorVenda;
 	}
@@ -119,4 +103,12 @@ public class PedidoItem {
 		this.valorVenda = valorVenda;
 	}
 
+	public Pedido getPedido() {
+		return pedido;
+	}
+
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
+	}
+	
 }

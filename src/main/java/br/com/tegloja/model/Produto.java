@@ -29,16 +29,13 @@ public class Produto {
 	private String nomeProduto;
 
 	@Column(name = "valor_unit")
-	private BigDecimal valorUnit;
+	private BigDecimal valorUnitario;
 
 	@Column(name = "quantidade_estoque")
-	private Integer quantidadeEstoq;
+	private Integer quantidadeEstoque;
 
 	@Column(name = "data_ultima_alteracao")
 	private LocalDate dataAlteracao;
-
-	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
-	private List<PedidoItem> itens;
 
 	@ManyToOne
 	@JoinColumn(name = "id_categoria")
@@ -53,8 +50,8 @@ public class Produto {
 		super();
 		this.id = id;
 		this.nomeProduto = nomeProduto;
-		this.valorUnit = valorUnit;
-		this.quantidadeEstoq = quantidadeEstoq;
+		this.valorUnitario = valorUnit;
+		this.quantidadeEstoque = quantidadeEstoq;
 		this.dataAlteracao = dataAlteracao;
 		this.categoria = categoria;
 	}
@@ -63,8 +60,8 @@ public class Produto {
 		this.categoria = produtoRequest.getCategoria();
 		this.dataAlteracao = LocalDate.now();
 		this.nomeProduto = produtoRequest.getNomeProduto();
-		this.quantidadeEstoq = produtoRequest.getQuantidadeEstoq();
-		this.valorUnit = produtoRequest.getValorUnit();
+		this.quantidadeEstoque = produtoRequest.getQuantidadeEstoque();
+		this.valorUnitario = produtoRequest.getValorUnitario();
 	}
 
 	public Produto(ProdutoResponseDTO produtoResponseDTO) {
@@ -72,16 +69,8 @@ public class Produto {
 		this.dataAlteracao = produtoResponseDTO.getDataAlteracao();
 		this.id = produtoResponseDTO.getIdProduto();
 		this.nomeProduto = produtoResponseDTO.getNomeProduto();
-		this.quantidadeEstoq = produtoResponseDTO.getQuantidadeEstoq();
-		this.valorUnit = produtoResponseDTO.getValorUnit();
-	}
-
-	public List<PedidoItem> getItens() {
-		return itens;
-	}
-
-	public void setItens(List<PedidoItem> itens) {
-		this.itens = itens;
+		this.quantidadeEstoque = produtoResponseDTO.getQuantidadeEstoque();
+		this.valorUnitario = produtoResponseDTO.getValorUnitario();
 	}
 
 	public Long getId() {
@@ -100,20 +89,20 @@ public class Produto {
 		this.nomeProduto = nomeProduto;
 	}
 
-	public BigDecimal getValorUnit() {
-		return valorUnit;
+	public BigDecimal getValorUnitario() {
+		return valorUnitario;
 	}
 
 	public void setValorUnit(BigDecimal valorUnit) {
-		this.valorUnit = valorUnit;
+		this.valorUnitario = valorUnit;
 	}
 
-	public Integer getQuantidadeEstoq() {
-		return quantidadeEstoq;
+	public Integer getQuantidadeEstoque() {
+		return quantidadeEstoque;
 	}
 
 	public void setQuantidadeEstoq(Integer quantidadeEstoq) {
-		this.quantidadeEstoq = quantidadeEstoq;
+		this.quantidadeEstoque = quantidadeEstoq;
 	}
 
 	public LocalDate getDataAlteracao() {

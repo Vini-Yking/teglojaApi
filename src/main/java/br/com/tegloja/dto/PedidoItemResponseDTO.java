@@ -35,7 +35,8 @@ public class PedidoItemResponseDTO {
 		this.idPedidoItem = pedidoItem.getId();
 		this.pedido = pedidoItem.getPedido();
 		this.produto = pedidoItem.getProduto();
-		this.quantidadeProduto = pedidoItem.getQtdproduto();
+		this.quantidadeProduto = pedidoItem.getQuantidadeProduto();
+		this.valorVenda = pedidoItem.getValorVenda();
 	}
 
 	public Long getIdPedidoItem() {
