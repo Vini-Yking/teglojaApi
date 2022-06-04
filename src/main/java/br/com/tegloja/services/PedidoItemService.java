@@ -42,7 +42,7 @@ public class PedidoItemService {
 	}
 
 	public List<PedidoItemResponseDTO> buscarPorIdPedido(Long idPedido) {
-		PedidoResponseDTO pedidoResponse = pedidoService.buscarPorId(idPedido);
+		PedidoResponseDTO pedidoResponse = pedidoService.buscarPorIdPedido(idPedido);
 		Pedido pedido = new Pedido(pedidoResponse);
 		List<PedidoItem> itens = _pedidoItemRepository.findByPedido(pedido);
 		if (itens.isEmpty())
@@ -85,7 +85,7 @@ public class PedidoItemService {
 	 */
 	public PedidoItemResponseDTO adicionar(Long idPedido, PedidoItemRequestDTO pedidoItemRequest) {
 		// Checa o pedido
-		PedidoResponseDTO pedidoResponse = pedidoService.buscarPorId(idPedido);
+		PedidoResponseDTO pedidoResponse = pedidoService.buscarPorIdPedido(idPedido);
 		if (pedidoResponse.getStatus().equals(StatusCompra.FINALIZADO)) {
 			// throw new PedidoFinalizadoException("Pedido já finalizado.");
 		}

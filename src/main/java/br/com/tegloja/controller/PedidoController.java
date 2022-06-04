@@ -45,7 +45,7 @@ public class PedidoController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<PedidoResponseDTO> buscarPorId(@PathVariable Long id) {
-		return ResponseEntity.ok(pedidoService.buscarPorId(id));
+		return ResponseEntity.ok(pedidoService.buscarPorIdPedido(id));
 	}
 	
 	@GetMapping("/{id}/itens")

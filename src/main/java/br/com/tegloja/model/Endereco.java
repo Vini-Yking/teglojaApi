@@ -12,6 +12,8 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import br.com.tegloja.dto.EnderecoDTO;
+
 
 
 @Entity
@@ -23,8 +25,8 @@ public class Endereco {
 	private Long id;
 
 	
-	@Pattern(regexp="[0-9]",message="Número inválido")
-	@Size(max=8,message="Oito dígitos")
+	@Pattern(regexp="^[0-9]{8}",message= "precisam ser oito numeros")
+	@Size(min = 8, max=8,message="Cep precisa ter oito Digitos")
 	@Column(nullable = false, unique = true)
 	private String cep;
 
@@ -43,14 +45,22 @@ public class Endereco {
 
 	}
 
-	public Endereco(String cep, String logradouro, String complemento, String bairro, String localidade, String uf,
-			String ibge, String gia, String ddd, String siafi) {
+	public Endereco(String cep, String logradouro, String complemento, String bairro, String cidade, String uf) {
 		this.cep = cep;
 		this.logradouro = logradouro;
 		this.complemento = complemento;
 		this.bairro = bairro;
-		this.localidade = localidade;
+		this.localidade = cidade;
 		this.uf = uf;
+	}
+
+	public Endereco(EnderecoDTO enderecoDTO) {
+		this.cep = enderecoDTO.getCep();
+		this.logradouro = enderecoDTO.getLogradouro();
+		this.complemento = enderecoDTO.getComplemento();
+		this.bairro = enderecoDTO.getBairro();
+		this.localidade = enderecoDTO.getCidade();
+		this.uf = enderecoDTO.getUf();
 	}
 
 	public List<Cliente> getCliente() {

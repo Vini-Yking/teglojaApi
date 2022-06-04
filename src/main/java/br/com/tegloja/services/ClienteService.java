@@ -12,15 +12,24 @@ import org.springframework.stereotype.Service;
 import br.com.tegloja.backend.config.MailConfig;
 import br.com.tegloja.dto.ClienteRequestDTO;
 import br.com.tegloja.dto.ClienteResponseDTO;
+import br.com.tegloja.dto.EnderecoDTO;
 import br.com.tegloja.handler.IdNotFoundException;
 import br.com.tegloja.model.Cliente;
+import br.com.tegloja.model.Endereco;
 import br.com.tegloja.repository.ClienteRepository;
+import br.com.tegloja.repository.EnderecoRepository;
 
 @Service
 public class ClienteService {
 
 	@Autowired
 	private ClienteRepository _clienterepository;
+	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	private EnderecoService enderecoService;
 
 	@Autowired
 	private MailConfig mailConfig;
@@ -55,14 +64,17 @@ public class ClienteService {
 
 	public ClienteResponseDTO adicionar(ClienteRequestDTO clienteRequest) {
 		Cliente cliente = new Cliente(clienteRequest);
+		EnderecoDTO enderecoDTO = enderecoService.buscar(clienteRequest.getCep());
+		Endereco endereco = new Endereco(enderecoDTO);
 		cliente = _clienterepository.save(cliente);
+		
 		/**
 		 * Não foi possivel enviar email por limitação do google
 		 * mailConfig.enviarEmail(cliente.getEmail(), "Cadastrado efetuado com sucesso", cliente.toString());
 		 */
 		
 		
-		return new ClienteResponseDTO(cliente);
+		return new ClienteResponseDTO(cliente,endereco);
 	}
 
 	public ClienteResponseDTO atualizar(ClienteRequestDTO clienteRequest, Long id) {
