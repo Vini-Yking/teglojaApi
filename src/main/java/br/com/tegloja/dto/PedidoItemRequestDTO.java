@@ -8,20 +8,18 @@ import br.com.tegloja.model.Produto;
 public class PedidoItemRequestDTO {
 
 	private Produto produto;
-	private Integer qtdproduto;
+	private Integer quantidadeProduto;
 	private BigDecimal valorDesconto;
-	private Pedido pedido;
 
 	public PedidoItemRequestDTO() {
 
 	}
 
-	public PedidoItemRequestDTO(Produto produto, Integer qtdproduto, BigDecimal valorDesconto, Pedido pedido) {
+	public PedidoItemRequestDTO(Produto produto, Integer quantidadeProduto, BigDecimal valorDesconto) {
 		super();
 		this.produto = produto;
-		this.qtdproduto = qtdproduto;
+		this.quantidadeProduto = quantidadeProduto;
 		this.valorDesconto = valorDesconto;
-		this.pedido = pedido;
 	}
 
 	public Produto getProduto() {
@@ -32,12 +30,12 @@ public class PedidoItemRequestDTO {
 		this.produto = produto;
 	}
 
-	public Integer getQtdproduto() {
-		return qtdproduto;
+	public Integer getQuantidadeProduto() {
+		return quantidadeProduto;
 	}
 
 	public void setQtdproduto(Integer qtdproduto) {
-		this.qtdproduto = qtdproduto;
+		this.quantidadeProduto = qtdproduto;
 	}
 
 	public BigDecimal getValorDesconto() {
@@ -46,14 +44,6 @@ public class PedidoItemRequestDTO {
 
 	public void setValorDesconto(BigDecimal valorDesconto) {
 		this.valorDesconto = valorDesconto;
-	}
-
-	public Pedido getPedido() {
-		return pedido;
-	}
-
-	public void setPedido(Pedido pedido) {
-		this.pedido = pedido;
 	}
 
 }

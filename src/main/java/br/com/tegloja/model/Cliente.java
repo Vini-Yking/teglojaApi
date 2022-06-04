@@ -9,6 +9,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
 import org.hibernate.validator.constraints.UniqueElements;
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -41,7 +42,7 @@ public class Cliente {
 	@UniqueElements(message= "Esse e-mail já foi cadastrado")
 	@Column(nullable = false, unique = true)
 	private String email;
-
+	
 	public Cliente() {
 	}
 	

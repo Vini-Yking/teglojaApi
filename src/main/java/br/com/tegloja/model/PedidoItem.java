@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 
 import br.com.tegloja.dto.PedidoItemRequestDTO;
@@ -35,13 +34,11 @@ public class PedidoItem {
 
 	// @Transient
 	// private BigDecimal subTotal;
-    
-	@DecimalMin(value= "0.0")
-	@Column 
+
+	@Column(name = "valor_desconto")
 	private BigDecimal valorDesconto;
-	
-	
-	@Column
+
+	@Column(name = "valor_venda")
 	private BigDecimal valorVenda;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -63,9 +60,9 @@ public class PedidoItem {
 	}
 
 	public PedidoItem(PedidoItemRequestDTO pedidoItemRequest) {
-		this.pedido = pedidoItemRequest.getPedido();
 		this.produto = pedidoItemRequest.getProduto();
-		this.quantidadeProduto = pedidoItemRequest.getQtdproduto();
+		this.quantidadeProduto = pedidoItemRequest.getQuantidadeProduto();
+		this.valorDesconto = pedidoItemRequest.getValorDesconto();
 	}
 
 	public Long getId() {
@@ -84,12 +81,12 @@ public class PedidoItem {
 		this.produto = produto;
 	}
 
-	public Integer getQtdproduto() {
+	public Integer getQuantidadeProduto() {
 		return quantidadeProduto;
 	}
 
-	public void setQtdproduto(Integer qtdproduto) {
-		this.quantidadeProduto = qtdproduto;
+	public void setQuantidadeProduto(Integer quantidadeProduto) {
+		this.quantidadeProduto = quantidadeProduto;
 	}
 
 	public BigDecimal getValorDesconto() {
@@ -100,22 +97,6 @@ public class PedidoItem {
 		this.valorDesconto = valorDesconto;
 	}
 
-	public Pedido getPedido() {
-		return pedido;
-	}
-
-	public void setPedido(Pedido pedido) {
-		this.pedido = pedido;
-	}
-
-	public Integer getQuantidadeProduto() {
-		return quantidadeProduto;
-	}
-
-	public void setQuantidadeProduto(Integer quantidadeProduto) {
-		this.quantidadeProduto = quantidadeProduto;
-	}
-
 	public BigDecimal getValorVenda() {
 		return valorVenda;
 	}
@@ -124,4 +105,12 @@ public class PedidoItem {
 		this.valorVenda = valorVenda;
 	}
 
+	public Pedido getPedido() {
+		return pedido;
+	}
+
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
+	}
+	
 }

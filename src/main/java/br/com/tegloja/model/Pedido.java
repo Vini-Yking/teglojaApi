@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import br.com.tegloja.dto.PedidoRequestDTO;
+import br.com.tegloja.dto.PedidoResponseDTO;
 import br.com.tegloja.enums.StatusCompra;
 
 
@@ -32,12 +33,10 @@ public class Pedido {
 	@Column(name = "status_pedido", nullable = false)
 	private StatusCompra status;
 
-	
-	@Column(name = "dt_compra")
+	@Column(name = "data_compra")
 	private LocalDate dataCompra;
-	
-	
-	@Column(name = "dt_entrega")
+
+	@Column(name = "data_entrega")
 	private LocalDate dataEntrega;
     
 	
@@ -51,18 +50,18 @@ public class Pedido {
 
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
 	private List<PedidoItem> itens;
-	
+
 	// @ManyToMany
 	// @JoinTable(name = "pedido_item", joinColumns = @JoinColumn(name =
 	// "id_pedido"), inverseJoinColumns = @JoinColumn(name = "id_produto"))
 	// private List<Produto> produtos;
 
 	public Pedido() {
+		
 	}
 
 	public Pedido(Long id, StatusCompra status, LocalDate dataCompra, LocalDate dataEntrega, BigDecimal valortotal,
 			Cliente cliente) {
-		super();
 		this.id = id;
 		this.status = status;
 		this.dataCompra = dataCompra;
@@ -72,11 +71,16 @@ public class Pedido {
 	}
 
 	public Pedido(PedidoRequestDTO pedidoRequest) {
-		this.status = pedidoRequest.getStatus();
-		this.dataCompra = pedidoRequest.getDataCompra();
-		this.dataEntrega = pedidoRequest.getDataEntrega();
-		this.valortotal = pedidoRequest.getValorTotal();
 		this.cliente = pedidoRequest.getCliente();
+	}
+
+	public Pedido(PedidoResponseDTO pedidoResponse) {
+		this.cliente = pedidoResponse.getCliente();
+		this.dataCompra = pedidoResponse.getDataCompra();
+		this.dataEntrega = pedidoResponse.getDataEntrega();
+		this.id = pedidoResponse.getIdPedido();
+		this.status = pedidoResponse.getStatus();
+		this.valortotal = pedidoResponse.getValortotal();
 	}
 
 	@Override // envio de email do pedido

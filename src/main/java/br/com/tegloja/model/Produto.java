@@ -13,7 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Min;
 
 import br.com.tegloja.dto.ProdutoRequestDTO;
 import br.com.tegloja.dto.ProdutoResponseDTO;
@@ -26,23 +25,18 @@ public class Produto {
 	@Column(name = "id_produto")
 	private Long id;
 
-	@Column(name = "nm_produto")
+	@Column(name = "nome_produto")
 	private String nomeProduto;
     
 	@DecimalMin(value= "0.0", message= "Valor mínimo é zero")
 	@Column(name = "valor_unit")
-	private BigDecimal valorUnit;
-    
-	@Min(value= 0, message= "Quantidade mínima é zero")
-	@Column(name = "qtd_estoque")
-	private Integer quantidadeEstoq;
-    
-	
-	@Column(name = "dt_ultima_alteracao")
-	private LocalDate dataAlteracao;
+	private BigDecimal valorUnitario;
 
-	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
-	private List<PedidoItem> itens;
+	@Column(name = "quantidade_estoque")
+	private Integer quantidadeEstoque;
+
+	@Column(name = "data_ultima_alteracao")
+	private LocalDate dataAlteracao;
 
 	@ManyToOne
 	@JoinColumn(name = "id_categoria")
@@ -57,8 +51,8 @@ public class Produto {
 		super();
 		this.id = id;
 		this.nomeProduto = nomeProduto;
-		this.valorUnit = valorUnit;
-		this.quantidadeEstoq = quantidadeEstoq;
+		this.valorUnitario = valorUnit;
+		this.quantidadeEstoque = quantidadeEstoq;
 		this.dataAlteracao = dataAlteracao;
 		this.categoria = categoria;
 	}
@@ -67,8 +61,8 @@ public class Produto {
 		this.categoria = produtoRequest.getCategoria();
 		this.dataAlteracao = LocalDate.now();
 		this.nomeProduto = produtoRequest.getNomeProduto();
-		this.quantidadeEstoq = produtoRequest.getQuantidadeEstoq();
-		this.valorUnit = produtoRequest.getValorUnit();
+		this.quantidadeEstoque = produtoRequest.getQuantidadeEstoque();
+		this.valorUnitario = produtoRequest.getValorUnitario();
 	}
 
 	public Produto(ProdutoResponseDTO produtoResponseDTO) {
@@ -76,16 +70,8 @@ public class Produto {
 		this.dataAlteracao = produtoResponseDTO.getDataAlteracao();
 		this.id = produtoResponseDTO.getIdProduto();
 		this.nomeProduto = produtoResponseDTO.getNomeProduto();
-		this.quantidadeEstoq = produtoResponseDTO.getQuantidadeEstoq();
-		this.valorUnit = produtoResponseDTO.getValorUnit();
-	}
-
-	public List<PedidoItem> getItens() {
-		return itens;
-	}
-
-	public void setItens(List<PedidoItem> itens) {
-		this.itens = itens;
+		this.quantidadeEstoque = produtoResponseDTO.getQuantidadeEstoque();
+		this.valorUnitario = produtoResponseDTO.getValorUnitario();
 	}
 
 	public Long getId() {
@@ -104,20 +90,20 @@ public class Produto {
 		this.nomeProduto = nomeProduto;
 	}
 
-	public BigDecimal getValorUnit() {
-		return valorUnit;
+	public BigDecimal getValorUnitario() {
+		return valorUnitario;
 	}
 
 	public void setValorUnit(BigDecimal valorUnit) {
-		this.valorUnit = valorUnit;
+		this.valorUnitario = valorUnit;
 	}
 
-	public Integer getQuantidadeEstoq() {
-		return quantidadeEstoq;
+	public Integer getQuantidadeEstoque() {
+		return quantidadeEstoque;
 	}
 
 	public void setQuantidadeEstoq(Integer quantidadeEstoq) {
-		this.quantidadeEstoq = quantidadeEstoq;
+		this.quantidadeEstoque = quantidadeEstoq;
 	}
 
 	public LocalDate getDataAlteracao() {

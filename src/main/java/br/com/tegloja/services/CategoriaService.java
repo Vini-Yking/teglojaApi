@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.tegloja.dto.CategoriaRequestDTO;
@@ -30,9 +32,16 @@ public class CategoriaService {
 		List<Categoria> categorias = _categoriarepository.findAll();
 		// @formatter:off
 		return categorias.stream()
-				.map(c -> new CategoriaResponseDTO(c))
+				.map(categoria -> new CategoriaResponseDTO(categoria))
 				.collect(Collectors.toList());
 		// @formatter:on
+	}
+
+	public Page<Categoria> buscarPagina(Pageable page) {
+		Page<Categoria> categorias = _categoriarepository.findAll(page);
+
+		return categorias;
+		//return categorias.map(categoria -> new CategoriaResponseDTO(categoria));
 	}
 
 	public CategoriaResponseDTO buscarPorId(Long id) {
@@ -46,6 +55,7 @@ public class CategoriaService {
 	public CategoriaResponseDTO atualizar(CategoriaRequestDTO categoriaRequest, Long id) {
 		buscarPorId(id);
 		Categoria categoria = new Categoria(categoriaRequest);
+		categoria.setId(id);
 		categoria = _categoriarepository.save(categoria);
 
 		return new CategoriaResponseDTO(categoria);

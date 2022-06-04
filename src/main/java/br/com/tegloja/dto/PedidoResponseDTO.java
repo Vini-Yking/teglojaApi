@@ -37,6 +37,7 @@ public class PedidoResponseDTO {
 		this.idPedido = pedido.getId();
 		this.status = pedido.getStatus();
 		this.valortotal = pedido.getValortotal();
+		this.Cliente = pedido.getCliente();
 	}
 
 	public Long getIdPedido() {

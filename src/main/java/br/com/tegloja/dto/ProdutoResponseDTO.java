@@ -12,8 +12,8 @@ public class ProdutoResponseDTO {
 	private Long idProduto;
 	private Categoria categoria;
 	private String nomeProduto;
-	private BigDecimal valorUnit;
-	private Integer quantidadeEstoq;
+	private BigDecimal valorUnitario;
+	private Integer quantidadeEstoque;
 	private LocalDate dataAlteracao;
 
 	public ProdutoResponseDTO() {
@@ -25,8 +25,8 @@ public class ProdutoResponseDTO {
 		this.categoria = produto.getCategoria();
 		this.idProduto = produto.getId();
 		this.nomeProduto = produto.getNomeProduto();
-		this.quantidadeEstoq = produto.getQuantidadeEstoq();
-		this.valorUnit = produto.getValorUnit();	
+		this.quantidadeEstoque = produto.getQuantidadeEstoque();
+		this.valorUnitario = produto.getValorUnitario();	
 	}
 	
 	public ProdutoResponseDTO(Produto produto) {
@@ -34,8 +34,8 @@ public class ProdutoResponseDTO {
 		this.categoria = produto.getCategoria();
 		this.idProduto = produto.getId();
 		this.nomeProduto = produto.getNomeProduto();
-		this.quantidadeEstoq = produto.getQuantidadeEstoq();
-		this.valorUnit = produto.getValorUnit();		
+		this.quantidadeEstoque = produto.getQuantidadeEstoque();
+		this.valorUnitario = produto.getValorUnitario();		
 	}
 	
 	public Categoria getCategoria() {
@@ -62,20 +62,20 @@ public class ProdutoResponseDTO {
 		this.nomeProduto = nomeProduto;
 	}
 
-	public BigDecimal getValorUnit() {
-		return valorUnit;
+	public BigDecimal getValorUnitario() {
+		return valorUnitario;
 	}
 
-	public void setValorUnit(BigDecimal valorUnit) {
-		this.valorUnit = valorUnit;
+	public void setValorUnitario(BigDecimal valorUnit) {
+		this.valorUnitario = valorUnit;
 	}
 
-	public Integer getQuantidadeEstoq() {
-		return quantidadeEstoq;
+	public Integer getQuantidadeEstoque() {
+		return quantidadeEstoque;
 	}
 
-	public void setQuantidadeEstoq(Integer quantidadeEstoq) {
-		this.quantidadeEstoq = quantidadeEstoq;
+	public void setQuantidadeEstoque(Integer quantidadeEstoq) {
+		this.quantidadeEstoque = quantidadeEstoq;
 	}
 
 	public LocalDate getDataAlteracao() {

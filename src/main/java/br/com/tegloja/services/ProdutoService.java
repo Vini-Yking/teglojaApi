@@ -1,13 +1,13 @@
 package br.com.tegloja.services;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import br.com.tegloja.dto.CategoriaResponseDTO;
 import br.com.tegloja.dto.ProdutoRequestDTO;
@@ -34,9 +34,15 @@ public class ProdutoService {
 		List<Produto> produtos = produtoRepository.findAll();
 		// @formatter:off
 		return produtos.stream()
-				.map(p -> new ProdutoResponseDTO(p))
+				.map(produto -> new ProdutoResponseDTO(produto))
 				.collect(Collectors.toList());
 		// @formatter:on
+	}
+
+	public Page<ProdutoResponseDTO> buscarPagina(Pageable page) {
+		Page<Produto> produtos = produtoRepository.findAll(page);
+
+		return produtos.map(produto -> new ProdutoResponseDTO(produto));
 	}
 
 	/**
@@ -84,6 +90,7 @@ public class ProdutoService {
 		Categoria categoria = new Categoria(categoriaResponseDTO);
 		Produto produto = new Produto(produtoRequest);
 		produto.setCategoria(categoria);
+		produto.setId(id);
 		produtoRepository.save(produto);
 
 		return new ProdutoResponseDTO(produto);

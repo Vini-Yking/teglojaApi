@@ -8,8 +8,8 @@ public class ProdutoRequestDTO {
 
 	private String nomeProduto;
 	private Categoria categoria;
-	private BigDecimal valorUnit;
-	private Integer quantidadeEstoq;
+	private BigDecimal valorUnitario;
+	private Integer quantidadeEstoque;
 
 	public ProdutoRequestDTO() {
 	}
@@ -18,8 +18,8 @@ public class ProdutoRequestDTO {
 		super();
 		this.nomeProduto = nomeProduto;
 		this.categoria = categoria;
-		this.valorUnit = valorUnit;
-		this.quantidadeEstoq = quantidadeEstoq;
+		this.valorUnitario = valorUnit;
+		this.quantidadeEstoque = quantidadeEstoq;
 	}
 
 	public String getNomeProduto() {
@@ -38,20 +38,20 @@ public class ProdutoRequestDTO {
 		this.categoria = categoria;
 	}
 
-	public BigDecimal getValorUnit() {
-		return valorUnit;
+	public BigDecimal getValorUnitario() {
+		return valorUnitario;
 	}
 
-	public void setValorUnit(BigDecimal valorUnit) {
-		this.valorUnit = valorUnit;
+	public void setValorUnitario(BigDecimal valorUnit) {
+		this.valorUnitario = valorUnit;
 	}
 
-	public Integer getQuantidadeEstoq() {
-		return quantidadeEstoq;
+	public Integer getQuantidadeEstoque() {
+		return quantidadeEstoque;
 	}
 
-	public void setQuantidadeEstoq(Integer quantidadeEstoq) {
-		this.quantidadeEstoq = quantidadeEstoq;
+	public void setQuantidadeEstoque(Integer quantidadeEstoq) {
+		this.quantidadeEstoque = quantidadeEstoq;
 	}
 
 }
