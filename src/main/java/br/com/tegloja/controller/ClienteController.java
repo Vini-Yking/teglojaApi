@@ -25,7 +25,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.tegloja.dto.ClienteRequestDTO;
 import br.com.tegloja.dto.ClienteResponseDTO;
+import br.com.tegloja.dto.PedidoResponseDTO;
 import br.com.tegloja.services.ClienteService;
+import br.com.tegloja.services.PedidoService;
 
 @RestController
 @RequestMapping("/tegloja/clientes")
@@ -33,6 +35,9 @@ public class ClienteController {
 
 	@Autowired
 	private ClienteService clienteService;
+
+	@Autowired
+	private PedidoService pedidoService;
 
 	@GetMapping
 	public ResponseEntity<List<ClienteResponseDTO>> buscarTodos() {
@@ -44,8 +49,8 @@ public class ClienteController {
 		return ResponseEntity.ok(clienteService.buscarPorId(id));
 	}
 
-	@GetMapping("/pagina")
-	public ResponseEntity<Page<ClienteResponseDTO>> buscarPagina(@PageableDefault(
+	@GetMapping("/paginas")
+	public ResponseEntity<Page<ClienteResponseDTO>> buscarTodosPaginado(@PageableDefault(
 	// @formatter:off
 					sort = "nome",
 					direction = Sort.Direction.ASC,
@@ -54,6 +59,17 @@ public class ClienteController {
 					)Pageable pageable) {
 		// @formatter:on
 		return ResponseEntity.ok(clienteService.buscarPagina(pageable));
+	}
+
+	@GetMapping("/clientes/{id}/pedidos")
+	public ResponseEntity<List<PedidoResponseDTO>> buscarPedidosCliente(@PathVariable Long id) {
+		return ResponseEntity.ok(pedidoService.buscarPorIdCliente(id));
+	}
+
+	@GetMapping("/clientes/{id}/pedidos/paginas")
+	public ResponseEntity<Page<PedidoResponseDTO>> buscarPedidosPaginadosCliente(@PathVariable Long id,
+			@PageableDefault(page = 0, size = 8) Pageable pageable) {
+		return ResponseEntity.ok(pedidoService.buscarPorIdClientePaginado(id, pageable));
 	}
 
 	@PostMapping

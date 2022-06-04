@@ -59,6 +59,12 @@ public class ProdutoController {
 		return ResponseEntity.ok(produtoService.buscarPorId(id));
 	}
 
+	// TODO
+	// @GetMapping("/{id}/pedidos")
+	// public ResponseEntity<ProdutoResponseDTO> buscarPedidosProduto(@PathVariable
+	// Long id) {
+	// }
+
 	@PutMapping("/{id}")
 	public ResponseEntity<ProdutoResponseDTO> atualizar(@RequestBody ProdutoRequestDTO produtoRequest, Long id) {
 		return ResponseEntity.ok(produtoService.atualizar(produtoRequest, id));

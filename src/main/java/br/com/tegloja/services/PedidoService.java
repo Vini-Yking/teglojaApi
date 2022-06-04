@@ -53,12 +53,33 @@ public class PedidoService {
 		return pedidos.map(pedido -> new PedidoResponseDTO(pedido));
 	}
 
-	public PedidoResponseDTO buscarPorId(Long id) {
+	public PedidoResponseDTO buscarPorIdPedido(Long id) {
 		Optional<Pedido> pedido = _pedidorepository.findById(id);
 		if (pedido.isEmpty()) {
 			throw new IdNotFoundException("Não existe um pedido com esse id.");
 		}
 		return new PedidoResponseDTO(pedido.get());
+	}
+
+	public List<PedidoResponseDTO> buscarPorIdCliente(Long idCliente) {
+		ClienteResponseDTO clienteResponse = clienteService.buscarPorId(idCliente);
+		Cliente cliente = new Cliente(clienteResponse);
+
+		List<Pedido> pedidos = _pedidorepository.findByCliente(cliente);
+		// @formatter:off
+		return pedidos.stream()
+				.map(pedido -> new PedidoResponseDTO(pedido))
+				.collect(Collectors.toList());
+		// @formatter:on
+	}
+
+	public Page<PedidoResponseDTO> buscarPorIdClientePaginado(Long idCliente, Pageable pageable) {
+		ClienteResponseDTO clienteResponse = clienteService.buscarPorId(idCliente);
+		Cliente cliente = new Cliente(clienteResponse);
+
+		Page<Pedido> pedidos = _pedidorepository.findByCliente(cliente, pageable);
+
+		return pedidos.map(pedido -> new PedidoResponseDTO(pedido));
 	}
 
 	public PedidoResponseDTO adicionar(PedidoRequestDTO pedidoRequest) {
@@ -70,10 +91,11 @@ public class PedidoService {
 		pedido.setCliente(cliente);
 		pedido = _pedidorepository.save(pedido);
 		/**
-		 *  Não foi possivel enviar email por limitação do google
-		 *  mailConfig.enviarEmail(cliente.getEmail(), "Compra Concluida!", pedido.toString());
+		 * Não foi possivel enviar email por limitação do google
+		 * mailConfig.enviarEmail(cliente.getEmail(), "Compra Concluida!",
+		 * pedido.toString());
 		 */
-		
+
 		return new PedidoResponseDTO(pedido);
 	}
 
@@ -88,7 +110,7 @@ public class PedidoService {
 	}
 
 	public PedidoResponseDTO finalizarPedido(Long idPedido) {
-		PedidoResponseDTO pedidoResponse = buscarPorId(idPedido);
+		PedidoResponseDTO pedidoResponse = buscarPorIdPedido(idPedido);
 		List<PedidoItemResponseDTO> itens = pedidoItemService.buscarPorIdPedido(idPedido);
 
 		Pedido pedido = new Pedido(pedidoResponse);
@@ -108,7 +130,7 @@ public class PedidoService {
 	}
 
 	public PedidoResponseDTO atualizar(PedidoRequestDTO pedidoRequest, Long id) {
-		buscarPorId(id);
+		buscarPorIdPedido(id);
 		ClienteResponseDTO clienteResponseDTO = clienteService.buscarPorId(pedidoRequest.getCliente().getId());
 
 		Cliente cliente = new Cliente(clienteResponseDTO);
@@ -122,7 +144,7 @@ public class PedidoService {
 	}
 
 	public void deletar(Long id) {
-		buscarPorId(id);
+		buscarPorIdPedido(id);
 		_pedidorepository.deleteById(id);
 	}
 }
