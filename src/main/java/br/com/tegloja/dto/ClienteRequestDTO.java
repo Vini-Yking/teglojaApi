@@ -4,19 +4,31 @@ public class ClienteRequestDTO {
 
 	private String cpf;
 	private String cep;
+	private Integer numeroEndereco;
 	private String nome;
 	private String email;
+	
 
 	public ClienteRequestDTO() {
 
 	}
 
-	public ClienteRequestDTO(String cpf, String cep, String nome, String email) {
+	public ClienteRequestDTO(String cpf, String cep, String nome, String email, Integer numeroEndereco) {
 		super();
 		this.cpf = cpf;
 		this.cep = cep;
 		this.nome = nome;
 		this.email = email;
+		this.numeroEndereco = numeroEndereco;
+	}
+
+	
+	public Integer getNumeroEndereco() {
+		return numeroEndereco;
+	}
+
+	public void setNumeroEndereco(Integer numeroEndereco) {
+		this.numeroEndereco = numeroEndereco;
 	}
 
 	public String getCpf() {

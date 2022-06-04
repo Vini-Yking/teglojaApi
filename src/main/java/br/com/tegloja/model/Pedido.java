@@ -15,11 +15,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
 
 import br.com.tegloja.dto.PedidoRequestDTO;
 import br.com.tegloja.dto.PedidoResponseDTO;
+import br.com.tegloja.enums.FormaPagamento;
 import br.com.tegloja.enums.StatusCompra;
-
 
 @Entity
 public class Pedido {
@@ -38,12 +39,15 @@ public class Pedido {
 
 	@Column(name = "data_entrega")
 	private LocalDate dataEntrega;
-    
-	
+
 	@Column(name = "valor_total")
 	private BigDecimal valortotal;
-    
-	
+
+	@Column(name = "tipo_pagamento")
+	@NotBlank
+	@Enumerated(EnumType.STRING)
+	private FormaPagamento tipoPagamento;
+
 	@ManyToOne
 	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
@@ -51,13 +55,8 @@ public class Pedido {
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
 	private List<PedidoItem> itens;
 
-	// @ManyToMany
-	// @JoinTable(name = "pedido_item", joinColumns = @JoinColumn(name =
-	// "id_pedido"), inverseJoinColumns = @JoinColumn(name = "id_produto"))
-	// private List<Produto> produtos;
-
 	public Pedido() {
-		
+
 	}
 
 	public Pedido(Long id, StatusCompra status, LocalDate dataCompra, LocalDate dataEntrega, BigDecimal valortotal,
@@ -81,6 +80,7 @@ public class Pedido {
 		this.id = pedidoResponse.getIdPedido();
 		this.status = pedidoResponse.getStatus();
 		this.valortotal = pedidoResponse.getValortotal();
+		this.tipoPagamento = pedidoResponse.getTipoPagamento();
 	}
 
 	@Override // envio de email do pedido
@@ -135,6 +135,22 @@ public class Pedido {
 
 	public void setValortotal(BigDecimal valortotal) {
 		this.valortotal = valortotal;
+	}
+
+	public FormaPagamento getTipoPagamento() {
+		return tipoPagamento;
+	}
+
+	public void setTipoPagamento(FormaPagamento tipoPagamento) {
+		this.tipoPagamento = tipoPagamento;
+	}
+
+	public List<PedidoItem> getItens() {
+		return itens;
+	}
+
+	public void setItens(List<PedidoItem> itens) {
+		this.itens = itens;
 	}
 
 }

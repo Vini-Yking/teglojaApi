@@ -3,6 +3,7 @@ package br.com.tegloja.dto;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import br.com.tegloja.enums.FormaPagamento;
 import br.com.tegloja.enums.StatusCompra;
 import br.com.tegloja.model.Cliente;
 import br.com.tegloja.model.Pedido;
@@ -14,21 +15,11 @@ public class PedidoResponseDTO {
 	private LocalDate dataCompra;
 	private LocalDate dataEntrega;
 	private BigDecimal valortotal;
+	private FormaPagamento tipoPagamento;
 	private Cliente Cliente;
 
 	public PedidoResponseDTO() {
 
-	}
-
-	public PedidoResponseDTO(Long idPedido, StatusCompra status, LocalDate dataCompra, LocalDate dataEntrega,
-			BigDecimal valortotal, Cliente cliente) {
-		super();
-		this.idPedido = idPedido;
-		this.status = status;
-		this.dataCompra = dataCompra;
-		this.dataEntrega = dataEntrega;
-		this.valortotal = valortotal;
-		this.Cliente = cliente;
 	}
 
 	public PedidoResponseDTO(Pedido pedido) {
@@ -38,6 +29,7 @@ public class PedidoResponseDTO {
 		this.status = pedido.getStatus();
 		this.valortotal = pedido.getValortotal();
 		this.Cliente = pedido.getCliente();
+		this.tipoPagamento = pedido.getTipoPagamento();
 	}
 
 	public Long getIdPedido() {
@@ -87,5 +79,15 @@ public class PedidoResponseDTO {
 	public void setCliente(Cliente cliente) {
 		Cliente = cliente;
 	}
+
+	public FormaPagamento getTipoPagamento() {
+		return tipoPagamento;
+	}
+
+	public void setTipoPagamento(FormaPagamento tipoPagamento) {
+		this.tipoPagamento = tipoPagamento;
+	}
+	
+	
 
 }

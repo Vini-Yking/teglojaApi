@@ -10,7 +10,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.UniqueElements;
 import org.hibernate.validator.constraints.br.CPF;
 
 import br.com.tegloja.dto.ClienteRequestDTO;
@@ -25,21 +24,23 @@ public class Cliente {
 	private Long id;
 
 	@CPF(message= "Insira um cpf válido")
-	@UniqueElements(message= "Esse cpf já foi cadastrado")
 	@Column(nullable = false, unique = true)
 	private String cpf;
     
-	@Pattern(regexp="[0-9]",message="Número inválido")
-	@Size(max=8,message="Oito dígitos")
+	@Pattern(regexp="^[0-9]{8}",message= "precisam ser oito numeros")
+	@Size(min = 8, max=8,message="Cep precisa ter oito Digitos")
 	@Column(nullable = false)
 	private String cep;
+	
+	@NotNull(message="Numero endereço precisa ser preenchido caso não haja numero, informe 0")
+	@Column(name="endereco_numero",nullable=false)
+	private Integer numeroEndereco;
     
 	@NotNull(message= "Deve inserir um nome")
 	@Column(name = "nome_cliente", nullable = false)
 	private String nome;
     
 	@Email(message=" Insira um e-mail válido")
-	@UniqueElements(message= "Esse e-mail já foi cadastrado")
 	@Column(nullable = false, unique = true)
 	private String email;
 	
@@ -51,13 +52,15 @@ public class Cliente {
         this.cpf = clienteRequest.getCpf();
         this.email = clienteRequest.getEmail();
         this.nome = clienteRequest.getNome();
+        this.numeroEndereco = clienteRequest.getNumeroEndereco();
     }
-	public Cliente(Long id, String cpf, String cep, String nome, String email) {
+	public Cliente(Long id, String cpf, String cep, String nome, String email, Integer numeroEndereco) {
 		this.id = id;
 		this.cpf = cpf;
 		this.cep = cep;
 		this.nome = nome;
 		this.email = email;
+		this.numeroEndereco = numeroEndereco;
 	}
 
 	public Cliente(ClienteResponseDTO clienteResponse) {
@@ -66,11 +69,21 @@ public class Cliente {
 		this.email = clienteResponse.getEmail();
 		this.id = clienteResponse.getId();
 		this.nome = clienteResponse.getNome();
+		this.numeroEndereco = clienteResponse.getNumeroEndereco();
 	}
 
 	@Override // Usado para enviar email
 	public String toString() {
 		return "Cliente " + nome + "\ncpf=" + cpf + "\ncep=" + cep + "\nemail=" + email + "";
+	}
+
+	
+	public Integer getNumeroEndereco() {
+		return numeroEndereco;
+	}
+
+	public void setNumeroEndereco(Integer numeroEndereco) {
+		this.numeroEndereco = numeroEndereco;
 	}
 
 	public Long getId() {

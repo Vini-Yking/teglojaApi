@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.tegloja.dto.EnderecoDTO;
-import br.com.tegloja.model.Endereco;
 import br.com.tegloja.services.EnderecoService;
 
 @RestController
