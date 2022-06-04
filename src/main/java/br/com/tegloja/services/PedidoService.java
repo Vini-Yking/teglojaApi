@@ -19,8 +19,8 @@ import br.com.tegloja.dto.PedidoRequestDTO;
 import br.com.tegloja.dto.PedidoResponseDTO;
 import br.com.tegloja.dto.ProdutoResponseDTO;
 import br.com.tegloja.enums.StatusCompra;
-import br.com.tegloja.handler.IdNotFoundException;
-import br.com.tegloja.handler.SemEstoqueException;
+import br.com.tegloja.handler.NaoEncontradoException;
+import br.com.tegloja.handler.ArgumentoInvalidoException;
 import br.com.tegloja.model.Cliente;
 import br.com.tegloja.model.Pedido;
 import br.com.tegloja.repository.PedidoRepository;
@@ -61,7 +61,7 @@ public class PedidoService {
 	public PedidoResponseDTO buscarPorIdPedido(Long id) {
 		Optional<Pedido> pedido = _pedidorepository.findById(id);
 		if (pedido.isEmpty()) {
-			throw new IdNotFoundException("Não existe um pedido com esse id.");
+			throw new NaoEncontradoException("Não existe um pedido com esse id.");
 		}
 		return new PedidoResponseDTO(pedido.get());
 	}
@@ -125,7 +125,7 @@ public class PedidoService {
 			Integer quantidadeProduto = pedidoItemResponseDTO.getQuantidadeProduto();
 
 			if (quantidadeProduto > produtoResponse.getQuantidadeEstoque()) {
-				throw new SemEstoqueException("Sem estoque para o produto: " + produtoResponse.getNomeProduto());
+				throw new ArgumentoInvalidoException("Sem estoque para o produto: " + produtoResponse.getNomeProduto());
 			}
 		}
 

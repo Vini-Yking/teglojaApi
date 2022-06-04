@@ -4,13 +4,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-public class SemEstoqueException extends RuntimeException {
+public class ArgumentoInvalidoException extends RuntimeException {
 
-	public SemEstoqueException() {
-		super("Sem estoque.");
+	public ArgumentoInvalidoException() {
+		super("Argumento inválido.");
 	}
 
-	public SemEstoqueException(String message) {
+	public ArgumentoInvalidoException(String message) {
 		super(message);
 	}
 

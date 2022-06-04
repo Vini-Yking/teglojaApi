@@ -44,7 +44,6 @@ public class Pedido {
 	private BigDecimal valortotal;
 
 	@Column(name = "tipo_pagamento")
-	@NotBlank
 	@Enumerated(EnumType.STRING)
 	private FormaPagamento tipoPagamento;
 
