@@ -1,5 +1,6 @@
 package br.com.tegloja.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -89,8 +90,19 @@ public class ProdutoService {
 
 		Categoria categoria = new Categoria(categoriaResponseDTO);
 		Produto produto = new Produto(produtoRequest);
+		produto.setDataAlteracao(LocalDate.now());
 		produto.setCategoria(categoria);
 		produto.setId(id);
+		produtoRepository.save(produto);
+
+		return new ProdutoResponseDTO(produto);
+	}
+
+	public ProdutoResponseDTO subtrairEstoque(Long idProduto, Integer quantidade) {
+		ProdutoResponseDTO produtoResponse = buscarPorId(idProduto);
+
+		Produto produto = new Produto(produtoResponse);
+		produto.setQuantidadeEstoq(produto.getQuantidadeEstoque() - quantidade);
 		produtoRepository.save(produto);
 
 		return new ProdutoResponseDTO(produto);

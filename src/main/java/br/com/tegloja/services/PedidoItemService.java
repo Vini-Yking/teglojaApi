@@ -16,6 +16,7 @@ import br.com.tegloja.dto.PedidoResponseDTO;
 import br.com.tegloja.dto.ProdutoResponseDTO;
 import br.com.tegloja.enums.StatusCompra;
 import br.com.tegloja.handler.IdNotFoundException;
+import br.com.tegloja.handler.SemEstoqueException;
 import br.com.tegloja.model.Pedido;
 import br.com.tegloja.model.PedidoItem;
 import br.com.tegloja.model.Produto;
@@ -42,7 +43,7 @@ public class PedidoItemService {
 	}
 
 	public List<PedidoItemResponseDTO> buscarPorIdPedido(Long idPedido) {
-		PedidoResponseDTO pedidoResponse = pedidoService.buscarPorId(idPedido);
+		PedidoResponseDTO pedidoResponse = pedidoService.buscarPorIdPedido(idPedido);
 		Pedido pedido = new Pedido(pedidoResponse);
 		List<PedidoItem> itens = _pedidoItemRepository.findByPedido(pedido);
 		if (itens.isEmpty())
@@ -85,7 +86,7 @@ public class PedidoItemService {
 	 */
 	public PedidoItemResponseDTO adicionar(Long idPedido, PedidoItemRequestDTO pedidoItemRequest) {
 		// Checa o pedido
-		PedidoResponseDTO pedidoResponse = pedidoService.buscarPorId(idPedido);
+		PedidoResponseDTO pedidoResponse = pedidoService.buscarPorIdPedido(idPedido);
 		if (pedidoResponse.getStatus().equals(StatusCompra.FINALIZADO)) {
 			// throw new PedidoFinalizadoException("Pedido já finalizado.");
 		}
@@ -96,6 +97,9 @@ public class PedidoItemService {
 
 		ProdutoResponseDTO produtoDTO = produtoService.buscarPorId(pedidoItem.getProduto().getId());
 		Produto produto = new Produto(produtoDTO);
+		if (pedidoItemRequest.getQuantidadeProduto() > produto.getQuantidadeEstoque()) {
+			throw new SemEstoqueException();
+		}
 
 		BigDecimal quantidadeProduto = new BigDecimal(pedidoItem.getQuantidadeProduto());
 		BigDecimal valor = produto.getValorUnitario().multiply(quantidadeProduto);
