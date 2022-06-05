@@ -58,6 +58,12 @@ public class ClienteService {
 		return new ClienteResponseDTO(cliente.get());
 	}
 
+	public Page<ClienteResponseDTO> buscarPorNome(Pageable page, String nome) {
+		Page<Cliente> clientes = _clienteRepository.findByNomeContainingIgnoreCase(page, nome);
+
+		return clientes.map(cliente -> new ClienteResponseDTO(cliente));
+	}
+
 	public ClienteResponseDTO adicionar(ClienteRequestDTO clienteRequest) {
 		Cliente cliente = new Cliente(clienteRequest);
 		EnderecoDTO enderecoDTO = enderecoService.buscarInserirCep(clienteRequest.getCep());

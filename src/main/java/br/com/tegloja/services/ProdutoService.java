@@ -46,6 +46,31 @@ public class ProdutoService {
 		return produtos.map(produto -> new ProdutoResponseDTO(produto));
 	}
 
+	public Page<ProdutoResponseDTO> buscarPorNome(Pageable page, String nome) {
+		Page<Produto> produtos = produtoRepository.findByNomeProdutoContainingIgnoreCase(page, nome);
+
+		return produtos.map(produto -> new ProdutoResponseDTO(produto));
+	}
+
+	public List<ProdutoResponseDTO> buscarPorCategoria(Long idCategoria) {
+		CategoriaResponseDTO categoriaResponse = categoriaService.buscarPorId(idCategoria);
+		Categoria categoria = new Categoria(categoriaResponse);
+		List<Produto> produtos = produtoRepository.findByCategoria(categoria);
+		// @formatter:off
+		return produtos.stream()
+				.map(produto -> new ProdutoResponseDTO(produto))
+				.collect(Collectors.toList());
+		// @formatter:on
+	}
+
+	public Page<ProdutoResponseDTO> buscarPorCategoriaPaginado(Pageable pageable, Long idCategoria) {
+		CategoriaResponseDTO categoriaResponse = categoriaService.buscarPorId(idCategoria);
+		Categoria categoria = new Categoria(categoriaResponse);
+		Page<Produto> produtos = produtoRepository.findByCategoria(pageable, categoria);
+
+		return produtos.map(produto -> new ProdutoResponseDTO(produto));
+	}
+
 	/**
 	 * Ao inserir um novo produto, obrigatoriamente deverá estar atrelado a uma
 	 * categoria
