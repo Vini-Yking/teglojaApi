@@ -17,7 +17,7 @@ public class EnderecoService {
 	@Autowired
 	private EnderecoRepository enderecoRepository;
 
-	public EnderecoDTO buscar(String cep) {
+	public EnderecoDTO buscarInserirCep(String cep) {
 		Optional<Endereco> endereco = enderecoRepository.findByCep(cep);
 
 		if (endereco.isPresent()) {
@@ -37,10 +37,18 @@ public class EnderecoService {
 		}
 
 	}
+	
+	public Boolean buscarCep(String cep) {
+		Optional<Endereco> endereco = enderecoRepository.findByCep(cep);
+	if(endereco.isPresent()) {
+		return true;
+	}
+	return false;
+	}
+	
 
 	private EnderecoDTO inserir(Endereco endereco) {
 		endereco = enderecoRepository.save(endereco);
-
 		return new EnderecoDTO(endereco);
 	}
 

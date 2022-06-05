@@ -10,11 +10,8 @@ public class ClienteResponseDTO {
 	private String nome;
 	private String email;
 	private String cep;
-	private String bairro;
-	private String logradouro;
 	private Integer numeroEndereco;
-	private String cidade;
-	private String uf;
+	private Endereco endereco;
 	
 	
 	public ClienteResponseDTO(Cliente cliente) {
@@ -24,62 +21,27 @@ public class ClienteResponseDTO {
 		this.nome = cliente.getNome();
 		this.email = cliente.getEmail();
 		this.numeroEndereco = cliente.getNumeroEndereco();
+		this.endereco = cliente.getEndereco();
 	}
 	
-	public ClienteResponseDTO(Cliente cliente,Endereco endereco) {
-		this.id = cliente.getId();
-		this.cpf = cliente.getCpf();
-		this.nome = cliente.getNome();
-		this.email = cliente.getEmail();
-		this.cep = cliente.getCep();
-		this.numeroEndereco = cliente.getNumeroEndereco();
-		this.bairro = endereco.getBairro();
-		this.logradouro = endereco.getLogradouro();
-		this.cidade = endereco.getLocalidade();
-		this.uf = endereco.getUf();
-		
+	public ClienteResponseDTO() {
+		super();
 	}
-	
-	
-	
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
 	public Integer getNumeroEndereco() {
 		return numeroEndereco;
 	}
 
 	public void setNumeroEndereco(Integer numeroEndereco) {
 		this.numeroEndereco = numeroEndereco;
-	}
-
-	public String getBairro() {
-		return bairro;
-	}
-
-	public void setBairro(String bairro) {
-		this.bairro = bairro;
-	}
-
-	public String getLogradouro() {
-		return logradouro;
-	}
-
-	public void setLogradouro(String logradouro) {
-		this.logradouro = logradouro;
-	}
-
-	public String getCidade() {
-		return cidade;
-	}
-
-	public void setCidade(String localidade) {
-		this.cidade = localidade;
-	}
-
-	public String getUf() {
-		return uf;
-	}
-
-	public void setUf(String uf) {
-		this.uf = uf;
 	}
 
 	public Long getId() {

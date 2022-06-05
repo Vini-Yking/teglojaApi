@@ -27,7 +27,7 @@ public class Endereco {
 	
 	@Pattern(regexp="^[0-9]{8}",message= "precisam ser oito numeros")
 	@Size(min = 8, max=8,message="Cep precisa ter oito Digitos")
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false,unique=true)
 	private String cep;
 
 	private String logradouro;
@@ -35,12 +35,11 @@ public class Endereco {
 	private String bairro;
 	private String localidade;
 	private String uf;
-    
-	
-	@OneToMany
-	@JoinColumn(name = "id_categoria")
-	private List<Cliente> cliente;
 
+	@OneToMany
+	@JoinColumn(name = "id_cliente")
+	private List<Cliente> clientes;
+	
 	public Endereco() {
 
 	}
@@ -52,6 +51,7 @@ public class Endereco {
 		this.bairro = bairro;
 		this.localidade = cidade;
 		this.uf = uf;
+
 	}
 
 	public Endereco(EnderecoDTO enderecoDTO) {
@@ -61,14 +61,6 @@ public class Endereco {
 		this.bairro = enderecoDTO.getBairro();
 		this.localidade = enderecoDTO.getCidade();
 		this.uf = enderecoDTO.getUf();
-	}
-
-	public List<Cliente> getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(List<Cliente> cliente) {
-		this.cliente = cliente;
 	}
 
 	public Long getId() {

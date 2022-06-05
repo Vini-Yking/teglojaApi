@@ -18,7 +18,7 @@ public class EnderecoController {
 
 	@GetMapping("{cep}")
 	public ResponseEntity<EnderecoDTO> buscarPorCep(@PathVariable String cep) {
-		EnderecoDTO enderecoDTO = enderecoService.buscar(cep);
+		EnderecoDTO enderecoDTO = enderecoService.buscarInserirCep(cep);
 		if (enderecoDTO == null) {
 			return ResponseEntity.notFound().build();
 		}
