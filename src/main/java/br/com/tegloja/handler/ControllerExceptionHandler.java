@@ -42,8 +42,8 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 		return super.handleExceptionInternal(ex, erroResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
 	}
 
-	@ExceptionHandler(value = { DatabaseException.class })
-	public ResponseEntity<Object> handle(DatabaseException ex, WebRequest request) {
+	@ExceptionHandler(value = { DuplicateKeyException.class })
+	public ResponseEntity<Object> handle(DuplicateKeyException ex, WebRequest request) {
 		ErroResponseDTO erroResponse = new ErroResponseDTO(HttpStatus.BAD_REQUEST.value(),
 				"Erro de constraint no banco de dados.", LocalDateTime.now(), ex.getMessage());
 		return super.handleExceptionInternal(ex, erroResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
