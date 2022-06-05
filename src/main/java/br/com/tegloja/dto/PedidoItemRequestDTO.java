@@ -9,16 +9,30 @@ public class PedidoItemRequestDTO {
 	private Produto produto;
 	private Integer quantidadeProduto;
 	private BigDecimal valorDesconto;
+	private String tipoPagamento;
 
 	public PedidoItemRequestDTO() {
 
 	}
 
-	public PedidoItemRequestDTO(Produto produto, Integer quantidadeProduto, BigDecimal valorDesconto) {
+	public PedidoItemRequestDTO(Produto produto, Integer quantidadeProduto, BigDecimal valorDesconto,String tipoPagamento) {
 		super();
 		this.produto = produto;
 		this.quantidadeProduto = quantidadeProduto;
 		this.valorDesconto = valorDesconto;
+		this.tipoPagamento = tipoPagamento;
+	}
+
+	public String getTipoPagamento() {
+		return tipoPagamento;
+	}
+
+	public void setTipoPagamento(String tipoPagamento) {
+		this.tipoPagamento = tipoPagamento;
+	}
+
+	public void setQuantidadeProduto(Integer quantidadeProduto) {
+		this.quantidadeProduto = quantidadeProduto;
 	}
 
 	public Produto getProduto() {
