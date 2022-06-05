@@ -13,7 +13,7 @@ import br.com.tegloja.backend.config.MailConfig;
 import br.com.tegloja.dto.ClienteRequestDTO;
 import br.com.tegloja.dto.ClienteResponseDTO;
 import br.com.tegloja.dto.EnderecoDTO;
-import br.com.tegloja.handler.IdNotFoundException;
+import br.com.tegloja.handler.NaoEncontradoException;
 import br.com.tegloja.model.Cliente;
 import br.com.tegloja.model.Endereco;
 import br.com.tegloja.repository.ClienteRepository;
@@ -53,7 +53,7 @@ public class ClienteService {
 	public ClienteResponseDTO buscarPorId(Long id) {
 		Optional<Cliente> cliente = _clienteRepository.findById(id);
 		if (cliente.isEmpty()) {
-			throw new IdNotFoundException("Não existe um cliente com esse id.");
+			throw new NaoEncontradoException("Não existe um cliente com esse id.");
 		}
 		return new ClienteResponseDTO(cliente.get());
 	}

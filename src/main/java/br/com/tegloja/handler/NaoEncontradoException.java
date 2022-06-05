@@ -4,35 +4,35 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(code = HttpStatus.NOT_FOUND)
-public class IdNotFoundException extends RuntimeException {
+public class NaoEncontradoException extends RuntimeException {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public IdNotFoundException() {
+	public NaoEncontradoException() {
 		super("Não encontrado");
 
 		// TODO Auto-generated constructor stub
 	}
 
-	public IdNotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+	public NaoEncontradoException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 		// TODO Auto-generated constructor stub
 	}
 
-	public IdNotFoundException(String message, Throwable cause) {
+	public NaoEncontradoException(String message, Throwable cause) {
 		super(message, cause);
 		// TODO Auto-generated constructor stub
 	}
 
-	public IdNotFoundException(String message) {
+	public NaoEncontradoException(String message) {
 		super(message);
 		// TODO Auto-generated constructor stub
 	}
 
-	public IdNotFoundException(Throwable cause) {
+	public NaoEncontradoException(Throwable cause) {
 		super(cause);
 		// TODO Auto-generated constructor stub
 	}
