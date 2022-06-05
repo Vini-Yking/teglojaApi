@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -57,7 +58,7 @@ public class ClienteController {
 	}
 
 	@GetMapping("/paginas")
-	@ApiOperation(value = "Retorna uma lista paginada de todos as categorias")
+	@ApiOperation(value = "Retorna uma lista paginada de todos os clientes")
 	public ResponseEntity<Page<ClienteResponseDTO>> buscarTodosPaginado(@PageableDefault(
 	// @formatter:off
 					sort = "nome",
@@ -67,6 +68,19 @@ public class ClienteController {
 					)Pageable pageable) {
 		// @formatter:on
 		return ResponseEntity.ok(clienteService.buscarPagina(pageable));
+	}
+
+	@GetMapping("/pesquisar")
+	@ApiOperation(value = "Retorna uma lista paginada de clientes pesquisados por nome")
+	public ResponseEntity<Page<ClienteResponseDTO>> buscarPorNome(@PageableDefault(
+	// @formatter:off
+					sort = "nome",
+					direction = Sort.Direction.ASC,
+					page = 0,
+					size = 8
+					)Pageable pageable, @RequestParam String nome) {
+		// @formatter:on
+		return ResponseEntity.ok(clienteService.buscarPorNome(pageable, nome));
 	}
 
 	@GetMapping("/clientes/{id}/pedidos")
