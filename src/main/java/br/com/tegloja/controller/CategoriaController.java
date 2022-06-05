@@ -24,8 +24,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.tegloja.dto.CategoriaRequestDTO;
 import br.com.tegloja.dto.CategoriaResponseDTO;
+import br.com.tegloja.dto.ProdutoResponseDTO;
 import br.com.tegloja.model.Categoria;
 import br.com.tegloja.services.CategoriaService;
+import br.com.tegloja.services.ProdutoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -37,6 +39,8 @@ public class CategoriaController {
 
 	@Autowired
 	private CategoriaService categoriaService;
+
+	private ProdutoService produtoService;
 
 	@GetMapping
 	@ApiOperation(value = "Retorna uma lista de todos as categorias")
@@ -61,6 +65,18 @@ public class CategoriaController {
 					)Pageable pageable) {
 		// @formatter:on
 		return ResponseEntity.ok(categoriaService.buscarPagina(pageable));
+	}
+
+	@GetMapping("/{id}/produtos")
+	@ApiOperation(value = "Retorna os produtos de uma categoria")
+	public ResponseEntity<List<ProdutoResponseDTO>> buscarProdutosCategoria(@PathVariable Long id) {
+		return ResponseEntity.ok(produtoService.buscarPorCategoria(id));
+	}
+
+	@GetMapping("/{id}/produtos")
+	@ApiOperation(value = "Retorna os produtos paginados de uma categoria")
+	public ResponseEntity<List<ProdutoResponseDTO>> buscarProdutosCategoriaPaginado(@PathVariable Long id) {
+		return ResponseEntity.ok(produtoService.buscarPorCategoria(id));
 	}
 
 	@PostMapping
