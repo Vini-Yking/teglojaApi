@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -59,6 +60,18 @@ public class ProdutoController {
 					size = 8)Pageable pageable) {
 		// @formatter:on
 		return ResponseEntity.ok(produtoService.buscarPagina(pageable));
+	}
+
+	@GetMapping("/pesquisar")
+	@ApiOperation(value = "Retorna uma lista paginada de produtos pesquisados por nome")
+	public ResponseEntity<Page<ProdutoResponseDTO>> buscarPorNome(@PageableDefault(
+	// @formatter:off
+					sort = "nomeProduto",
+					direction = Sort.Direction.ASC,
+					page = 0,
+					size = 8)Pageable pageable, @RequestParam String nome) {
+		// @formatter:on
+		return ResponseEntity.ok(produtoService.buscarPorNome(pageable, nome));
 	}
 
 	@GetMapping("/{id}")
