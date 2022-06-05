@@ -24,6 +24,7 @@ public class EnderecoController {
 		}
 		return ResponseEntity.ok(enderecoDTO);
 	}
+
 	// troquei para ao invés de retornar todos os dados da api Endereco só os que
 	// realmente a gente precisa no DTO
 }

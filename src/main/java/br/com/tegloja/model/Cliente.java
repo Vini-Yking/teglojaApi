@@ -47,7 +47,7 @@ public class Cliente {
 	@Column(nullable = false)
 	private String email;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name = "id_endereco")
 	private Endereco endereco;
 	
