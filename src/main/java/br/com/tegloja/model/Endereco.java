@@ -13,8 +13,6 @@ import javax.validation.constraints.Size;
 
 import br.com.tegloja.dto.EnderecoDTO;
 
-
-
 @Entity
 public class Endereco {
 
@@ -23,10 +21,9 @@ public class Endereco {
 	@Column(name = "id_endereco")
 	private Long id;
 
-	
-	@Pattern(regexp="^[0-9]{8}",message= "precisam ser oito numeros")
-	@Size(min = 8, max=8,message="Cep precisa ter oito Digitos")
-	@Column(nullable = false,unique=true)
+	@Pattern(regexp = "^[0-9]{8}", message = "precisam ser oito numeros")
+	@Size(min = 8, max = 8, message = "Cep precisa ter oito Digitos")
+	@Column(nullable = false, unique = true)
 	private String cep;
 
 	private String logradouro;
@@ -34,15 +31,17 @@ public class Endereco {
 	private String bairro;
 	private String localidade;
 	private String uf;
-	
-	@OneToMany(mappedBy = "endereco")
-	private List<Cliente>cliente;
-	
+
+	@OneToMany
+	@JoinColumn(name = "id_cliente")
+	private List<Cliente> clientes;
+
 	public Endereco() {
 
 	}
 
-	public Endereco(Long id,String cep, String logradouro, String complemento, String bairro, String cidade, String uf) {
+	public Endereco(Long id, String cep, String logradouro, String complemento, String bairro, String cidade,
+			String uf) {
 		this.id = id;
 		this.cep = cep;
 		this.logradouro = logradouro;
@@ -120,4 +119,4 @@ public class Endereco {
 	}
 
 }
-//classe principal para retornar o endereco da API viacep
+// classe principal para retornar o endereco da API viacep

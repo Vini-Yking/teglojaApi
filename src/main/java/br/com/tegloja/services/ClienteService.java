@@ -60,11 +60,13 @@ public class ClienteService {
 
 	public ClienteResponseDTO adicionar(ClienteRequestDTO clienteRequest) {
 		Cliente cliente = new Cliente(clienteRequest);
-		EnderecoDTO enderecoDTO = enderecoService.buscarColetarCep(clienteRequest.getCep());
+		EnderecoDTO enderecoDTO = enderecoService.buscarInserirCep(clienteRequest.getCep());
+
 		Endereco endereco = new Endereco(enderecoDTO);
 
 		cliente.setEndereco(endereco);
-		_clienteRepository.save(cliente);
+		cliente = _clienteRepository.save(cliente);
+
 		/**
 		 * Não foi possivel enviar email por limitação do google
 		 * mailConfig.enviarEmail(cliente.getEmail(), "Cadastrado efetuado com sucesso",
