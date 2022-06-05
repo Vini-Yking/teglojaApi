@@ -47,7 +47,7 @@ public class Cliente {
 	@Column(nullable = false)
 	private String email;
 	
-	@ManyToOne(cascade=CascadeType.PERSIST)
+	@ManyToOne
 	@JoinColumn(name = "id_endereco")
 	private Endereco endereco;
 	
@@ -60,6 +60,7 @@ public class Cliente {
         this.email = clienteRequest.getEmail();
         this.nome = clienteRequest.getNome();
         this.numeroEndereco = clienteRequest.getNumeroEndereco();
+        this.endereco = clienteRequest.getEndereco();
     }
 	public Cliente(Long id, String cpf, String cep, String nome, String email, Integer numeroEndereco) {
 		this.id = id;
@@ -77,6 +78,7 @@ public class Cliente {
 		this.id = clienteResponse.getId();
 		this.nome = clienteResponse.getNome();
 		this.numeroEndereco = clienteResponse.getNumeroEndereco();
+		this.endereco = clienteResponse.getEndereco();
 		
 		
 	}

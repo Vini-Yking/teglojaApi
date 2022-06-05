@@ -17,7 +17,6 @@ import br.com.tegloja.handler.NaoEncontradoException;
 import br.com.tegloja.model.Cliente;
 import br.com.tegloja.model.Endereco;
 import br.com.tegloja.repository.ClienteRepository;
-import br.com.tegloja.repository.EnderecoRepository;
 
 @Service
 public class ClienteService {
@@ -61,7 +60,7 @@ public class ClienteService {
 
 	public ClienteResponseDTO adicionar(ClienteRequestDTO clienteRequest) {
 		Cliente cliente = new Cliente(clienteRequest);
-		EnderecoDTO enderecoDTO = enderecoService.buscarCep(clienteRequest.getCep());
+		EnderecoDTO enderecoDTO = enderecoService.buscarColetarCep(clienteRequest.getCep());
 		Endereco endereco = new Endereco(enderecoDTO);
 
 		cliente.setEndereco(endereco);

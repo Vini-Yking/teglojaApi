@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -35,16 +34,16 @@ public class Endereco {
 	private String bairro;
 	private String localidade;
 	private String uf;
-
-	@OneToMany
-	@JoinColumn(name = "id_cliente")
-	private List<Cliente> clientes;
+	
+	@OneToMany(mappedBy = "endereco")
+	private List<Cliente>cliente;
 	
 	public Endereco() {
 
 	}
 
-	public Endereco(String cep, String logradouro, String complemento, String bairro, String cidade, String uf) {
+	public Endereco(Long id,String cep, String logradouro, String complemento, String bairro, String cidade, String uf) {
+		this.id = id;
 		this.cep = cep;
 		this.logradouro = logradouro;
 		this.complemento = complemento;
@@ -55,6 +54,7 @@ public class Endereco {
 	}
 
 	public Endereco(EnderecoDTO enderecoDTO) {
+		this.id = enderecoDTO.getId();
 		this.cep = enderecoDTO.getCep();
 		this.logradouro = enderecoDTO.getLogradouro();
 		this.complemento = enderecoDTO.getComplemento();

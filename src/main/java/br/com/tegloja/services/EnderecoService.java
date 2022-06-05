@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import br.com.tegloja.dto.EnderecoDTO;
+import br.com.tegloja.handler.DatabaseException;
 import br.com.tegloja.handler.NaoEncontradoException;
 import br.com.tegloja.model.Endereco;
 import br.com.tegloja.repository.EnderecoRepository;
@@ -20,7 +21,7 @@ public class EnderecoService {
 	public EnderecoDTO buscarInserirCep(String cep) {
 		Optional<Endereco> endereco = enderecoRepository.findByCep(cep);
 
-		if (endereco.isPresent()) {			
+		if (endereco.isPresent()) {
 			return new EnderecoDTO(endereco.get());
 		} else {
 			RestTemplate rs = new RestTemplate();
@@ -30,26 +31,56 @@ public class EnderecoService {
 			if (!enderecoViaCep.get().getCep().isEmpty()) {
 				String cepSemTraco = enderecoViaCep.get().getCep().replaceAll("-", "");
 				enderecoViaCep.get().setCep(cepSemTraco);
-				return inserir(enderecoViaCep.get());
+				return inserirCep(enderecoViaCep.get());
 			} else {
 				return null; // exceção
 			}
 		}
 
 	}
-	
+
+	public EnderecoDTO buscarColetarCep(String cep) {
+		Optional<Endereco> endereco = enderecoRepository.findByCep(cep);
+
+		if (endereco.isPresent()) {
+			return new EnderecoDTO(endereco.get());
+		} else {
+			RestTemplate rs = new RestTemplate();
+			String url = "http://viacep.com.br/ws/" + cep + "/json";
+			Optional<Endereco> enderecoViaCep = Optional.ofNullable(rs.getForObject(url, Endereco.class));
+
+			if (!enderecoViaCep.get().getCep().isEmpty()) {
+				String cepSemTraco = enderecoViaCep.get().getCep().replaceAll("-", "");
+				enderecoViaCep.get().setCep(cepSemTraco);
+				return new EnderecoDTO(enderecoViaCep.get());
+			} else {
+				return null; // exceção
+			}
+		}
+	}
+
 	public EnderecoDTO buscarCep(String cep) {
 		Optional<Endereco> endereco = enderecoRepository.findByCep(cep);
-		
-		if (!endereco.isPresent()) {			
+
+		if (!endereco.isPresent()) {
 			throw new NaoEncontradoException("Testando esse maldito cep");
 		}
 		return new EnderecoDTO(endereco.get());
 	}
-	
 
-	private EnderecoDTO inserir(Endereco endereco) {
+	public EnderecoDTO inserir(Endereco endereco) {
 		endereco = enderecoRepository.save(endereco);
+		return new EnderecoDTO(endereco);
+	}
+
+	public EnderecoDTO inserirCep(Endereco endereco) {
+		enderecoRepository.save(endereco);
+		try {
+			endereco = enderecoRepository.save(endereco);
+		} catch (Exception e) {
+			throw new DatabaseException("Endereco ja cadastrado");
+		}
+
 		return new EnderecoDTO(endereco);
 	}
 
