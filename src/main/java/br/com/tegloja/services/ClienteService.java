@@ -17,7 +17,6 @@ import br.com.tegloja.handler.NaoEncontradoException;
 import br.com.tegloja.model.Cliente;
 import br.com.tegloja.model.Endereco;
 import br.com.tegloja.repository.ClienteRepository;
-import br.com.tegloja.repository.EnderecoRepository;
 
 @Service
 public class ClienteService {
@@ -64,10 +63,10 @@ public class ClienteService {
 		EnderecoDTO enderecoDTO = enderecoService.buscarInserirCep(clienteRequest.getCep());
 
 		Endereco endereco = new Endereco(enderecoDTO);
-		
+
 		cliente.setEndereco(endereco);
 		cliente = _clienteRepository.save(cliente);
-		
+
 		/**
 		 * Não foi possivel enviar email por limitação do google
 		 * mailConfig.enviarEmail(cliente.getEmail(), "Cadastrado efetuado com sucesso",

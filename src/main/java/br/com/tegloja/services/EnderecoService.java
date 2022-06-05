@@ -8,6 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 import br.com.tegloja.dto.EnderecoDTO;
 import br.com.tegloja.handler.ArgumentoInvalidoException;
+import br.com.tegloja.handler.DuplicateKeyException;
 import br.com.tegloja.handler.NaoEncontradoException;
 import br.com.tegloja.model.Endereco;
 import br.com.tegloja.repository.EnderecoRepository;
@@ -48,6 +49,17 @@ public class EnderecoService {
 		Endereco endereco = enderecoRepository.save(enderecoViaCep.get());
 		return new EnderecoDTO(endereco);
 
+	}
+
+	public EnderecoDTO inserirCep(Endereco endereco) {
+		enderecoRepository.save(endereco);
+		try {
+			endereco = enderecoRepository.save(endereco);
+		} catch (Exception e) {
+			throw new DuplicateKeyException("Endereco ja cadastrado");
+		}
+
+		return new EnderecoDTO(endereco);
 	}
 
 	public void deletar(Long id) {

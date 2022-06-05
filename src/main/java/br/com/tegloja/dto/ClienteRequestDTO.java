@@ -1,5 +1,7 @@
 package br.com.tegloja.dto;
 
+import java.util.List;
+
 import br.com.tegloja.model.Cliente;
 import br.com.tegloja.model.Endereco;
 
@@ -23,7 +25,7 @@ public class ClienteRequestDTO {
 		this.nome = cliente.getNome();
 		this.email = cliente.getEmail();
 		this.numeroEndereco = cliente.getNumeroEndereco();
-		this.endereco = cliente.getEndereco();
+		this.endereco =  cliente.getEndereco();
 	}
 	
 	
@@ -32,7 +34,7 @@ public class ClienteRequestDTO {
 	}
 
 	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
+		this.endereco =  endereco;
 	}
 
 	public Integer getNumeroEndereco() {

@@ -33,15 +33,13 @@ public class Endereco {
 	private String localidade;
 	private String uf;
 
-	@OneToMany
-	@JoinColumn(name = "id_cliente")
-	private List<Cliente> clientes;
-
 	public Endereco() {
 
 	}
 
-	public Endereco(String cep, String logradouro, String complemento, String bairro, String cidade, String uf) {
+	public Endereco(Long id, String cep, String logradouro, String complemento, String bairro, String cidade,
+			String uf) {
+		this.id = id;
 		this.cep = cep;
 		this.logradouro = logradouro;
 		this.complemento = complemento;
@@ -118,4 +116,4 @@ public class Endereco {
 	}
 
 }
-//classe principal para retornar o endereco da API viacep
+// classe principal para retornar o endereco da API viacep

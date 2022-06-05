@@ -3,7 +3,6 @@ package br.com.tegloja.dto;
 import br.com.tegloja.model.Endereco;
 
 public class EnderecoDTO {
-
 	private Long id;
 	private String cep;
 	private String logradouro;

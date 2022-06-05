@@ -78,7 +78,6 @@ public class Cliente {
 		this.id = clienteResponse.getId();
 		this.nome = clienteResponse.getNome();
 		this.numeroEndereco = clienteResponse.getNumeroEndereco();
-
 	}
 
 	@Override // Usado para enviar email
