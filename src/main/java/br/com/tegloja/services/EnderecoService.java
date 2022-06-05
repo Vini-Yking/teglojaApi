@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import br.com.tegloja.dto.EnderecoDTO;
-import br.com.tegloja.handler.NaoEncontradoException;
+import br.com.tegloja.handler.IdNotFoundException;
 import br.com.tegloja.model.Endereco;
 import br.com.tegloja.repository.EnderecoRepository;
 
@@ -20,7 +20,7 @@ public class EnderecoService {
 	public EnderecoDTO buscarInserirCep(String cep) {
 		Optional<Endereco> endereco = enderecoRepository.findByCep(cep);
 
-		if (endereco.isPresent()) {
+		if (endereco.isPresent()) {			
 			return new EnderecoDTO(endereco.get());
 		} else {
 			RestTemplate rs = new RestTemplate();
@@ -54,7 +54,7 @@ public class EnderecoService {
 
 	public void deletar(Long id) {
 		if (enderecoRepository.findById(id).isEmpty()) {
-			throw new NaoEncontradoException("Não existe um endereço com esse id.");
+			throw new IdNotFoundException("Não existe um endereço com esse id.");
 		}
 
 		enderecoRepository.deleteById(id);
