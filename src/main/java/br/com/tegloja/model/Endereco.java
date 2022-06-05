@@ -14,8 +14,6 @@ import javax.validation.constraints.Size;
 
 import br.com.tegloja.dto.EnderecoDTO;
 
-
-
 @Entity
 public class Endereco {
 
@@ -24,10 +22,9 @@ public class Endereco {
 	@Column(name = "id_endereco")
 	private Long id;
 
-	
-	@Pattern(regexp="^[0-9]{8}",message= "precisam ser oito numeros")
-	@Size(min = 8, max=8,message="Cep precisa ter oito Digitos")
-	@Column(nullable = false,unique=true)
+	@Pattern(regexp = "^[0-9]{8}", message = "precisam ser oito numeros")
+	@Size(min = 8, max = 8, message = "Cep precisa ter oito Digitos")
+	@Column(nullable = false, unique = true)
 	private String cep;
 
 	private String logradouro;
@@ -39,7 +36,7 @@ public class Endereco {
 	@OneToMany
 	@JoinColumn(name = "id_cliente")
 	private List<Cliente> clientes;
-	
+
 	public Endereco() {
 
 	}
@@ -55,6 +52,7 @@ public class Endereco {
 	}
 
 	public Endereco(EnderecoDTO enderecoDTO) {
+		this.id = enderecoDTO.getId();
 		this.cep = enderecoDTO.getCep();
 		this.logradouro = enderecoDTO.getLogradouro();
 		this.complemento = enderecoDTO.getComplemento();
