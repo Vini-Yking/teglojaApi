@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -31,10 +32,6 @@ public class Endereco {
 	private String bairro;
 	private String localidade;
 	private String uf;
-
-	@OneToMany
-	@JoinColumn(name = "id_cliente")
-	private List<Cliente> clientes;
 
 	public Endereco() {
 
