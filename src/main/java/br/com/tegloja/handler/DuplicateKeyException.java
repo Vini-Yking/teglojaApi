@@ -1,8 +1,8 @@
 package br.com.tegloja.handler;
 
-public class DatabaseException extends RuntimeException {
+public class DuplicateKeyException extends RuntimeException {
 
-	public DatabaseException(String message) {
+	public DuplicateKeyException(String message) {
 		super(message);
 	}
 

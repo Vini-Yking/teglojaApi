@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.tegloja.dto.CategoriaRequestDTO;
 import br.com.tegloja.dto.CategoriaResponseDTO;
-import br.com.tegloja.handler.DatabaseException;
+import br.com.tegloja.handler.DuplicateKeyException;
 import br.com.tegloja.handler.NaoEncontradoException;
 import br.com.tegloja.model.Categoria;
 import br.com.tegloja.repository.CategoriaRepository;
@@ -28,7 +28,7 @@ public class CategoriaService {
 		try {
 			categoria = _categoriarepository.save(categoria);
 		} catch (Exception e) {
-			throw new DatabaseException("Essa categoria já foi cadastrada");
+			throw new DuplicateKeyException("Essa categoria já foi cadastrada.");
 		}
 
 		return new CategoriaResponseDTO(categoria);
