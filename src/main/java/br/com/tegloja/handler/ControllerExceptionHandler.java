@@ -15,6 +15,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import br.com.tegloja.dto.ErroResponseDTO;
+import br.com.tegloja.enums.EnumValidationException;
 
 @ControllerAdvice
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
@@ -30,7 +31,13 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 		return super.handleExceptionInternal(ex, erroResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
 	}
 
-
+	@ExceptionHandler(value = { EnumValidationException.class })
+	public ResponseEntity<Object> handle(EnumValidationException ex, WebRequest request){
+		ErroResponseDTO erroResponse = new ErroResponseDTO(HttpStatus.NOT_FOUND.value(), "Pagamento não encontrado",
+				LocalDateTime.now(), ex.getMessage());
+		return super.handleExceptionInternal(ex, erroResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+	}
+	
 	 /**
 	  * 	Exceção que trata quando o usuario entra um parâmetro que contraria a regra
 	 de negócio (ex: passar quantidade de produto maior que estoque)

@@ -45,7 +45,7 @@ public class Pedido {
 
 	@Column(name = "tipo_pagamento")
 	@Enumerated(EnumType.STRING)
-	private FormaPagamento tipoPagamento;
+	private FormaPagamento formaPagamento;
 
 	@ManyToOne
 	@JoinColumn(name = "id_cliente")
@@ -59,7 +59,7 @@ public class Pedido {
 	}
 
 	public Pedido(Long id, StatusCompra status, LocalDate dataCompra, LocalDate dataEntrega, BigDecimal valortotal,
-			Cliente cliente) {
+			Cliente cliente,String tipoPagamento) {
 		this.id = id;
 		this.status = status;
 		this.dataCompra = dataCompra;
@@ -79,7 +79,7 @@ public class Pedido {
 		this.id = pedidoResponse.getIdPedido();
 		this.status = pedidoResponse.getStatus();
 		this.valortotal = pedidoResponse.getValortotal();
-		this.tipoPagamento = pedidoResponse.getTipoPagamento();
+		this.formaPagamento = pedidoResponse.getFormaPagamento();
 	}
 
 	@Override // envio de email do pedido
@@ -136,12 +136,12 @@ public class Pedido {
 		this.valortotal = valortotal;
 	}
 
-	public FormaPagamento getTipoPagamento() {
-		return tipoPagamento;
+	public FormaPagamento getFormaPagamento() {
+		return formaPagamento;
 	}
 
-	public void setTipoPagamento(FormaPagamento tipoPagamento) {
-		this.tipoPagamento = tipoPagamento;
+	public void setFormaPagamento(FormaPagamento formaPagamento) {
+		this.formaPagamento = formaPagamento;
 	}
 
 	public List<PedidoItem> getItens() {

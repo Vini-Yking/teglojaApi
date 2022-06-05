@@ -14,10 +14,13 @@ import org.springframework.stereotype.Service;
 
 import br.com.tegloja.backend.config.MailConfig;
 import br.com.tegloja.dto.ClienteResponseDTO;
+import br.com.tegloja.dto.PedidoItemRequestDTO;
 import br.com.tegloja.dto.PedidoItemResponseDTO;
 import br.com.tegloja.dto.PedidoRequestDTO;
 import br.com.tegloja.dto.PedidoResponseDTO;
 import br.com.tegloja.dto.ProdutoResponseDTO;
+import br.com.tegloja.enums.EnumValidationException;
+import br.com.tegloja.enums.FormaPagamento;
 import br.com.tegloja.enums.StatusCompra;
 import br.com.tegloja.handler.NaoEncontradoException;
 import br.com.tegloja.handler.ArgumentoInvalidoException;
@@ -114,9 +117,13 @@ public class PedidoService {
 		return new PedidoResponseDTO(pedido);
 	}
 
-	public PedidoResponseDTO finalizarPedido(Long idPedido) {
+	public PedidoResponseDTO finalizarPedido(Long idPedido, PedidoRequestDTO requestDTO ){
 		PedidoResponseDTO pedidoResponse = buscarPorIdPedido(idPedido);
 		List<PedidoItemResponseDTO> itens = pedidoItemService.buscarPorIdPedido(idPedido);
+		FormaPagamento pagamento = requestDTO.getFormaPagamento();
+		if (!FormaPagamento.verificaPagamento(pagamento.getCodigo())) {
+			throw new EnumValidationException("Pagamento invalido");
+		}
 
 		// Verifica o estoque dos produtos
 		for (PedidoItemResponseDTO pedidoItemResponseDTO : itens) {
@@ -146,6 +153,7 @@ public class PedidoService {
 		pedido.setDataCompra(LocalDate.now());
 		pedido.setDataEntrega(LocalDate.now().plusDays(7));
 		pedido.setStatus(StatusCompra.FINALIZADO);
+		pedido.setFormaPagamento(pagamento);
 		pedido = _pedidorepository.save(pedido);
 
 		return new PedidoResponseDTO(pedido);
@@ -169,4 +177,5 @@ public class PedidoService {
 		buscarPorIdPedido(id);
 		_pedidorepository.deleteById(id);
 	}
+
 }

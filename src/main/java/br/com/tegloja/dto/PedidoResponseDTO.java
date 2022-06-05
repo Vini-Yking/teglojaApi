@@ -15,7 +15,7 @@ public class PedidoResponseDTO {
 	private LocalDate dataCompra;
 	private LocalDate dataEntrega;
 	private BigDecimal valortotal;
-	private FormaPagamento tipoPagamento;
+	private FormaPagamento formaPagamento;
 	private Cliente Cliente;
 
 	public PedidoResponseDTO() {
@@ -29,7 +29,7 @@ public class PedidoResponseDTO {
 		this.status = pedido.getStatus();
 		this.valortotal = pedido.getValortotal();
 		this.Cliente = pedido.getCliente();
-		this.tipoPagamento = pedido.getTipoPagamento();
+		this.formaPagamento = pedido.getFormaPagamento();
 	}
 
 	public Long getIdPedido() {
@@ -80,12 +80,12 @@ public class PedidoResponseDTO {
 		Cliente = cliente;
 	}
 
-	public FormaPagamento getTipoPagamento() {
-		return tipoPagamento;
+	public FormaPagamento getFormaPagamento() {
+		return formaPagamento;
 	}
 
 	public void setTipoPagamento(FormaPagamento tipoPagamento) {
-		this.tipoPagamento = tipoPagamento;
+		this.formaPagamento = tipoPagamento;
 	}
 	
 	
