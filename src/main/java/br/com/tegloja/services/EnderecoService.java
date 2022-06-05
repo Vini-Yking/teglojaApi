@@ -17,10 +17,10 @@ public class EnderecoService {
 	@Autowired
 	private EnderecoRepository enderecoRepository;
 
-	public EnderecoDTO buscar(String cep) {
+	public EnderecoDTO buscarInserirCep(String cep) {
 		Optional<Endereco> endereco = enderecoRepository.findByCep(cep);
 
-		if (endereco.isPresent()) {
+		if (endereco.isPresent()) {			
 			return new EnderecoDTO(endereco.get());
 		} else {
 			RestTemplate rs = new RestTemplate();
@@ -37,10 +37,19 @@ public class EnderecoService {
 		}
 
 	}
+	
+	public EnderecoDTO buscarCep(String cep) {
+		Optional<Endereco> endereco = enderecoRepository.findByCep(cep);
+		
+		if (!endereco.isPresent()) {			
+			throw new NaoEncontradoException("Testando esse maldito cep");
+		}
+		return new EnderecoDTO(endereco.get());
+	}
+	
 
 	private EnderecoDTO inserir(Endereco endereco) {
 		endereco = enderecoRepository.save(endereco);
-
 		return new EnderecoDTO(endereco);
 	}
 

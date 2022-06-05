@@ -1,28 +1,40 @@
 package br.com.tegloja.dto;
 
+import br.com.tegloja.model.Cliente;
+import br.com.tegloja.model.Endereco;
+
 public class ClienteRequestDTO {
 
 	private String cpf;
-	private String cep;
-	private Integer numeroEndereco;
 	private String nome;
 	private String email;
+	private String cep;
+	private Integer numeroEndereco;
+	private Endereco endereco;
 	
 
 	public ClienteRequestDTO() {
 
 	}
-
-	public ClienteRequestDTO(String cpf, String cep, String nome, String email, Integer numeroEndereco) {
-		super();
-		this.cpf = cpf;
-		this.cep = cep;
-		this.nome = nome;
-		this.email = email;
-		this.numeroEndereco = numeroEndereco;
+	
+	public ClienteRequestDTO(Cliente cliente) {
+		this.cpf = cliente.getCpf();
+		this.cep = cliente.getCep();
+		this.nome = cliente.getNome();
+		this.email = cliente.getEmail();
+		this.numeroEndereco = cliente.getNumeroEndereco();
+		this.endereco = cliente.getEndereco();
+	}
+	
+	
+	public Endereco getEndereco() {
+		return endereco;
 	}
 
-	
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
 	public Integer getNumeroEndereco() {
 		return numeroEndereco;
 	}

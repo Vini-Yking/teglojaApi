@@ -2,7 +2,6 @@ package br.com.tegloja.dto;
 
 import java.math.BigDecimal;
 
-import br.com.tegloja.model.Pedido;
 import br.com.tegloja.model.Produto;
 
 public class PedidoItemRequestDTO {

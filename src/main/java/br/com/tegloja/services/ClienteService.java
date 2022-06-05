@@ -23,11 +23,8 @@ import br.com.tegloja.repository.EnderecoRepository;
 public class ClienteService {
 
 	@Autowired
-	private ClienteRepository _clienterepository;
-	
-	@Autowired
-	private EnderecoRepository enderecoRepository;
-	
+	private ClienteRepository _clienteRepository;
+
 	@Autowired
 	private EnderecoService enderecoService;
 
@@ -36,11 +33,11 @@ public class ClienteService {
 
 	public void deletar(Long id) {
 		buscarPorId(id);
-		_clienterepository.deleteById(id);
+		_clienteRepository.deleteById(id);
 	}
 
 	public List<ClienteResponseDTO> buscarTodos() {
-		List<Cliente> clientes = _clienterepository.findAll();
+		List<Cliente> clientes = _clienteRepository.findAll();
 		// @formatter:off
 		return clientes.stream()
 				.map(cliente -> new ClienteResponseDTO(cliente))
@@ -49,13 +46,13 @@ public class ClienteService {
 	}
 
 	public Page<ClienteResponseDTO> buscarPagina(Pageable page) {
-		Page<Cliente> clientes = _clienterepository.findAll(page);
+		Page<Cliente> clientes = _clienteRepository.findAll(page);
 
 		return clientes.map(cliente -> new ClienteResponseDTO(cliente));
 	}
 
 	public ClienteResponseDTO buscarPorId(Long id) {
-		Optional<Cliente> cliente = _clienterepository.findById(id);
+		Optional<Cliente> cliente = _clienteRepository.findById(id);
 		if (cliente.isEmpty()) {
 			throw new NaoEncontradoException("Não existe um cliente com esse id.");
 		}
@@ -64,24 +61,25 @@ public class ClienteService {
 
 	public ClienteResponseDTO adicionar(ClienteRequestDTO clienteRequest) {
 		Cliente cliente = new Cliente(clienteRequest);
-		EnderecoDTO enderecoDTO = enderecoService.buscar(clienteRequest.getCep());
+		EnderecoDTO enderecoDTO = enderecoService.buscarCep(clienteRequest.getCep());
 		Endereco endereco = new Endereco(enderecoDTO);
-		cliente = _clienterepository.save(cliente);
-		
+
+		cliente.setEndereco(endereco);
+		_clienteRepository.save(cliente);
 		/**
 		 * Não foi possivel enviar email por limitação do google
-		 * mailConfig.enviarEmail(cliente.getEmail(), "Cadastrado efetuado com sucesso", cliente.toString());
+		 * mailConfig.enviarEmail(cliente.getEmail(), "Cadastrado efetuado com sucesso",
+		 * cliente.toString());
 		 */
-		
-		
-		return new ClienteResponseDTO(cliente,endereco);
+
+		return new ClienteResponseDTO(cliente);
 	}
 
 	public ClienteResponseDTO atualizar(ClienteRequestDTO clienteRequest, Long id) {
 		buscarPorId(id);
 		Cliente cliente = new Cliente(clienteRequest);
 		cliente.setId(id);
-		cliente = _clienterepository.save(cliente);
+		cliente = _clienteRepository.save(cliente);
 
 		return new ClienteResponseDTO(cliente);
 	}

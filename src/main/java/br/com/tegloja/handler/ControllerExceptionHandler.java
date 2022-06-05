@@ -19,8 +19,10 @@ import br.com.tegloja.dto.ErroResponseDTO;
 @ControllerAdvice
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
-	// Exceção que trata quando o usuario entra um parametro e ele não é encontrado
-	// (ex: id não encontrado)
+	/**
+	 * Exceção que trata quando o usuario entra um parametro e ele não é encontrado
+	 (ex: id não encontrado)
+	 */
 	@ExceptionHandler(value = { NaoEncontradoException.class })
 	public ResponseEntity<Object> handle(NaoEncontradoException ex, WebRequest request) {
 		ErroResponseDTO erroResponse = new ErroResponseDTO(HttpStatus.NOT_FOUND.value(), "Não encontrado",
@@ -28,8 +30,11 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 		return super.handleExceptionInternal(ex, erroResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
 	}
 
-	// Exceção que trata quando o usuario entra um parâmetro que contraria a regra
-	// de negócio (ex: passar quantidade de produto maior que estoque)
+
+	 /**
+	  * 	Exceção que trata quando o usuario entra um parâmetro que contraria a regra
+	 de negócio (ex: passar quantidade de produto maior que estoque)
+	  */
 	@ExceptionHandler(value = { ArgumentoInvalidoException.class })
 	public ResponseEntity<Object> handle(ArgumentoInvalidoException ex, WebRequest request) {
 		ErroResponseDTO erroResponse = new ErroResponseDTO(HttpStatus.BAD_REQUEST.value(), "Argumento inválido.",
@@ -43,8 +48,9 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 				"Erro de constraint no banco de dados.", LocalDateTime.now(), ex.getMessage());
 		return super.handleExceptionInternal(ex, erroResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
 	}
-
-	// Exceção que trata os erros de validação do Request Body (@Valid ...)
+	/**
+	 * Exceção que trata os erros de validação do Request Body (@Valid ...)
+	 */
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {

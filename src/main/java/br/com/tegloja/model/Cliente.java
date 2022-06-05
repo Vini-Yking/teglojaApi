@@ -1,10 +1,13 @@
 package br.com.tegloja.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -24,7 +27,7 @@ public class Cliente {
 	private Long id;
 
 	@CPF(message= "Insira um cpf válido")
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false)
 	private String cpf;
     
 	@Pattern(regexp="^[0-9]{8}",message= "precisam ser oito numeros")
@@ -41,8 +44,12 @@ public class Cliente {
 	private String nome;
     
 	@Email(message=" Insira um e-mail válido")
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false)
 	private String email;
+	
+	@ManyToOne(cascade=CascadeType.PERSIST)
+	@JoinColumn(name = "id_endereco")
+	private Endereco endereco;
 	
 	public Cliente() {
 	}
@@ -70,7 +77,11 @@ public class Cliente {
 		this.id = clienteResponse.getId();
 		this.nome = clienteResponse.getNome();
 		this.numeroEndereco = clienteResponse.getNumeroEndereco();
+		
+		
 	}
+	
+	
 
 	@Override // Usado para enviar email
 	public String toString() {
@@ -78,6 +89,15 @@ public class Cliente {
 	}
 
 	
+	
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
 	public Integer getNumeroEndereco() {
 		return numeroEndereco;
 	}

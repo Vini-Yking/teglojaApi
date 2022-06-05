@@ -18,12 +18,13 @@ public class EnderecoController {
 
 	@GetMapping("{cep}")
 	public ResponseEntity<EnderecoDTO> buscarPorCep(@PathVariable String cep) {
-		EnderecoDTO enderecoDTO = enderecoService.buscar(cep);
+		EnderecoDTO enderecoDTO = enderecoService.buscarInserirCep(cep);
 		if (enderecoDTO == null) {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(enderecoDTO);
 	}
+
 	// troquei para ao invés de retornar todos os dados da api Endereco só os que
 	// realmente a gente precisa no DTO
 }
