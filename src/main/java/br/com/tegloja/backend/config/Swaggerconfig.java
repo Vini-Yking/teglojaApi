@@ -10,8 +10,10 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
+@EnableSwagger2
 public class Swaggerconfig {
 
 		@Bean
@@ -27,7 +29,7 @@ public class Swaggerconfig {
 		private ApiInfo apiInfo() {
 			ApiInfo apiInfo = new ApiInfoBuilder()
 					.title("API - Tegloja")
-					.description("Api da TEGLOJA")
+					.description("Api REST da TEGLOJA.")
 					.license("Apache License 2.0")
 					.termsOfServiceUrl("")
 					.version("1.01")

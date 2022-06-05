@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,25 +26,32 @@ import br.com.tegloja.dto.CategoriaRequestDTO;
 import br.com.tegloja.dto.CategoriaResponseDTO;
 import br.com.tegloja.model.Categoria;
 import br.com.tegloja.services.CategoriaService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/tegloja/categorias")
+@Api(value = "Categorias de Produtos")
+@CrossOrigin(origins = "*")
 public class CategoriaController {
 
 	@Autowired
 	private CategoriaService categoriaService;
 
 	@GetMapping
+	@ApiOperation(value = "Retorna uma lista de todos as categorias")
 	public ResponseEntity<List<CategoriaResponseDTO>> buscarTodos() {
 		return ResponseEntity.ok(categoriaService.buscarTodos());
 	}
 
 	@GetMapping("/{id}")
+	@ApiOperation(value = "Retorna uma categoria")
 	public ResponseEntity<CategoriaResponseDTO> buscarPorId(@PathVariable Long id) {
 		return ResponseEntity.ok(categoriaService.buscarPorId(id));
 	}
 
 	@GetMapping("/pagina")
+	@ApiOperation(value = "Retorna uma lista paginada de todos as categorias")
 	public ResponseEntity<Page<Categoria>> buscarPagina(@PageableDefault(
 	// @formatter:off
 					sort = "categoria",
@@ -56,6 +64,7 @@ public class CategoriaController {
 	}
 
 	@PostMapping
+	@ApiOperation(value = "Adiciona uma categoria")
 	public ResponseEntity<CategoriaResponseDTO> adicionar(@Valid @RequestBody CategoriaRequestDTO request) {
 		CategoriaResponseDTO categoriaResponseDTO = categoriaService.adicionar(request);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -65,6 +74,7 @@ public class CategoriaController {
 	}
 
 	@PutMapping("/{id}")
+	@ApiOperation(value = "Atualiza uma categoria")
 	public ResponseEntity<CategoriaResponseDTO> atualizar(@Valid @RequestBody CategoriaRequestDTO request,
 			@PathVariable Long id) {
 		CategoriaResponseDTO responseBody = categoriaService.atualizar(request, id);
@@ -73,6 +83,7 @@ public class CategoriaController {
 	}
 
 	@DeleteMapping("/{id}")
+	@ApiOperation(value = "Apaga uma categoria")
 	public ResponseEntity<Object> excluir(@PathVariable Long id) {
 		categoriaService.deletar(id);
 

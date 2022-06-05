@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,9 +29,13 @@ import br.com.tegloja.dto.ClienteResponseDTO;
 import br.com.tegloja.dto.PedidoResponseDTO;
 import br.com.tegloja.services.ClienteService;
 import br.com.tegloja.services.PedidoService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/tegloja/clientes")
+@Api(value = "Clientes")
+@CrossOrigin(origins = "*")
 public class ClienteController {
 
 	@Autowired
@@ -40,16 +45,19 @@ public class ClienteController {
 	private PedidoService pedidoService;
 
 	@GetMapping
+	@ApiOperation(value = "Retorna uma lista de todos os clientes")
 	public ResponseEntity<List<ClienteResponseDTO>> buscarTodos() {
 		return ResponseEntity.ok(clienteService.buscarTodos());
 	}
 
 	@GetMapping("/{id}")
+	@ApiOperation(value = "Retorna um cliente")
 	public ResponseEntity<ClienteResponseDTO> buscarPorId(@PathVariable Long id) {
 		return ResponseEntity.ok(clienteService.buscarPorId(id));
 	}
 
 	@GetMapping("/paginas")
+	@ApiOperation(value = "Retorna uma lista paginada de todos as categorias")
 	public ResponseEntity<Page<ClienteResponseDTO>> buscarTodosPaginado(@PageableDefault(
 	// @formatter:off
 					sort = "nome",
@@ -62,11 +70,13 @@ public class ClienteController {
 	}
 
 	@GetMapping("/clientes/{id}/pedidos")
+	@ApiOperation(value = "Retorna uma lista de pedidos do cliente")
 	public ResponseEntity<List<PedidoResponseDTO>> buscarPedidosCliente(@PathVariable Long id) {
 		return ResponseEntity.ok(pedidoService.buscarPorIdCliente(id));
 	}
 
 	@GetMapping("/clientes/{id}/pedidos/paginas")
+	@ApiOperation(value = "Retorna uma lista paginada de pedidos do cliente")
 	public ResponseEntity<Page<PedidoResponseDTO>> buscarPedidosPaginadosCliente(@PathVariable Long id,
 			@PageableDefault(page = 0, size = 8) Pageable pageable) {
 		return ResponseEntity.ok(pedidoService.buscarPorIdClientePaginado(id, pageable));
@@ -74,6 +84,7 @@ public class ClienteController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
+	@ApiOperation(value = "Adiciona um cliente")
 	public ResponseEntity<ClienteResponseDTO> adicionar(@Valid @RequestBody ClienteRequestDTO request) {
 		ClienteResponseDTO clienteResponseDTO = clienteService.adicionar(request);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -82,6 +93,7 @@ public class ClienteController {
 	}
 
 	@PutMapping("/{id}")
+	@ApiOperation(value = "Atualiza um cliente")
 	public ResponseEntity<ClienteResponseDTO> atualizar(@Valid @RequestBody ClienteRequestDTO request,
 			@PathVariable Long id) {
 		ClienteResponseDTO responseBody = clienteService.atualizar(request, id);
@@ -90,6 +102,7 @@ public class ClienteController {
 	}
 
 	@DeleteMapping("/{id}")
+	@ApiOperation(value = "Apaga um cliente")
 	public ResponseEntity<Object> excluir(@PathVariable Long id) {
 		clienteService.deletar(id);
 
