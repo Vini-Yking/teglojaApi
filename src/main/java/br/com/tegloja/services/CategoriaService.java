@@ -43,11 +43,10 @@ public class CategoriaService {
 		// @formatter:on
 	}
 
-	public Page<Categoria> buscarPagina(Pageable page) {
+	public Page<CategoriaResponseDTO> buscarPagina(Pageable page) {
 		Page<Categoria> categorias = _categoriarepository.findAll(page);
 
-		return categorias;
-		// return categorias.map(categoria -> new CategoriaResponseDTO(categoria));
+		return categorias.map(categoria -> new CategoriaResponseDTO(categoria));
 	}
 
 	public CategoriaResponseDTO buscarPorId(Long id) {
@@ -56,6 +55,12 @@ public class CategoriaService {
 			throw new NaoEncontradoException("Não existe uma categoria com esse id.");
 		}
 		return new CategoriaResponseDTO(categoria.get());
+	}
+
+	public Page<CategoriaResponseDTO> buscarPorNome(Pageable pageable, String nome) {
+		Page<Categoria> categorias = _categoriarepository.findByCategoriaContainingIgnoreCase(pageable, nome);
+
+		return categorias.map(categoria -> new CategoriaResponseDTO(categoria));
 	}
 
 	public CategoriaResponseDTO atualizar(CategoriaRequestDTO categoriaRequest, Long id) {
