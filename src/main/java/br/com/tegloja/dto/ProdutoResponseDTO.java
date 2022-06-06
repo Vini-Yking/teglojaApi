@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import br.com.tegloja.model.Categoria;
-import br.com.tegloja.model.Foto;
 import br.com.tegloja.model.Produto;
 
 public class ProdutoResponseDTO {

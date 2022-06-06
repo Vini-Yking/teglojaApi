@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import br.com.tegloja.backend.config.MailConfig;
 import br.com.tegloja.dto.ClienteResponseDTO;
-import br.com.tegloja.dto.PedidoItemRequestDTO;
 import br.com.tegloja.dto.PedidoItemResponseDTO;
 import br.com.tegloja.dto.PedidoRequestDTO;
 import br.com.tegloja.dto.PedidoResponseDTO;
@@ -23,7 +22,6 @@ import br.com.tegloja.enums.FormaPagamento;
 import br.com.tegloja.enums.StatusCompra;
 import br.com.tegloja.handler.NaoEncontradoException;
 import br.com.tegloja.handler.ArgumentoInvalidoException;
-import br.com.tegloja.handler.EnumValidationException;
 import br.com.tegloja.model.Cliente;
 import br.com.tegloja.model.Pedido;
 import br.com.tegloja.repository.PedidoRepository;
@@ -91,7 +89,7 @@ public class PedidoService {
 	}
 
 	public PedidoResponseDTO adicionar(PedidoRequestDTO pedidoRequest) {
-		ClienteResponseDTO clienteResponseDTO = clienteService.buscarPorId(pedidoRequest.getCliente().getId());
+		ClienteResponseDTO clienteResponseDTO = clienteService.buscarPorId(pedidoRequest.getIdCliente());
 
 		Cliente cliente = new Cliente(clienteResponseDTO);
 		Pedido pedido = new Pedido(pedidoRequest);
@@ -108,7 +106,7 @@ public class PedidoService {
 	}
 
 	public PedidoResponseDTO iniciarPedidoVazio(PedidoRequestDTO requestDTO) {
-		ClienteResponseDTO clienteDTO = clienteService.buscarPorId(requestDTO.getCliente().getId());
+		ClienteResponseDTO clienteDTO = clienteService.buscarPorId(requestDTO.getIdCliente());
 		Pedido pedido = new Pedido();
 		pedido.setCliente(new Cliente(clienteDTO));
 		pedido.setStatus(StatusCompra.NAO_FINALIZADO);
@@ -120,9 +118,9 @@ public class PedidoService {
 	public PedidoResponseDTO finalizarPedido(Long idPedido, PedidoRequestDTO requestDTO) {
 		PedidoResponseDTO pedidoResponse = buscarPorIdPedido(idPedido);
 		List<PedidoItemResponseDTO> itens = pedidoItemService.buscarPorIdPedido(idPedido);
-		
-		FormaPagamento pagamento = FormaPagamento.verificaPagamento(requestDTO.getFormaPagamento().intValue());
-		
+
+		FormaPagamento pagamento = FormaPagamento.verificaPagamento(requestDTO.getCodigoPagamento().intValue());
+
 		// Verifica o estoque dos produtos
 		for (PedidoItemResponseDTO pedidoItemResponseDTO : itens) {
 			Long idProduto = pedidoItemResponseDTO.getProduto().getId();
@@ -159,7 +157,7 @@ public class PedidoService {
 
 	public PedidoResponseDTO atualizar(PedidoRequestDTO pedidoRequest, Long id) {
 		buscarPorIdPedido(id);
-		ClienteResponseDTO clienteResponseDTO = clienteService.buscarPorId(pedidoRequest.getCliente().getId());
+		ClienteResponseDTO clienteResponseDTO = clienteService.buscarPorId(pedidoRequest.getIdCliente());
 
 		Cliente cliente = new Cliente(clienteResponseDTO);
 		Pedido pedido = new Pedido(pedidoRequest);

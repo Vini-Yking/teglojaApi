@@ -2,11 +2,9 @@ package br.com.tegloja.dto;
 
 import java.math.BigDecimal;
 
-import br.com.tegloja.model.Produto;
-
 public class PedidoItemRequestDTO {
 
-	private Produto produto;
+	private Long idProduto;
 	private Integer quantidadeProduto;
 	private BigDecimal valorDesconto;
 
@@ -14,27 +12,27 @@ public class PedidoItemRequestDTO {
 
 	}
 
-	public PedidoItemRequestDTO(Produto produto, Integer quantidadeProduto, BigDecimal valorDesconto) {
+	public PedidoItemRequestDTO(Long idProduto, Integer quantidadeProduto, BigDecimal valorDesconto) {
 		super();
-		this.produto = produto;
+		this.idProduto = idProduto;
 		this.quantidadeProduto = quantidadeProduto;
 		this.valorDesconto = valorDesconto;
 	}
 
-	public Produto getProduto() {
-		return produto;
+	public Long getIdProduto() {
+		return idProduto;
 	}
 
-	public void setProduto(Produto produto) {
-		this.produto = produto;
+	public void setIdProduto(Long idProduto) {
+		this.idProduto = idProduto;
+	}
+
+	public void setQuantidadeProduto(Integer quantidadeProduto) {
+		this.quantidadeProduto = quantidadeProduto;
 	}
 
 	public Integer getQuantidadeProduto() {
 		return quantidadeProduto;
-	}
-
-	public void setQtdproduto(Integer qtdproduto) {
-		this.quantidadeProduto = qtdproduto;
 	}
 
 	public BigDecimal getValorDesconto() {

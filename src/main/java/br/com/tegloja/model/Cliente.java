@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import br.com.tegloja.dto.ClienteRequestDTO;
 import br.com.tegloja.dto.ClienteResponseDTO;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @Entity
 public class Cliente {
 
@@ -33,7 +33,7 @@ public class Cliente {
 	@Column(nullable = false)
 	private String cpf;
 
-	@Pattern(regexp = "^[0-9]{8}", message = "precisam ser oito numeros")
+	@Pattern(regexp = "^[0-9]{8}", message = "Cep precisa ter apenas números e 8 dígitos")
 	@Size(min = 8, max = 8, message = "Cep precisa ter oito Digitos")
 	@Column(nullable = false)
 	private String cep;
