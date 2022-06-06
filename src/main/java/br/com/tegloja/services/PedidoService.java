@@ -117,7 +117,7 @@ public class PedidoService {
 		return new PedidoResponseDTO(pedido);
 	}
 
-	public PedidoResponseDTO finalizarPedido(Long idPedido, PedidoRequestDTO requestDTO ){
+	public PedidoResponseDTO finalizarPedido(Long idPedido, PedidoRequestDTO requestDTO) {
 		PedidoResponseDTO pedidoResponse = buscarPorIdPedido(idPedido);
 		List<PedidoItemResponseDTO> itens = pedidoItemService.buscarPorIdPedido(idPedido);
 		

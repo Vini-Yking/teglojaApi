@@ -20,7 +20,7 @@ public enum FormaPagamento {
 				return pagamento;
 			}
 		}
-		throw new EnumValidationException("Pagamento invalido");
+		throw new EnumValidationException("Forma de pagamento inválida");
 	}
 	
 	public static FormaPagamento verificaPagamentoReal(Integer value) throws EnumValidationException {

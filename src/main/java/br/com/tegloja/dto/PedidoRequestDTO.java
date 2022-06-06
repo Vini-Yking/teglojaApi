@@ -1,10 +1,6 @@
 package br.com.tegloja.dto;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-
 import br.com.tegloja.enums.FormaPagamento;
-import br.com.tegloja.enums.StatusCompra;
 import br.com.tegloja.model.Cliente;
 
 public class PedidoRequestDTO {
@@ -16,9 +12,10 @@ public class PedidoRequestDTO {
 
 	}
 
-	public PedidoRequestDTO(Cliente cliente) {
+	public PedidoRequestDTO(Cliente cliente, Long codigoPagamento) {
 		super();
 		this.cliente = cliente;
+		this.codigoPagamento = codigoPagamento;
 	}
 
 	public PedidoRequestDTO(Long tipoPagamento) {

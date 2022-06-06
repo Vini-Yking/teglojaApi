@@ -7,19 +7,28 @@ import br.com.tegloja.model.Categoria;
 public class ProdutoRequestDTO {
 
 	private String nomeProduto;
-	private Categoria categoria;
+	private Long idCategoria;
 	private BigDecimal valorUnitario;
 	private Integer quantidadeEstoque;
 
 	public ProdutoRequestDTO() {
 	}
 
-	public ProdutoRequestDTO(String nomeProduto, Categoria categoria, BigDecimal valorUnit, Integer quantidadeEstoq) {
+	public ProdutoRequestDTO(String nomeProduto, Long idCategoria, BigDecimal valorUnitario,
+			Integer quantidadeEstoque) {
 		super();
 		this.nomeProduto = nomeProduto;
-		this.categoria = categoria;
-		this.valorUnitario = valorUnit;
-		this.quantidadeEstoque = quantidadeEstoq;
+		this.idCategoria = idCategoria;
+		this.valorUnitario = valorUnitario;
+		this.quantidadeEstoque = quantidadeEstoque;
+	}
+
+	public Long getIdCategoria() {
+		return idCategoria;
+	}
+
+	public void setIdCategoria(Long idCategoria) {
+		this.idCategoria = idCategoria;
 	}
 
 	public String getNomeProduto() {
@@ -28,14 +37,6 @@ public class ProdutoRequestDTO {
 
 	public void setNomeProduto(String nomeProduto) {
 		this.nomeProduto = nomeProduto;
-	}
-
-	public Categoria getCategoria() {
-		return categoria;
-	}
-
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
 	}
 
 	public BigDecimal getValorUnitario() {
