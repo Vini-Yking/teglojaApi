@@ -117,14 +117,11 @@ public class PedidoService {
 		return new PedidoResponseDTO(pedido);
 	}
 
-	public PedidoResponseDTO finalizarPedido(Long idPedido, PedidoRequestDTO requestDTO ){
+	public PedidoResponseDTO finalizarPedido(Long idPedido, PedidoRequestDTO requestDTO) {
 		PedidoResponseDTO pedidoResponse = buscarPorIdPedido(idPedido);
 		List<PedidoItemResponseDTO> itens = pedidoItemService.buscarPorIdPedido(idPedido);
-		FormaPagamento pagamento = requestDTO.getFormaPagamento();
-		if (!FormaPagamento.verificaPagamento(pagamento.getCodigo())) {
-			throw new EnumValidationException("Pagamento invalido");
-		}
-		
+		FormaPagamento pagamento = FormaPagamento.verificaPagamento(requestDTO.getCodigoPagamento().intValue());
+
 		// Verifica o estoque dos produtos
 		for (PedidoItemResponseDTO pedidoItemResponseDTO : itens) {
 			Long idProduto = pedidoItemResponseDTO.getProduto().getId();

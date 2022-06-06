@@ -13,13 +13,13 @@ public enum FormaPagamento {
 	private String tipo;
 
 	@JsonCreator
-	public static Boolean verificaPagamento(Integer value) throws EnumValidationException{
+	public static FormaPagamento verificaPagamento(Integer value) throws EnumValidationException {
 		for (FormaPagamento pagamento : FormaPagamento.values()) {
 			if (value.equals(pagamento.getCodigo())) {
-				return true;
+				return pagamento;
 			}
 		}
-		return false;
+		throw new EnumValidationException("Forma de pagamento inválida");
 	}
 
 	private FormaPagamento(Integer codigo, String tipo) {
