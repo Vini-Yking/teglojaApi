@@ -6,7 +6,6 @@ public class EnderecoDTO {
 	private Long id;
 	private String cep;
 	private String logradouro;
-	private String complemento;
 	private String bairro;
 	private String cidade;
 	private String uf;
@@ -19,7 +18,6 @@ public class EnderecoDTO {
 		this.id = endereco.getId();
 		this.cep = endereco.getCep();
 		this.logradouro = endereco.getLogradouro();
-		this.complemento = endereco.getComplemento();
 		this.bairro = endereco.getBairro();
 		this.cidade = endereco.getLocalidade();
 		this.uf = endereco.getUf();
@@ -47,14 +45,6 @@ public class EnderecoDTO {
 
 	public void setLogradouro(String logradouro) {
 		this.logradouro = logradouro;
-	}
-
-	public String getComplemento() {
-		return complemento;
-	}
-
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
 	}
 
 	public String getBairro() {
