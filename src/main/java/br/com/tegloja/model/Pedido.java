@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -47,11 +48,11 @@ public class Pedido {
 
 	@Column(name = "valor_total")
 	private BigDecimal valortotal;
-
+	
 	@Column(name = "tipo_pagamento")
-	@Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.ORDINAL)
 	private FormaPagamento formaPagamento;
-
+	
 	@ManyToOne
 	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
@@ -70,7 +71,7 @@ public class Pedido {
 	}
 
 	public Pedido(Long id, StatusCompra status, LocalDate dataCompra, LocalDate dataEntrega, BigDecimal valortotal,
-			Cliente cliente,String tipoPagamento, List<PedidoItem> itens) {
+			Cliente cliente,FormaPagamento tipoPagamento, List<PedidoItem> itens) {
 		this.id = id;
 		this.status = status;
 		this.dataCompra = dataCompra;

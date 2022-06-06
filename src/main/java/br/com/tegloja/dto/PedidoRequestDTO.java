@@ -10,7 +10,7 @@ import br.com.tegloja.model.Cliente;
 public class PedidoRequestDTO {
 
 	private Cliente cliente;
-	private FormaPagamento formaPagamento;
+	private Long formaPagamento;
 
 	public PedidoRequestDTO() {
 
@@ -21,16 +21,16 @@ public class PedidoRequestDTO {
 		this.cliente = cliente;
 	}
 
-	public PedidoRequestDTO(FormaPagamento tipoPagamento) {
+	public PedidoRequestDTO(Long tipoPagamento) {
 		super();
 		this.formaPagamento = tipoPagamento;
 	}
 
-	public FormaPagamento getFormaPagamento() {
+	public Long getFormaPagamento() {
 		return formaPagamento;
 	}
 
-	public void setFormaPagamento(FormaPagamento tipoPagamento) {
+	public void setFormaPagamento(Long tipoPagamento) {
 		this.formaPagamento = tipoPagamento;
 	}
 

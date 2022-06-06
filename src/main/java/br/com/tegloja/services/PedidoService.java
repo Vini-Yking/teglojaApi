@@ -120,10 +120,8 @@ public class PedidoService {
 	public PedidoResponseDTO finalizarPedido(Long idPedido, PedidoRequestDTO requestDTO ){
 		PedidoResponseDTO pedidoResponse = buscarPorIdPedido(idPedido);
 		List<PedidoItemResponseDTO> itens = pedidoItemService.buscarPorIdPedido(idPedido);
-		FormaPagamento pagamento = requestDTO.getFormaPagamento();
-		if (!FormaPagamento.verificaPagamento(pagamento.getCodigo())) {
-			throw new EnumValidationException("Pagamento invalido");
-		}
+		
+		FormaPagamento pagamento = FormaPagamento.verificaPagamento(requestDTO.getFormaPagamento().intValue());
 		
 		// Verifica o estoque dos produtos
 		for (PedidoItemResponseDTO pedidoItemResponseDTO : itens) {
