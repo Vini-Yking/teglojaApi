@@ -14,9 +14,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.DecimalMin;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import br.com.tegloja.dto.ProdutoRequestDTO;
 import br.com.tegloja.dto.ProdutoResponseDTO;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 public class Produto {
 

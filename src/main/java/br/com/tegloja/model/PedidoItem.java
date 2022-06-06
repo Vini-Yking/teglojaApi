@@ -13,9 +13,11 @@ import javax.persistence.Table;
 import javax.validation.constraints.Min;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.tegloja.dto.PedidoItemRequestDTO;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "pedido_itens")
 public class PedidoItem {
