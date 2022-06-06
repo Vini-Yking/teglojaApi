@@ -48,7 +48,7 @@ public class PedidoItemService {
 		Pedido pedido = new Pedido(pedidoResponse);
 		List<PedidoItem> itens = _pedidoItemRepository.findByPedido(pedido);
 		if (itens.isEmpty())
-			throw new NaoEncontradoException("Não existe itens neste pedido.");
+			throw new ArgumentoInvalidoException("Não é possível finalizar um pedido sem itens.");
 
 		// @formatter:off
 		return itens.stream()
@@ -104,7 +104,7 @@ public class PedidoItemService {
 		BigDecimal quantidadeProduto = new BigDecimal(pedidoItem.getQuantidadeProduto());
 		BigDecimal valor = produto.getValorUnitario().multiply(quantidadeProduto);
 		valor = valor.subtract(pedidoItem.getValorDesconto());
-		
+
 		pedido.setFormaPagamento(FormaPagamento.ABERTO);
 		pedidoItem.setProduto(produto);
 		pedidoItem.setPedido(pedido);

@@ -40,13 +40,12 @@ public class EnderecoService {
 		RestTemplate rs = new RestTemplate();
 		String url = "http://viacep.com.br/ws/" + cep + "/json";
 		Optional<Endereco> enderecoViaCep = Optional.ofNullable(rs.getForObject(url, Endereco.class));
-		if (enderecoViaCep.isEmpty()) {
+		if (enderecoViaCep.get().getLocalidade() == null) {
 			throw new ArgumentoInvalidoException("Cep não existente.");
 		}
-
-		String cepSemTraco = enderecoViaCep.get().getCep().replaceAll("-", "");
-		enderecoViaCep.get().setCep(cepSemTraco);
-		Endereco endereco = enderecoRepository.save(enderecoViaCep.get());
+		Endereco endereco = enderecoViaCep.get();
+		endereco.setCep(cep);
+		endereco = enderecoRepository.save(enderecoViaCep.get());
 		return new EnderecoDTO(endereco);
 
 	}
