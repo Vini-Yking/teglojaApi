@@ -26,8 +26,8 @@ import br.com.tegloja.dto.PedidoResponseDTO;
 import br.com.tegloja.enums.FormaPagamento;
 import br.com.tegloja.enums.StatusCompra;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
-@JsonIgnoreProperties(ignoreUnknown = true,value={"hibernateLazyInitializer", "handler"})
 public class Pedido {
 
 	@Id

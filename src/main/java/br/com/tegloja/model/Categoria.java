@@ -8,9 +8,12 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import br.com.tegloja.dto.CategoriaRequestDTO;
 import br.com.tegloja.dto.CategoriaResponseDTO;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 public class Categoria {
 
