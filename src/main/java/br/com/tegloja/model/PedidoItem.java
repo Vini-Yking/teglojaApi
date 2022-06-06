@@ -19,7 +19,7 @@ import br.com.tegloja.dto.PedidoItemRequestDTO;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
-@Table(name = "pedido_itens")
+@Table(name = "pedido_item")
 public class PedidoItem {
 
 	@Id

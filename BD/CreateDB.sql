@@ -6,7 +6,7 @@ CREATE SCHEMA if not exists tegloja ;
 /* Project name:                                                          */
 /* Author:                                                                */
 /* Script type:           Database creation script                        */
-/* Created on:            2022-06-05 21:19                                */
+/* Created on:            2022-06-06 12:17                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -67,10 +67,10 @@ CREATE TABLE tegloja.pedido (
 );
 
 /* ---------------------------------------------------------------------- */
-/* Add table "tegloja.pedido_itens"                                       */
+/* Add table "tegloja.pedido_item"                                        */
 /* ---------------------------------------------------------------------- */
 
-CREATE TABLE tegloja.pedido_itens (
+CREATE TABLE tegloja.pedido_item (
     id_item SERIAL  NOT NULL,
     id_produto INTEGER  NOT NULL,
     quantidade_produto INTEGER  NOT NULL,
@@ -119,10 +119,10 @@ ALTER TABLE tegloja.produto ADD CONSTRAINT categoria_produto
 ALTER TABLE tegloja.pedido ADD CONSTRAINT cliente_pedido 
     FOREIGN KEY (id_cliente) REFERENCES tegloja.cliente (id_cliente);
 
-ALTER TABLE tegloja.pedido_itens ADD CONSTRAINT produto_pedido_itens 
+ALTER TABLE tegloja.pedido_item ADD CONSTRAINT produto_pedido_itens 
     FOREIGN KEY (id_produto) REFERENCES tegloja.produto (id_produto);
 
-ALTER TABLE tegloja.pedido_itens ADD CONSTRAINT pedido_pedido_itens 
+ALTER TABLE tegloja.pedido_item ADD CONSTRAINT pedido_pedido_itens 
     FOREIGN KEY (id_pedido) REFERENCES tegloja.pedido (id_pedido);
 
 ALTER TABLE tegloja.endereco ADD CONSTRAINT cliente_endereco 

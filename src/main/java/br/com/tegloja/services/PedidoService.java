@@ -122,6 +122,7 @@ public class PedidoService {
 		
 		FormaPagamento pagamento = FormaPagamento.verificaPagamento(requestDTO.getFormaPagamento().intValue());
 		
+		
 		// Verifica o estoque dos produtos
 		for (PedidoItemResponseDTO pedidoItemResponseDTO : itens) {
 			Long idProduto = pedidoItemResponseDTO.getProduto().getId();
@@ -145,6 +146,7 @@ public class PedidoService {
 				.map(x -> x.getValorVenda())
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
 		// @formatter:on
+		pagamento.verificaPagamentoFinalizado(requestDTO.getFormaPagamento().intValue());
 		total.setScale(2, RoundingMode.HALF_UP);
 		pedido.setValortotal(total);
 		pedido.setDataCompra(LocalDate.now());
