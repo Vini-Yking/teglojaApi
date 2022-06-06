@@ -91,7 +91,6 @@ public class PedidoItemService {
 			throw new ArgumentoInvalidoException("Esse pedido já foi finalizado.");
 		}
 
-		// se funcionar transformar para receber uma lista
 		PedidoItem pedidoItem = new PedidoItem(pedidoItemRequest);
 		Pedido pedido = new Pedido(pedidoResponse);
 

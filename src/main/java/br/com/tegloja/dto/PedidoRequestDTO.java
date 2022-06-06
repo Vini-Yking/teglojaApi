@@ -20,14 +20,11 @@ public class PedidoRequestDTO {
 		super();
 		this.cliente = cliente;
 	}
-	
-	
 
 	public PedidoRequestDTO(FormaPagamento tipoPagamento) {
 		super();
 		this.formaPagamento = tipoPagamento;
 	}
-	
 
 	public FormaPagamento getFormaPagamento() {
 		return formaPagamento;
@@ -44,6 +41,5 @@ public class PedidoRequestDTO {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-
 
 }

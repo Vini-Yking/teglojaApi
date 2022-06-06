@@ -16,6 +16,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import br.com.tegloja.dto.PedidoRequestDTO;
 import br.com.tegloja.dto.PedidoResponseDTO;
@@ -23,6 +27,7 @@ import br.com.tegloja.enums.FormaPagamento;
 import br.com.tegloja.enums.StatusCompra;
 
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true,value={"hibernateLazyInitializer", "handler"})
 public class Pedido {
 
 	@Id
@@ -51,7 +56,13 @@ public class Pedido {
 	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
 
+	/**
+	 * cancelar json loop
+	 */
+	
+	@JsonManagedReference
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+	
 	private List<PedidoItem> itens;
 
 	public Pedido() {
@@ -59,13 +70,14 @@ public class Pedido {
 	}
 
 	public Pedido(Long id, StatusCompra status, LocalDate dataCompra, LocalDate dataEntrega, BigDecimal valortotal,
-			Cliente cliente,String tipoPagamento) {
+			Cliente cliente,String tipoPagamento, List<PedidoItem> itens) {
 		this.id = id;
 		this.status = status;
 		this.dataCompra = dataCompra;
 		this.dataEntrega = dataEntrega;
 		this.valortotal = valortotal;
 		this.cliente = cliente;
+		this.itens = itens;
 	}
 
 	public Pedido(PedidoRequestDTO pedidoRequest) {
@@ -73,13 +85,14 @@ public class Pedido {
 	}
 
 	public Pedido(PedidoResponseDTO pedidoResponse) {
+		this.id = pedidoResponse.getIdPedido();
 		this.cliente = pedidoResponse.getCliente();
 		this.dataCompra = pedidoResponse.getDataCompra();
 		this.dataEntrega = pedidoResponse.getDataEntrega();
-		this.id = pedidoResponse.getIdPedido();
 		this.status = pedidoResponse.getStatus();
 		this.valortotal = pedidoResponse.getValortotal();
 		this.formaPagamento = pedidoResponse.getFormaPagamento();
+		this.itens = pedidoResponse.getItens();
 	}
 
 	@Override // envio de email do pedido

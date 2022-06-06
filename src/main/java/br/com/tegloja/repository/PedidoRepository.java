@@ -16,5 +16,7 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 	List<Pedido> findByCliente(Cliente cliente);
 
 	Page<Pedido> findByCliente(Cliente cliente, Pageable pageable);
+	
+//	Page<Pedido> findByValorTotalBetween(Double valorMinimo, Double valorMaximo, Pageable pageable);
 
 }

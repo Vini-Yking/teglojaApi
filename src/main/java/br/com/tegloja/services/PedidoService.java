@@ -19,11 +19,11 @@ import br.com.tegloja.dto.PedidoItemResponseDTO;
 import br.com.tegloja.dto.PedidoRequestDTO;
 import br.com.tegloja.dto.PedidoResponseDTO;
 import br.com.tegloja.dto.ProdutoResponseDTO;
-import br.com.tegloja.enums.EnumValidationException;
 import br.com.tegloja.enums.FormaPagamento;
 import br.com.tegloja.enums.StatusCompra;
 import br.com.tegloja.handler.NaoEncontradoException;
 import br.com.tegloja.handler.ArgumentoInvalidoException;
+import br.com.tegloja.handler.EnumValidationException;
 import br.com.tegloja.model.Cliente;
 import br.com.tegloja.model.Pedido;
 import br.com.tegloja.repository.PedidoRepository;
@@ -124,7 +124,7 @@ public class PedidoService {
 		if (!FormaPagamento.verificaPagamento(pagamento.getCodigo())) {
 			throw new EnumValidationException("Pagamento invalido");
 		}
-
+		
 		// Verifica o estoque dos produtos
 		for (PedidoItemResponseDTO pedidoItemResponseDTO : itens) {
 			Long idProduto = pedidoItemResponseDTO.getProduto().getId();

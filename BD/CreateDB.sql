@@ -6,7 +6,7 @@ CREATE SCHEMA if not exists tegloja ;
 /* Project name:                                                          */
 /* Author:                                                                */
 /* Script type:           Database creation script                        */
-/* Created on:            2022-06-03 00:01                                */
+/* Created on:            2022-06-05 21:19                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -61,6 +61,7 @@ CREATE TABLE tegloja.pedido (
     data_compra TIMESTAMP,
     data_entrega TIMESTAMP,
     valor_total DOUBLE PRECISION,
+    tipo_pagamento CHARACTER VARYING(40),
     id_cliente INTEGER  NOT NULL,
     CONSTRAINT PK_pedido PRIMARY KEY (id_pedido)
 );

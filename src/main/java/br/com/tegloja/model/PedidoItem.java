@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import br.com.tegloja.dto.PedidoItemRequestDTO;
 
 @Entity
@@ -40,8 +42,12 @@ public class PedidoItem {
 
 	@Column(name = "valor_venda")
 	private BigDecimal valorVenda;
-
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	
+	/**
+	 * evitar loop
+	 */
+	@JsonBackReference
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "id_pedido")
 	private Pedido pedido;
 

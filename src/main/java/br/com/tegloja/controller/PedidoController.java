@@ -25,11 +25,14 @@ import br.com.tegloja.dto.PedidoItemRequestDTO;
 import br.com.tegloja.dto.PedidoItemResponseDTO;
 import br.com.tegloja.dto.PedidoRequestDTO;
 import br.com.tegloja.dto.PedidoResponseDTO;
-import br.com.tegloja.enums.EnumValidationException;
+import br.com.tegloja.handler.EnumValidationException;
 import br.com.tegloja.services.PedidoItemService;
 import br.com.tegloja.services.PedidoService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController // /tegloga/pedidos/id/itens
+@Api(value = "Pedidos cadastrados")
 @RequestMapping("/tegloja/pedidos")
 public class PedidoController {
 
@@ -43,17 +46,17 @@ public class PedidoController {
 	public ResponseEntity<List<PedidoResponseDTO>> buscarTodos() {
 		return ResponseEntity.ok(pedidoService.buscarTodos());
 	}
-
+	@ApiOperation(value = "Retorna uma lista de todos os produtos")
 	@GetMapping("/{id}")
 	public ResponseEntity<PedidoResponseDTO> buscarPorId(@PathVariable Long id) {
 		return ResponseEntity.ok(pedidoService.buscarPorIdPedido(id));
 	}
-	
+	@ApiOperation(value = "retorna um pedido pelo id")
 	@GetMapping("/{id}/itens")
 	public ResponseEntity<List<PedidoItemResponseDTO>> listarItensPorIdPedido(@PathVariable Long id) {
 		return ResponseEntity.ok(pedidoItemService.buscarPorIdPedido(id));
 	}
-
+	@ApiOperation(value = "Retorna uma lista de todos os produtos")
 	@GetMapping("/pagina")
 	public ResponseEntity<Page<PedidoResponseDTO>> buscarPagina(@PageableDefault(
 	// @formatter:off
@@ -65,7 +68,7 @@ public class PedidoController {
 		// @formatter:on
 		return ResponseEntity.ok(pedidoService.buscarPagina(pageable));
 	}
-
+	@ApiOperation(value = "Retorna uma lista de todos os produtos")
 	@PostMapping
 	public ResponseEntity<PedidoResponseDTO> iniciarPedido(@Valid @RequestBody PedidoRequestDTO request) {
 		PedidoResponseDTO pedidoResponseDTO = pedidoService.iniciarPedidoVazio(request);
@@ -74,22 +77,20 @@ public class PedidoController {
 
 		return ResponseEntity.created(uri).body(pedidoResponseDTO);
 	}
-	
+	@ApiOperation(value = "Retorna uma lista de todos os produtos")
 	@PostMapping("/item/{id}")
 	public ResponseEntity<PedidoItemResponseDTO> adicionarItem(@PathVariable Long id, @RequestBody PedidoItemRequestDTO requestItem){
 		PedidoItemResponseDTO pedidoItemResponseDTO = pedidoItemService.adicionar(id, requestItem);
-//		URI uri =ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-//				.buildAndExpand(pedidoItemResponseDTO.getIdPedidoItem()).toUri();
 		return ResponseEntity.ok().body(pedidoItemResponseDTO);
 	}
-	
+	@ApiOperation(value = "Retorna uma lista de todos os produtos")
 	@PutMapping("/{id}")
-	public ResponseEntity<PedidoResponseDTO> encerrarPedido(@PathVariable Long id,@RequestBody PedidoRequestDTO requestItem) throws EnumValidationException {
+	public ResponseEntity<PedidoResponseDTO> encerrarPedido(@Valid @PathVariable Long id,@RequestBody PedidoRequestDTO requestItem) throws EnumValidationException {
 		PedidoResponseDTO responseBody = pedidoService.finalizarPedido(id,requestItem);
 		return ResponseEntity.ok(responseBody);
 	}
 		
-
+	@ApiOperation(value = "Retorna uma lista de todos os produtos")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> excluir(@PathVariable Long id) {
 		pedidoService.deletar(id);

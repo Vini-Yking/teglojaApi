@@ -2,6 +2,8 @@ package br.com.tegloja.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
+import br.com.tegloja.handler.EnumValidationException;
+
 public enum StatusCompra {
 	FINALIZADO, NAO_FINALIZADO;
 
