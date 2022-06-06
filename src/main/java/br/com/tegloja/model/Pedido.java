@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -49,6 +50,9 @@ public class Pedido {
 	@Column(name = "tipo_pagamento")
 	@Enumerated(EnumType.ORDINAL)
 	private FormaPagamento formaPagamento;
+	
+	@Transient
+	private String pagamento;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_cliente")
@@ -96,6 +100,15 @@ public class Pedido {
 	public String toString() {
 		return "/nPedido Realizado no dia" + dataCompra + "\nSerá entregue em " + dataEntrega + "\nvalortotal R$"
 				+ valortotal + "";
+	}
+	
+
+	public String getPagamento() {
+		return pagamento;
+	}
+
+	public void setPagamento(String pagamento) {
+		this.pagamento = pagamento;
 	}
 
 	public Cliente getCliente() {

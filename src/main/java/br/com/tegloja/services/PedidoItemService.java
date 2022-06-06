@@ -14,6 +14,7 @@ import br.com.tegloja.dto.PedidoItemRequestDTO;
 import br.com.tegloja.dto.PedidoItemResponseDTO;
 import br.com.tegloja.dto.PedidoResponseDTO;
 import br.com.tegloja.dto.ProdutoResponseDTO;
+import br.com.tegloja.enums.FormaPagamento;
 import br.com.tegloja.enums.StatusCompra;
 import br.com.tegloja.handler.NaoEncontradoException;
 import br.com.tegloja.handler.ArgumentoInvalidoException;
@@ -103,7 +104,8 @@ public class PedidoItemService {
 		BigDecimal quantidadeProduto = new BigDecimal(pedidoItem.getQuantidadeProduto());
 		BigDecimal valor = produto.getValorUnitario().multiply(quantidadeProduto);
 		valor = valor.subtract(pedidoItem.getValorDesconto());
-
+		
+		pedido.setFormaPagamento(FormaPagamento.ABERTO);
 		pedidoItem.setProduto(produto);
 		pedidoItem.setPedido(pedido);
 		pedidoItem.setValorVenda(valor);

@@ -93,8 +93,7 @@ public class PedidoService {
 
 		Cliente cliente = new Cliente(clienteResponseDTO);
 		Pedido pedido = new Pedido(pedidoRequest);
-		
-		pedido.setFormaPagamento(FormaPagamento.ABERTO);
+
 		pedido.setCliente(cliente);
 		pedido = _pedidorepository.save(pedido);
 		/**

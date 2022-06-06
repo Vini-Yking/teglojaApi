@@ -38,16 +38,15 @@ public class PedidoResponseDTO {
 		this.Cliente = pedido.getCliente();
 		this.formaPagamento = pedido.getFormaPagamento();
 		this.itens = pedido.getItens();
-		this.pagamento = pedido.getFormaPagamento().getTipo();
 	}
 
 	
 	public String getPagamento() {
-		return pagamento;
+		return formaPagamento.getTipo();
 	}
 
 	public void setPagamento(String pagamento) {
-		this.pagamento = pagamento;
+		this.pagamento = formaPagamento.getTipo();
 	}
 
 	public List<PedidoItem> getItens() {
