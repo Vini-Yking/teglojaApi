@@ -20,8 +20,8 @@ import br.com.tegloja.dto.PedidoResponseDTO;
 import br.com.tegloja.dto.ProdutoResponseDTO;
 import br.com.tegloja.enums.FormaPagamento;
 import br.com.tegloja.enums.StatusCompra;
-import br.com.tegloja.handler.NaoEncontradoException;
 import br.com.tegloja.handler.ArgumentoInvalidoException;
+import br.com.tegloja.handler.NaoEncontradoException;
 import br.com.tegloja.model.Cliente;
 import br.com.tegloja.model.Pedido;
 import br.com.tegloja.repository.PedidoRepository;
@@ -112,6 +112,7 @@ public class PedidoService {
 		pedido.setStatus(StatusCompra.NAO_FINALIZADO);
 		pedido.setValortotal(BigDecimal.ZERO);
 		pedido = _pedidorepository.save(pedido);
+		pedido.setFormaPagamento(FormaPagamento.ABERTO);
 		return new PedidoResponseDTO(pedido);
 	}
 
@@ -144,6 +145,7 @@ public class PedidoService {
 				.map(x -> x.getValorVenda())
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
 		// @formatter:on
+		pagamento.verificaPagamentoFinalizado(requestDTO.getFormaPagamento().intValue());
 		total.setScale(2, RoundingMode.HALF_UP);
 		pedido.setValortotal(total);
 		pedido.setDataCompra(LocalDate.now());

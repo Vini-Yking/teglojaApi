@@ -43,4 +43,17 @@ public class PedidoItemRequestDTO {
 		this.valorDesconto = valorDesconto;
 	}
 
+	public Long getProdutoId() {
+		return produtoId;
+	}
+
+	public void setProdutoId(Long produtoId) {
+		this.produtoId = produtoId;
+	}
+
+	public void setQuantidadeProduto(Integer quantidadeProduto) {
+		this.quantidadeProduto = quantidadeProduto;
+	}
+	
+
 }

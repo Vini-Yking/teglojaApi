@@ -51,12 +51,12 @@ public class PedidoController {
 	public ResponseEntity<PedidoResponseDTO> buscarPorId(@PathVariable Long id) {
 		return ResponseEntity.ok(pedidoService.buscarPorIdPedido(id));
 	}
-	@ApiOperation(value = "retorna um pedido pelo id")
+	@ApiOperation(value = "Retorna um pedido pelo id")
 	@GetMapping("/{id}/itens")
 	public ResponseEntity<List<PedidoItemResponseDTO>> listarItensPorIdPedido(@PathVariable Long id) {
 		return ResponseEntity.ok(pedidoItemService.buscarPorIdPedido(id));
 	}
-	@ApiOperation(value = "Retorna uma lista de todos os produtos")
+	@ApiOperation(value = "Retorna uma pagina de produtos ordenada pela data de compra de tamanho 8 default")
 	@GetMapping("/pagina")
 	public ResponseEntity<Page<PedidoResponseDTO>> buscarPagina(@PageableDefault(
 	// @formatter:off
@@ -68,7 +68,7 @@ public class PedidoController {
 		// @formatter:on
 		return ResponseEntity.ok(pedidoService.buscarPagina(pageable));
 	}
-	@ApiOperation(value = "Retorna uma lista de todos os produtos")
+	@ApiOperation(value = "Inicia o pedido com dados de cliente")
 	@PostMapping
 	public ResponseEntity<PedidoResponseDTO> iniciarPedido(@Valid @RequestBody PedidoRequestDTO request) {
 		PedidoResponseDTO pedidoResponseDTO = pedidoService.iniciarPedidoVazio(request);
@@ -77,20 +77,20 @@ public class PedidoController {
 
 		return ResponseEntity.created(uri).body(pedidoResponseDTO);
 	}
-	@ApiOperation(value = "Retorna uma lista de todos os produtos")
+	@ApiOperation(value = "Adiciona itens/produtos do pedido")
 	@PostMapping("/item/{id}")
 	public ResponseEntity<PedidoItemResponseDTO> adicionarItem(@PathVariable Long id, @RequestBody PedidoItemRequestDTO requestItem){
 		PedidoItemResponseDTO pedidoItemResponseDTO = pedidoItemService.adicionar(id, requestItem);
 		return ResponseEntity.ok().body(pedidoItemResponseDTO);
 	}
-	@ApiOperation(value = "Retorna uma lista de todos os produtos")
+	@ApiOperation(value = "Encerra o pedido informando o tipo de pagamento")
 	@PutMapping("/{id}")
 	public ResponseEntity<PedidoResponseDTO> encerrarPedido(@Valid @PathVariable Long id,@RequestBody PedidoRequestDTO requestItem) throws EnumValidationException {
 		PedidoResponseDTO responseBody = pedidoService.finalizarPedido(id,requestItem);
 		return ResponseEntity.ok(responseBody);
 	}
 		
-	@ApiOperation(value = "Retorna uma lista de todos os produtos")
+	@ApiOperation(value = "Exclui um pedido pelo id")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> excluir(@PathVariable Long id) {
 		pedidoService.deletar(id);

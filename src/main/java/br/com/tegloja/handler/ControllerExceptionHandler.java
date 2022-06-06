@@ -30,9 +30,15 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 		return super.handleExceptionInternal(ex, erroResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
 	}
 
+	/**
+	 * exceção que trata os pagamentos do Enum caso na finalização da compra seja informado o pagamento em aberto ou diferente dos enums ele retorna mensagem
+	 * @param ex
+	 * @param request
+	 * @return
+	 */
 	@ExceptionHandler(value = { EnumValidationException.class })
 	public ResponseEntity<Object> handle(EnumValidationException ex, WebRequest request){
-		ErroResponseDTO erroResponse = new ErroResponseDTO(HttpStatus.NOT_FOUND.value(), "Pagamento não encontrado",
+		ErroResponseDTO erroResponse = new ErroResponseDTO(HttpStatus.NOT_FOUND.value(), "Forma de pagamento invalida",
 				LocalDateTime.now(), ex.getMessage());
 		return super.handleExceptionInternal(ex, erroResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
 	}

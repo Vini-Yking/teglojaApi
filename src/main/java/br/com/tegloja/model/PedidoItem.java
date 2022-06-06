@@ -19,19 +19,15 @@ import br.com.tegloja.dto.PedidoItemRequestDTO;
 
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @Entity
-@Table(name = "pedido_itens")
+@Table(name = "pedido_item")
 public class PedidoItem {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_item")
 	private Long id;
-
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "id_produto")
-	private Produto produto;
-
-	@Min(value = 1, message = "Quantidade mínima é um ")
+    
+	@Min(value= 1, message= "Quantidade mínima é um ")
 	@Column(nullable = false)
 	private Integer quantidadeProduto;
 
@@ -40,8 +36,15 @@ public class PedidoItem {
 
 	@Column(name = "valor_venda")
 	private BigDecimal valorVenda;
-
-	@JsonBackReference // cancelar json loop
+	
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "id_produto")
+	private Produto produto;
+	
+	/**
+	 * evitar loop
+	 */
+	@JsonBackReference
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "id_pedido")
 	private Pedido pedido;
