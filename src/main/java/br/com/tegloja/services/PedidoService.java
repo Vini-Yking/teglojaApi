@@ -14,16 +14,14 @@ import org.springframework.stereotype.Service;
 
 import br.com.tegloja.backend.config.MailConfig;
 import br.com.tegloja.dto.ClienteResponseDTO;
-import br.com.tegloja.dto.PedidoItemRequestDTO;
 import br.com.tegloja.dto.PedidoItemResponseDTO;
 import br.com.tegloja.dto.PedidoRequestDTO;
 import br.com.tegloja.dto.PedidoResponseDTO;
 import br.com.tegloja.dto.ProdutoResponseDTO;
 import br.com.tegloja.enums.FormaPagamento;
 import br.com.tegloja.enums.StatusCompra;
-import br.com.tegloja.handler.NaoEncontradoException;
 import br.com.tegloja.handler.ArgumentoInvalidoException;
-import br.com.tegloja.handler.EnumValidationException;
+import br.com.tegloja.handler.NaoEncontradoException;
 import br.com.tegloja.model.Cliente;
 import br.com.tegloja.model.Pedido;
 import br.com.tegloja.repository.PedidoRepository;
@@ -91,11 +89,12 @@ public class PedidoService {
 	}
 
 	public PedidoResponseDTO adicionar(PedidoRequestDTO pedidoRequest) {
-		ClienteResponseDTO clienteResponseDTO = clienteService.buscarPorId(pedidoRequest.getCliente().getId());
+		ClienteResponseDTO clienteResponseDTO = clienteService.buscarPorId(pedidoRequest.getClienteId());
 
 		Cliente cliente = new Cliente(clienteResponseDTO);
 		Pedido pedido = new Pedido(pedidoRequest);
-
+		
+		pedido.setFormaPagamento(FormaPagamento.ABERTO);
 		pedido.setCliente(cliente);
 		pedido = _pedidorepository.save(pedido);
 		/**
@@ -108,12 +107,13 @@ public class PedidoService {
 	}
 
 	public PedidoResponseDTO iniciarPedidoVazio(PedidoRequestDTO requestDTO) {
-		ClienteResponseDTO clienteDTO = clienteService.buscarPorId(requestDTO.getCliente().getId());
+		ClienteResponseDTO clienteDTO = clienteService.buscarPorId(requestDTO.getClienteId());
 		Pedido pedido = new Pedido();
 		pedido.setCliente(new Cliente(clienteDTO));
 		pedido.setStatus(StatusCompra.NAO_FINALIZADO);
 		pedido.setValortotal(BigDecimal.ZERO);
 		pedido = _pedidorepository.save(pedido);
+		pedido.setFormaPagamento(FormaPagamento.ABERTO);
 		return new PedidoResponseDTO(pedido);
 	}
 
@@ -159,7 +159,7 @@ public class PedidoService {
 
 	public PedidoResponseDTO atualizar(PedidoRequestDTO pedidoRequest, Long id) {
 		buscarPorIdPedido(id);
-		ClienteResponseDTO clienteResponseDTO = clienteService.buscarPorId(pedidoRequest.getCliente().getId());
+		ClienteResponseDTO clienteResponseDTO = clienteService.buscarPorId(pedidoRequest.getClienteId());
 
 		Cliente cliente = new Cliente(clienteResponseDTO);
 		Pedido pedido = new Pedido(pedidoRequest);

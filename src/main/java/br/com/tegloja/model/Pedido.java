@@ -15,9 +15,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -60,7 +57,6 @@ public class Pedido {
 	/**
 	 * cancelar json loop
 	 */
-	
 	@JsonManagedReference
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
 	

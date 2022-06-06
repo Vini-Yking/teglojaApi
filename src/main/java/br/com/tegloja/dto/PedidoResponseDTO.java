@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.tegloja.enums.FormaPagamento;
 import br.com.tegloja.enums.StatusCompra;
 import br.com.tegloja.model.Cliente;
@@ -17,7 +19,9 @@ public class PedidoResponseDTO {
 	private LocalDate dataCompra;
 	private LocalDate dataEntrega;
 	private BigDecimal valortotal;
+	@JsonIgnore
 	private FormaPagamento formaPagamento;
+	private String pagamento;
 	private Cliente Cliente;
 	private List<PedidoItem> itens;
 
@@ -34,6 +38,16 @@ public class PedidoResponseDTO {
 		this.Cliente = pedido.getCliente();
 		this.formaPagamento = pedido.getFormaPagamento();
 		this.itens = pedido.getItens();
+		this.pagamento = pedido.getFormaPagamento().getTipo();
+	}
+
+	
+	public String getPagamento() {
+		return pagamento;
+	}
+
+	public void setPagamento(String pagamento) {
+		this.pagamento = pagamento;
 	}
 
 	public List<PedidoItem> getItens() {

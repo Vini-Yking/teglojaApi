@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import br.com.tegloja.handler.EnumValidationException;
 
 public enum FormaPagamento {
-	PARCELADO(1, "Cartao"), CREDITOAVISTA(2, "Credito a vista"), DEBIDO(3, "Debito"), PIX(4, "Pix"), BOLETO(5, "Boleto");
+	ABERTO(0,"Não concluido"), PARCELADO(1, "Cartão"), CREDITOAVISTA(2, "Crédito a vista"), DEBIDO(3, "Débito"), PIX(4, "Pix"), BOLETO(5, "Boleto");
 
 	private Integer codigo;
 	private String tipo;

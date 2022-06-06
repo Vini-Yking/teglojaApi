@@ -27,11 +27,6 @@ public class PedidoItem {
 	@Column(name = "id_item")
 	private Long id;
     
-	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "id_produto")
-	private Produto produto;
-    
 	@Min(value= 1, message= "Quantidade mínima é um ")
 	@Column(nullable = false)
 	private Integer quantidadeProduto;
@@ -44,6 +39,10 @@ public class PedidoItem {
 
 	@Column(name = "valor_venda")
 	private BigDecimal valorVenda;
+	
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "id_produto")
+	private Produto produto;
 	
 	/**
 	 * evitar loop
