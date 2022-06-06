@@ -33,7 +33,8 @@ public class Endereco {
 
 	}
 
-	public Endereco(Long id, String cep, String logradouro, String bairro, String cidade, String uf) {
+	public Endereco(Long id, String cep, String logradouro, String bairro, String cidade,
+			String uf) {
 		this.id = id;
 		this.cep = cep;
 		this.logradouro = logradouro;
