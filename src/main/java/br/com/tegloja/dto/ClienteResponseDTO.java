@@ -1,14 +1,18 @@
 package br.com.tegloja.dto;
 
 import br.com.tegloja.model.Cliente;
+import br.com.tegloja.model.Endereco;
 
 public class ClienteResponseDTO {
 	
 	private Long id;
 	private String cpf;
-	private String cep;
 	private String nome;
 	private String email;
+	private String cep;
+	private Integer numeroEndereco;
+	private Endereco endereco;
+	
 	
 	public ClienteResponseDTO(Cliente cliente) {
 		this.id = cliente.getId();
@@ -16,6 +20,28 @@ public class ClienteResponseDTO {
 		this.cep = cliente.getCep();
 		this.nome = cliente.getNome();
 		this.email = cliente.getEmail();
+		this.numeroEndereco = cliente.getNumeroEndereco();
+		this.endereco = cliente.getEndereco();
+	}
+	
+	public ClienteResponseDTO() {
+		super();
+	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
+	public Integer getNumeroEndereco() {
+		return numeroEndereco;
+	}
+
+	public void setNumeroEndereco(Integer numeroEndereco) {
+		this.numeroEndereco = numeroEndereco;
 	}
 
 	public Long getId() {

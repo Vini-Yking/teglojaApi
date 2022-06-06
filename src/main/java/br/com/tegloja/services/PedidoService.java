@@ -17,8 +17,11 @@ import br.com.tegloja.dto.ClienteResponseDTO;
 import br.com.tegloja.dto.PedidoItemResponseDTO;
 import br.com.tegloja.dto.PedidoRequestDTO;
 import br.com.tegloja.dto.PedidoResponseDTO;
+import br.com.tegloja.dto.ProdutoResponseDTO;
+import br.com.tegloja.enums.FormaPagamento;
 import br.com.tegloja.enums.StatusCompra;
-import br.com.tegloja.handler.IdNotFoundException;
+import br.com.tegloja.handler.ArgumentoInvalidoException;
+import br.com.tegloja.handler.NaoEncontradoException;
 import br.com.tegloja.model.Cliente;
 import br.com.tegloja.model.Pedido;
 import br.com.tegloja.repository.PedidoRepository;
@@ -34,6 +37,9 @@ public class PedidoService {
 
 	@Autowired
 	private PedidoItemService pedidoItemService;
+
+	@Autowired
+	private ProdutoService produtoService;
 
 	@Autowired
 	private MailConfig mailConfig;
@@ -53,16 +59,37 @@ public class PedidoService {
 		return pedidos.map(pedido -> new PedidoResponseDTO(pedido));
 	}
 
-	public PedidoResponseDTO buscarPorId(Long id) {
+	public PedidoResponseDTO buscarPorIdPedido(Long id) {
 		Optional<Pedido> pedido = _pedidorepository.findById(id);
 		if (pedido.isEmpty()) {
-			throw new IdNotFoundException("Não existe um pedido com esse id.");
+			throw new NaoEncontradoException("Não existe um pedido com esse id.");
 		}
 		return new PedidoResponseDTO(pedido.get());
 	}
 
+	public List<PedidoResponseDTO> buscarPorIdCliente(Long idCliente) {
+		ClienteResponseDTO clienteResponse = clienteService.buscarPorId(idCliente);
+		Cliente cliente = new Cliente(clienteResponse);
+
+		List<Pedido> pedidos = _pedidorepository.findByCliente(cliente);
+		// @formatter:off
+		return pedidos.stream()
+				.map(pedido -> new PedidoResponseDTO(pedido))
+				.collect(Collectors.toList());
+		// @formatter:on
+	}
+
+	public Page<PedidoResponseDTO> buscarPorIdClientePaginado(Long idCliente, Pageable pageable) {
+		ClienteResponseDTO clienteResponse = clienteService.buscarPorId(idCliente);
+		Cliente cliente = new Cliente(clienteResponse);
+
+		Page<Pedido> pedidos = _pedidorepository.findByCliente(cliente, pageable);
+
+		return pedidos.map(pedido -> new PedidoResponseDTO(pedido));
+	}
+
 	public PedidoResponseDTO adicionar(PedidoRequestDTO pedidoRequest) {
-		ClienteResponseDTO clienteResponseDTO = clienteService.buscarPorId(pedidoRequest.getCliente().getId());
+		ClienteResponseDTO clienteResponseDTO = clienteService.buscarPorId(pedidoRequest.getIdCliente());
 
 		Cliente cliente = new Cliente(clienteResponseDTO);
 		Pedido pedido = new Pedido(pedidoRequest);
@@ -70,26 +97,47 @@ public class PedidoService {
 		pedido.setCliente(cliente);
 		pedido = _pedidorepository.save(pedido);
 		/**
-		 *  Não foi possivel enviar email por limitação do google
-		 *  mailConfig.enviarEmail(cliente.getEmail(), "Compra Concluida!", pedido.toString());
+		 * Não foi possivel enviar email por limitação do google
+		 * mailConfig.enviarEmail(cliente.getEmail(), "Compra Concluida!",
+		 * pedido.toString());
 		 */
-		
+
 		return new PedidoResponseDTO(pedido);
 	}
 
 	public PedidoResponseDTO iniciarPedidoVazio(PedidoRequestDTO requestDTO) {
-		ClienteResponseDTO clienteDTO = clienteService.buscarPorId(requestDTO.getCliente().getId());
+		ClienteResponseDTO clienteDTO = clienteService.buscarPorId(requestDTO.getIdCliente());
 		Pedido pedido = new Pedido();
 		pedido.setCliente(new Cliente(clienteDTO));
 		pedido.setStatus(StatusCompra.NAO_FINALIZADO);
 		pedido.setValortotal(BigDecimal.ZERO);
 		pedido = _pedidorepository.save(pedido);
+		pedido.setFormaPagamento(FormaPagamento.ABERTO);
 		return new PedidoResponseDTO(pedido);
 	}
 
-	public PedidoResponseDTO finalizarPedido(Long idPedido) {
-		PedidoResponseDTO pedidoResponse = buscarPorId(idPedido);
+	public PedidoResponseDTO finalizarPedido(Long idPedido, PedidoRequestDTO requestDTO) {
+		PedidoResponseDTO pedidoResponse = buscarPorIdPedido(idPedido);
 		List<PedidoItemResponseDTO> itens = pedidoItemService.buscarPorIdPedido(idPedido);
+
+		FormaPagamento pagamento = FormaPagamento.verificaPagamento(requestDTO.getCodigoPagamento().intValue());
+
+		// Verifica o estoque dos produtos
+		for (PedidoItemResponseDTO pedidoItemResponseDTO : itens) {
+			Long idProduto = pedidoItemResponseDTO.getProduto().getId();
+			ProdutoResponseDTO produtoResponse = produtoService.buscarPorId(idProduto);
+			Integer quantidadeProduto = pedidoItemResponseDTO.getQuantidadeProduto();
+
+			if (quantidadeProduto > produtoResponse.getQuantidadeEstoque()) {
+				throw new ArgumentoInvalidoException("Sem estoque para o produto: " + produtoResponse.getNomeProduto());
+			}
+		}
+
+		// Subtrai do estoque
+		for (PedidoItemResponseDTO pedidoItemResponseDTO : itens) {
+			Long idProduto = pedidoItemResponseDTO.getProduto().getId();
+			produtoService.subtrairEstoque(idProduto, pedidoItemResponseDTO.getQuantidadeProduto());
+		}
 
 		Pedido pedido = new Pedido(pedidoResponse);
 		// @formatter:off
@@ -97,19 +145,21 @@ public class PedidoService {
 				.map(x -> x.getValorVenda())
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
 		// @formatter:on
+		pagamento.verificaPagamentoFinalizado(requestDTO.getCodigoPagamento().intValue());
 		total.setScale(2, RoundingMode.HALF_UP);
 		pedido.setValortotal(total);
 		pedido.setDataCompra(LocalDate.now());
 		pedido.setDataEntrega(LocalDate.now().plusDays(7));
 		pedido.setStatus(StatusCompra.FINALIZADO);
+		pedido.setFormaPagamento(pagamento);
 		pedido = _pedidorepository.save(pedido);
 
 		return new PedidoResponseDTO(pedido);
 	}
 
 	public PedidoResponseDTO atualizar(PedidoRequestDTO pedidoRequest, Long id) {
-		buscarPorId(id);
-		ClienteResponseDTO clienteResponseDTO = clienteService.buscarPorId(pedidoRequest.getCliente().getId());
+		buscarPorIdPedido(id);
+		ClienteResponseDTO clienteResponseDTO = clienteService.buscarPorId(pedidoRequest.getIdCliente());
 
 		Cliente cliente = new Cliente(clienteResponseDTO);
 		Pedido pedido = new Pedido(pedidoRequest);
@@ -122,7 +172,8 @@ public class PedidoService {
 	}
 
 	public void deletar(Long id) {
-		buscarPorId(id);
+		buscarPorIdPedido(id);
 		_pedidorepository.deleteById(id);
 	}
+
 }

@@ -12,26 +12,31 @@ import org.springframework.stereotype.Service;
 import br.com.tegloja.backend.config.MailConfig;
 import br.com.tegloja.dto.ClienteRequestDTO;
 import br.com.tegloja.dto.ClienteResponseDTO;
-import br.com.tegloja.handler.IdNotFoundException;
+import br.com.tegloja.dto.EnderecoDTO;
+import br.com.tegloja.handler.NaoEncontradoException;
 import br.com.tegloja.model.Cliente;
+import br.com.tegloja.model.Endereco;
 import br.com.tegloja.repository.ClienteRepository;
 
 @Service
 public class ClienteService {
 
 	@Autowired
-	private ClienteRepository _clienterepository;
+	private ClienteRepository _clienteRepository;
+
+	@Autowired
+	private EnderecoService enderecoService;
 
 	@Autowired
 	private MailConfig mailConfig;
 
 	public void deletar(Long id) {
 		buscarPorId(id);
-		_clienterepository.deleteById(id);
+		_clienteRepository.deleteById(id);
 	}
 
 	public List<ClienteResponseDTO> buscarTodos() {
-		List<Cliente> clientes = _clienterepository.findAll();
+		List<Cliente> clientes = _clienteRepository.findAll();
 		// @formatter:off
 		return clientes.stream()
 				.map(cliente -> new ClienteResponseDTO(cliente))
@@ -40,28 +45,40 @@ public class ClienteService {
 	}
 
 	public Page<ClienteResponseDTO> buscarPagina(Pageable page) {
-		Page<Cliente> clientes = _clienterepository.findAll(page);
+		Page<Cliente> clientes = _clienteRepository.findAll(page);
 
 		return clientes.map(cliente -> new ClienteResponseDTO(cliente));
 	}
 
 	public ClienteResponseDTO buscarPorId(Long id) {
-		Optional<Cliente> cliente = _clienterepository.findById(id);
+		Optional<Cliente> cliente = _clienteRepository.findById(id);
 		if (cliente.isEmpty()) {
-			throw new IdNotFoundException("Não existe um cliente com esse id.");
+			throw new NaoEncontradoException("Não existe um cliente com esse id.");
 		}
 		return new ClienteResponseDTO(cliente.get());
 	}
 
+	public Page<ClienteResponseDTO> buscarPorNome(Pageable page, String nome) {
+		Page<Cliente> clientes = _clienteRepository.findByNomeContainingIgnoreCase(page, nome);
+
+		return clientes.map(cliente -> new ClienteResponseDTO(cliente));
+	}
+
 	public ClienteResponseDTO adicionar(ClienteRequestDTO clienteRequest) {
 		Cliente cliente = new Cliente(clienteRequest);
-		cliente = _clienterepository.save(cliente);
+		EnderecoDTO enderecoDTO = enderecoService.buscarInserirCep(clienteRequest.getCep());
+
+		Endereco endereco = new Endereco(enderecoDTO);
+
+		cliente.setEndereco(endereco);
+		cliente = _clienteRepository.save(cliente);
+
 		/**
 		 * Não foi possivel enviar email por limitação do google
-		 * mailConfig.enviarEmail(cliente.getEmail(), "Cadastrado efetuado com sucesso", cliente.toString());
+		 * mailConfig.enviarEmail(cliente.getEmail(), "Cadastrado efetuado com sucesso",
+		 * cliente.toString());
 		 */
-		
-		
+
 		return new ClienteResponseDTO(cliente);
 	}
 
@@ -69,7 +86,7 @@ public class ClienteService {
 		buscarPorId(id);
 		Cliente cliente = new Cliente(clienteRequest);
 		cliente.setId(id);
-		cliente = _clienterepository.save(cliente);
+		cliente = _clienteRepository.save(cliente);
 
 		return new ClienteResponseDTO(cliente);
 	}

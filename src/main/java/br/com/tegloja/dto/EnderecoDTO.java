@@ -3,12 +3,11 @@ package br.com.tegloja.dto;
 import br.com.tegloja.model.Endereco;
 
 public class EnderecoDTO {
-
+	private Long id;
 	private String cep;
 	private String logradouro;
-	private String complemento;
 	private String bairro;
-	private String localidade;
+	private String cidade;
 	private String uf;
 
 	public EnderecoDTO() {
@@ -16,12 +15,20 @@ public class EnderecoDTO {
 	}
 
 	public EnderecoDTO(Endereco endereco) {
+		this.id = endereco.getId();
 		this.cep = endereco.getCep();
 		this.logradouro = endereco.getLogradouro();
-		this.complemento = endereco.getComplemento();
 		this.bairro = endereco.getBairro();
-		this.localidade = endereco.getLocalidade();
+		this.cidade = endereco.getLocalidade();
 		this.uf = endereco.getUf();
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getCep() {
@@ -40,14 +47,6 @@ public class EnderecoDTO {
 		this.logradouro = logradouro;
 	}
 
-	public String getComplemento() {
-		return complemento;
-	}
-
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
-	}
-
 	public String getBairro() {
 		return bairro;
 	}
@@ -56,12 +55,12 @@ public class EnderecoDTO {
 		this.bairro = bairro;
 	}
 
-	public String getLocalidade() {
-		return localidade;
+	public String getCidade() {
+		return cidade;
 	}
 
-	public void setLocalidade(String localidade) {
-		this.localidade = localidade;
+	public void setCidade(String localidade) {
+		this.cidade = localidade;
 	}
 
 	public String getUf() {

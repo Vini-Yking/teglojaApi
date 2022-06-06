@@ -12,10 +12,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import br.com.tegloja.dto.PedidoItemRequestDTO;
 
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @Entity
-@Table(name = "pedido_itens")
+@Table(name = "pedido_item")
 public class PedidoItem {
 
 	@Id
@@ -23,25 +27,25 @@ public class PedidoItem {
 	@Column(name = "id_item")
 	private Long id;
     
-	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "id_produto")
-	private Produto produto;
-    
 	@Min(value= 1, message= "Quantidade mínima é um ")
 	@Column(nullable = false)
 	private Integer quantidadeProduto;
-
-	// @Transient
-	// private BigDecimal subTotal;
 
 	@Column(name = "valor_desconto")
 	private BigDecimal valorDesconto;
 
 	@Column(name = "valor_venda")
 	private BigDecimal valorVenda;
-
+	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "id_produto")
+	private Produto produto;
+	
+	/**
+	 * evitar loop
+	 */
+	@JsonBackReference
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "id_pedido")
 	private Pedido pedido;
 
@@ -60,7 +64,6 @@ public class PedidoItem {
 	}
 
 	public PedidoItem(PedidoItemRequestDTO pedidoItemRequest) {
-		this.produto = pedidoItemRequest.getProduto();
 		this.quantidadeProduto = pedidoItemRequest.getQuantidadeProduto();
 		this.valorDesconto = pedidoItemRequest.getValorDesconto();
 	}
@@ -112,5 +115,5 @@ public class PedidoItem {
 	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
 	}
-	
+
 }

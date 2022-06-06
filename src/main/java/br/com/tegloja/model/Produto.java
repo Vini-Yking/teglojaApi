@@ -11,9 +11,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.DecimalMin;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import br.com.tegloja.dto.ProdutoRequestDTO;
 import br.com.tegloja.dto.ProdutoResponseDTO;
 
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @Entity
 public class Produto {
 
@@ -24,8 +27,8 @@ public class Produto {
 
 	@Column(name = "nome_produto")
 	private String nomeProduto;
-    
-	@DecimalMin(value= "0.0", message= "Valor mínimo é zero")
+
+	@DecimalMin(value = "0.0", message = "ValorUnitario mínimo é zero")
 	@Column(name = "valor_unit")
 	private BigDecimal valorUnitario;
 
@@ -55,7 +58,6 @@ public class Produto {
 	}
 
 	public Produto(ProdutoRequestDTO produtoRequest) {
-		this.categoria = produtoRequest.getCategoria();
 		this.dataAlteracao = LocalDate.now();
 		this.nomeProduto = produtoRequest.getNomeProduto();
 		this.quantidadeEstoque = produtoRequest.getQuantidadeEstoque();

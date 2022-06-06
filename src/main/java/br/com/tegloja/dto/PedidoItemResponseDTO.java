@@ -9,12 +9,11 @@ import br.com.tegloja.model.Produto;
 public class PedidoItemResponseDTO {
 
 	private Long idPedidoItem;
-	private Pedido pedido;
 	private Produto produto;
 	private Integer quantidadeProduto;
 	private BigDecimal desconto;
 	private BigDecimal valorVenda;
-
+	private Pedido pedido;
 	public PedidoItemResponseDTO() {
 
 	}

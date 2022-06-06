@@ -1,31 +1,34 @@
 package br.com.tegloja.dto;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-
-import br.com.tegloja.enums.StatusCompra;
-import br.com.tegloja.model.Cliente;
-
 public class PedidoRequestDTO {
 
-	private Cliente cliente;
+	private Long idCliente;
+	private Long codigoPagamento;
 
 	public PedidoRequestDTO() {
 
 	}
 
-	public PedidoRequestDTO(Cliente cliente) {
+	public PedidoRequestDTO(Long idCliente, Long codigoPagamento) {
 		super();
-		this.cliente = cliente;
+		this.idCliente = idCliente;
+		this.codigoPagamento = codigoPagamento;
 	}
 
-	public Cliente getCliente() {
-		return cliente;
+	public Long getIdCliente() {
+		return idCliente;
 	}
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+	public void setIdCliente(Long idCliente) {
+		this.idCliente = idCliente;
 	}
 
+	public Long getCodigoPagamento() {
+		return codigoPagamento;
+	}
+
+	public void setCodigoPagamento(Long codigoPagamento) {
+		this.codigoPagamento = codigoPagamento;
+	}
 
 }

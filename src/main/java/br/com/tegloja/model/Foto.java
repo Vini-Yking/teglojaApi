@@ -9,6 +9,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 public class Foto {
 

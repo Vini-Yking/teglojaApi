@@ -1,5 +1,6 @@
 package br.com.tegloja.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
 import br.com.tegloja.dto.CategoriaResponseDTO;
 import br.com.tegloja.dto.ProdutoRequestDTO;
 import br.com.tegloja.dto.ProdutoResponseDTO;
-import br.com.tegloja.handler.IdNotFoundException;
+import br.com.tegloja.handler.NaoEncontradoException;
 import br.com.tegloja.model.Categoria;
 import br.com.tegloja.model.Produto;
 import br.com.tegloja.repository.ProdutoRepository;
@@ -45,6 +46,31 @@ public class ProdutoService {
 		return produtos.map(produto -> new ProdutoResponseDTO(produto));
 	}
 
+	public Page<ProdutoResponseDTO> buscarPorNome(Pageable page, String nome) {
+		Page<Produto> produtos = produtoRepository.findByNomeProdutoContainingIgnoreCase(page, nome);
+
+		return produtos.map(produto -> new ProdutoResponseDTO(produto));
+	}
+
+	public List<ProdutoResponseDTO> buscarPorCategoria(Long idCategoria) {
+		CategoriaResponseDTO categoriaResponse = categoriaService.buscarPorId(idCategoria);
+		Categoria categoria = new Categoria(categoriaResponse);
+		List<Produto> produtos = produtoRepository.findByCategoria(categoria);
+		// @formatter:off
+		return produtos.stream()
+				.map(produto -> new ProdutoResponseDTO(produto))
+				.collect(Collectors.toList());
+		// @formatter:on
+	}
+
+	public Page<ProdutoResponseDTO> buscarPorCategoriaPaginado(Pageable pageable, Long idCategoria) {
+		CategoriaResponseDTO categoriaResponse = categoriaService.buscarPorId(idCategoria);
+		Categoria categoria = new Categoria(categoriaResponse);
+		Page<Produto> produtos = produtoRepository.findByCategoria(pageable, categoria);
+
+		return produtos.map(produto -> new ProdutoResponseDTO(produto));
+	}
+
 	/**
 	 * Ao inserir um novo produto, obrigatoriamente deverá estar atrelado a uma
 	 * categoria
@@ -53,7 +79,7 @@ public class ProdutoService {
 	 * @return
 	 */
 	public ProdutoResponseDTO adicionar(ProdutoRequestDTO produtoRequest) {
-		CategoriaResponseDTO categoriaResponseDTO = categoriaService.buscarPorId(produtoRequest.getCategoria().getId());
+		CategoriaResponseDTO categoriaResponseDTO = categoriaService.buscarPorId(produtoRequest.getIdCategoria());
 
 		Categoria categoria = new Categoria(categoriaResponseDTO);
 		Produto produto = new Produto(produtoRequest);
@@ -78,19 +104,30 @@ public class ProdutoService {
 	public ProdutoResponseDTO buscarPorId(Long id) {
 		Optional<Produto> produto = produtoRepository.findById(id);
 		if (produto.isEmpty()) {
-			throw new IdNotFoundException("Não existe um produto com esse id.");
+			throw new NaoEncontradoException("Não existe um produto com esse id.");
 		}
 		return new ProdutoResponseDTO(produto.get());
 	}
 
 	public ProdutoResponseDTO atualizar(ProdutoRequestDTO produtoRequest, Long id) {
 		buscarPorId(id);
-		CategoriaResponseDTO categoriaResponseDTO = categoriaService.buscarPorId(produtoRequest.getCategoria().getId());
+		CategoriaResponseDTO categoriaResponseDTO = categoriaService.buscarPorId(produtoRequest.getIdCategoria());
 
 		Categoria categoria = new Categoria(categoriaResponseDTO);
 		Produto produto = new Produto(produtoRequest);
+		produto.setDataAlteracao(LocalDate.now());
 		produto.setCategoria(categoria);
 		produto.setId(id);
+		produtoRepository.save(produto);
+
+		return new ProdutoResponseDTO(produto);
+	}
+
+	public ProdutoResponseDTO subtrairEstoque(Long idProduto, Integer quantidade) {
+		ProdutoResponseDTO produtoResponse = buscarPorId(idProduto);
+
+		Produto produto = new Produto(produtoResponse);
+		produto.setQuantidadeEstoq(produto.getQuantidadeEstoque() - quantidade);
 		produtoRepository.save(produto);
 
 		return new ProdutoResponseDTO(produto);

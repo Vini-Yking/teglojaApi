@@ -11,7 +11,8 @@ import org.springframework.stereotype.Service;
 
 import br.com.tegloja.dto.CategoriaRequestDTO;
 import br.com.tegloja.dto.CategoriaResponseDTO;
-import br.com.tegloja.handler.IdNotFoundException;
+import br.com.tegloja.handler.DuplicateKeyException;
+import br.com.tegloja.handler.NaoEncontradoException;
 import br.com.tegloja.model.Categoria;
 import br.com.tegloja.repository.CategoriaRepository;
 
@@ -23,7 +24,12 @@ public class CategoriaService {
 
 	public CategoriaResponseDTO adicionar(CategoriaRequestDTO categoriaRequest) {
 		Categoria categoria = new Categoria(categoriaRequest);
-		categoria = _categoriarepository.save(categoria);
+
+		try {
+			categoria = _categoriarepository.save(categoria);
+		} catch (Exception e) {
+			throw new DuplicateKeyException("Essa categoria já foi cadastrada.");
+		}
 
 		return new CategoriaResponseDTO(categoria);
 	}
@@ -37,19 +43,24 @@ public class CategoriaService {
 		// @formatter:on
 	}
 
-	public Page<Categoria> buscarPagina(Pageable page) {
+	public Page<CategoriaResponseDTO> buscarPagina(Pageable page) {
 		Page<Categoria> categorias = _categoriarepository.findAll(page);
 
-		return categorias;
-		//return categorias.map(categoria -> new CategoriaResponseDTO(categoria));
+		return categorias.map(categoria -> new CategoriaResponseDTO(categoria));
 	}
 
 	public CategoriaResponseDTO buscarPorId(Long id) {
 		Optional<Categoria> categoria = _categoriarepository.findById(id);
 		if (categoria.isEmpty()) {
-			throw new IdNotFoundException("Não existe uma categoria com esse id.");
+			throw new NaoEncontradoException("Não existe uma categoria com esse id.");
 		}
 		return new CategoriaResponseDTO(categoria.get());
+	}
+
+	public Page<CategoriaResponseDTO> buscarPorNome(Pageable pageable, String nome) {
+		Page<Categoria> categorias = _categoriarepository.findByCategoriaContainingIgnoreCase(pageable, nome);
+
+		return categorias.map(categoria -> new CategoriaResponseDTO(categoria));
 	}
 
 	public CategoriaResponseDTO atualizar(CategoriaRequestDTO categoriaRequest, Long id) {

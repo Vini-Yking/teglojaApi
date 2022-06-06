@@ -1,19 +1,17 @@
 package br.com.tegloja.model;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import br.com.tegloja.dto.EnderecoDTO;
 
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @Entity
 public class Endereco {
 
@@ -22,43 +20,37 @@ public class Endereco {
 	@Column(name = "id_endereco")
 	private Long id;
 
-	
-	@Pattern(regexp="[0-9]",message="Número inválido")
-	@Size(max=8,message="Oito dígitos")
+	@Pattern(regexp = "^[0-9]{8}", message = "Cep precisa ter apenas números e 8 dígitos")
 	@Column(nullable = false, unique = true)
 	private String cep;
 
 	private String logradouro;
-	private String complemento;
 	private String bairro;
 	private String localidade;
 	private String uf;
-    
-	
-	@OneToMany
-	@JoinColumn(name = "id_categoria")
-	private List<Cliente> cliente;
 
 	public Endereco() {
 
 	}
 
-	public Endereco(String cep, String logradouro, String complemento, String bairro, String localidade, String uf,
-			String ibge, String gia, String ddd, String siafi) {
+	public Endereco(Long id, String cep, String logradouro, String bairro, String cidade,
+			String uf) {
+		this.id = id;
 		this.cep = cep;
 		this.logradouro = logradouro;
-		this.complemento = complemento;
 		this.bairro = bairro;
-		this.localidade = localidade;
+		this.localidade = cidade;
 		this.uf = uf;
+
 	}
 
-	public List<Cliente> getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(List<Cliente> cliente) {
-		this.cliente = cliente;
+	public Endereco(EnderecoDTO enderecoDTO) {
+		this.id = enderecoDTO.getId();
+		this.cep = enderecoDTO.getCep();
+		this.logradouro = enderecoDTO.getLogradouro();
+		this.bairro = enderecoDTO.getBairro();
+		this.localidade = enderecoDTO.getCidade();
+		this.uf = enderecoDTO.getUf();
 	}
 
 	public Long getId() {
@@ -83,14 +75,6 @@ public class Endereco {
 
 	public void setLogradouro(String logradouro) {
 		this.logradouro = logradouro;
-	}
-
-	public String getComplemento() {
-		return complemento;
-	}
-
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
 	}
 
 	public String getBairro() {
@@ -118,4 +102,4 @@ public class Endereco {
 	}
 
 }
-//classe principal para retornar o endereco da API viacep
+// classe principal para retornar o endereco da API viacep

@@ -14,8 +14,10 @@ import br.com.tegloja.dto.PedidoItemRequestDTO;
 import br.com.tegloja.dto.PedidoItemResponseDTO;
 import br.com.tegloja.dto.PedidoResponseDTO;
 import br.com.tegloja.dto.ProdutoResponseDTO;
+import br.com.tegloja.enums.FormaPagamento;
 import br.com.tegloja.enums.StatusCompra;
-import br.com.tegloja.handler.IdNotFoundException;
+import br.com.tegloja.handler.NaoEncontradoException;
+import br.com.tegloja.handler.ArgumentoInvalidoException;
 import br.com.tegloja.model.Pedido;
 import br.com.tegloja.model.PedidoItem;
 import br.com.tegloja.model.Produto;
@@ -36,17 +38,17 @@ public class PedidoItemService {
 	public PedidoItemResponseDTO buscarPorId(Long id) {
 		Optional<PedidoItem> item = _pedidoItemRepository.findById(id);
 		if (item.isEmpty())
-			throw new IdNotFoundException("Não existe um item com esse id.");
+			throw new NaoEncontradoException("Não existe um item com esse id.");
 
 		return new PedidoItemResponseDTO(item.get());
 	}
 
 	public List<PedidoItemResponseDTO> buscarPorIdPedido(Long idPedido) {
-		PedidoResponseDTO pedidoResponse = pedidoService.buscarPorId(idPedido);
+		PedidoResponseDTO pedidoResponse = pedidoService.buscarPorIdPedido(idPedido);
 		Pedido pedido = new Pedido(pedidoResponse);
 		List<PedidoItem> itens = _pedidoItemRepository.findByPedido(pedido);
 		if (itens.isEmpty())
-			throw new IdNotFoundException("Não existe itens neste pedido.");
+			throw new ArgumentoInvalidoException("Não é possível finalizar um pedido sem itens.");
 
 		// @formatter:off
 		return itens.stream()
@@ -85,22 +87,25 @@ public class PedidoItemService {
 	 */
 	public PedidoItemResponseDTO adicionar(Long idPedido, PedidoItemRequestDTO pedidoItemRequest) {
 		// Checa o pedido
-		PedidoResponseDTO pedidoResponse = pedidoService.buscarPorId(idPedido);
+		PedidoResponseDTO pedidoResponse = pedidoService.buscarPorIdPedido(idPedido);
 		if (pedidoResponse.getStatus().equals(StatusCompra.FINALIZADO)) {
-			// throw new PedidoFinalizadoException("Pedido já finalizado.");
+			throw new ArgumentoInvalidoException("Esse pedido já foi finalizado.");
 		}
 
-		// se funcionar transformar para receber uma lista
 		PedidoItem pedidoItem = new PedidoItem(pedidoItemRequest);
 		Pedido pedido = new Pedido(pedidoResponse);
 
-		ProdutoResponseDTO produtoDTO = produtoService.buscarPorId(pedidoItem.getProduto().getId());
+		ProdutoResponseDTO produtoDTO = produtoService.buscarPorId(pedidoItemRequest.getIdProduto());
 		Produto produto = new Produto(produtoDTO);
+		if (pedidoItemRequest.getQuantidadeProduto() > produto.getQuantidadeEstoque()) {
+			throw new ArgumentoInvalidoException();
+		}
 
 		BigDecimal quantidadeProduto = new BigDecimal(pedidoItem.getQuantidadeProduto());
 		BigDecimal valor = produto.getValorUnitario().multiply(quantidadeProduto);
 		valor = valor.subtract(pedidoItem.getValorDesconto());
 
+		pedido.setFormaPagamento(FormaPagamento.ABERTO);
 		pedidoItem.setProduto(produto);
 		pedidoItem.setPedido(pedido);
 		pedidoItem.setValorVenda(valor);
