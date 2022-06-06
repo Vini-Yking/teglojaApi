@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.tegloja.backend.config.MailConfig;
+import br.com.tegloja.dto.ClientePutRequestDTO;
 import br.com.tegloja.dto.ClienteRequestDTO;
 import br.com.tegloja.dto.ClienteResponseDTO;
 import br.com.tegloja.dto.EnderecoDTO;
@@ -27,8 +28,8 @@ public class ClienteService {
 	@Autowired
 	private EnderecoService enderecoService;
 
-	@Autowired
-	private MailConfig mailConfig;
+	// @Autowired
+	// private MailConfig mailConfig;
 
 	public void deletar(Long id) {
 		buscarPorId(id);
@@ -82,10 +83,14 @@ public class ClienteService {
 		return new ClienteResponseDTO(cliente);
 	}
 
-	public ClienteResponseDTO atualizar(ClienteRequestDTO clienteRequest, Long id) {
-		buscarPorId(id);
-		Cliente cliente = new Cliente(clienteRequest);
-		cliente.setId(id);
+	public ClienteResponseDTO atualizar(ClientePutRequestDTO clientePutRequest, Long id) {
+		ClienteResponseDTO clienteResponseDTO = buscarPorId(id);
+		Cliente cliente = new Cliente(clienteResponseDTO);
+		EnderecoDTO enderecoDTO = enderecoService.buscarInserirCep(clientePutRequest.getCep());
+
+		cliente.setNome(clientePutRequest.getNome());
+		cliente.setNumeroEndereco(clientePutRequest.getNumeroEndereco());
+		cliente.setEndereco(new Endereco(enderecoDTO));
 		cliente = _clienteRepository.save(cliente);
 
 		return new ClienteResponseDTO(cliente);

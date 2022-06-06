@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.com.tegloja.dto.ClientePutRequestDTO;
 import br.com.tegloja.dto.ClienteRequestDTO;
 import br.com.tegloja.dto.ClienteResponseDTO;
 import br.com.tegloja.dto.PedidoResponseDTO;
@@ -108,7 +109,7 @@ public class ClienteController {
 
 	@PutMapping("/{id}")
 	@ApiOperation(value = "Atualiza um cliente")
-	public ResponseEntity<ClienteResponseDTO> atualizar(@Valid @RequestBody ClienteRequestDTO request,
+	public ResponseEntity<ClienteResponseDTO> atualizar(@Valid @RequestBody ClientePutRequestDTO request,
 			@PathVariable Long id) {
 		ClienteResponseDTO responseBody = clienteService.atualizar(request, id);
 
