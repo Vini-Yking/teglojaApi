@@ -130,3 +130,51 @@ ALTER TABLE tegloja.endereco ADD CONSTRAINT cliente_endereco
 
 ALTER TABLE tegloja.foto ADD CONSTRAINT produto_foto 
     FOREIGN KEY (id_produto) REFERENCES tegloja.produto (id_produto);
+
+/* ---------------------------------------------------------------------- */
+/* INSERTS                                                                */
+/* ---------------------------------------------------------------------- */
+
+insert into api.categoria (nome_categoria) 
+values 
+('Utilitário'),
+('Material de construção'),
+('Ferramentas');
+
+insert into api.produto (nome_produto, quantidade_estoque, valor_unit, id_categoria)
+values 
+('Arruela', 1000, 2.42, 1),
+('Porca', 1000, 0.34, 1),
+('Bucha', 1000, 1.79, 1),
+('Barra rosqueada', 25, 4.44, 3),
+('Parafuso', 1000, 2.90, 1),
+('Chave de Fenda', 50, 12.90, 3),
+('Broca', 200, 8.28, 3);
+
+insert into api.endereco (bairro, cep, localidade, logradouro, uf)
+values
+('Lagoa', '27925400', 'Macaé', 'Avenida Vereador Roberto Garrido de Souza', 'RJ'),
+('Alto da Serra', '25635030', 'Petrópolis', 'Rua Fernando Fernandes Lima', 'RJ'),
+('Várzea', '25953000', 'Teresópolis', 'Avenida Lúcio Meira', 'RJ'),
+('Jardim Meudon', '25954020', 'Teresópolis', 'Rua Goitacases', 'RJ'),
+('São Pedro', '25955230', 'Teresópolis', 'Rua Pedro Strucchi', 'RJ'),
+('São Pedro', '25956250', 'Teresópolis', 'Rua Otto Alencar', 'RJ');
+
+insert into api.cliente (cep, cpf, email, nome_cliente, endereco_numero, id_endereco)
+values
+('27925400', '80501507043', 'thiago@serratec.com', 'Thiago Paes', 222, 1),
+('25635030', '30632596082', 'vinicios@serratec.com', 'Marcos Vinicios', 111, 2),
+('25953000', '06773117020', 'hitalo@serratec.com', 'Hítalo Taverna', 333, 3),
+('25954020', '38890628065', 'silvia_patricia@serratec.com', 'Sílvia Patrícia', 232, 4),
+('25955230', '27474817004', 'nicolas@serratec.com', 'Nícolas', 987, 5),
+('25956250', '39198868012', 'gabriel@serratec.com', 'Gabriel Bochimpani', 987, 6);
+
+
+
+
+
+
+
+
+
+
