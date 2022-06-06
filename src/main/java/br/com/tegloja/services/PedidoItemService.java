@@ -95,7 +95,7 @@ public class PedidoItemService {
 		PedidoItem pedidoItem = new PedidoItem(pedidoItemRequest);
 		Pedido pedido = new Pedido(pedidoResponse);
 
-		ProdutoResponseDTO produtoDTO = produtoService.buscarPorId(pedidoItemRequest.getProdutoId());
+		ProdutoResponseDTO produtoDTO = produtoService.buscarPorId(pedidoItemRequest.getIdProduto());
 		Produto produto = new Produto(produtoDTO);
 		if (pedidoItemRequest.getQuantidadeProduto() > produto.getQuantidadeEstoque()) {
 			throw new ArgumentoInvalidoException();

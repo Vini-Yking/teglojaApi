@@ -25,7 +25,7 @@ import br.com.tegloja.dto.PedidoResponseDTO;
 import br.com.tegloja.enums.FormaPagamento;
 import br.com.tegloja.enums.StatusCompra;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @Entity
 public class Pedido {
 
@@ -46,7 +46,7 @@ public class Pedido {
 
 	@Column(name = "valor_total")
 	private BigDecimal valortotal;
-	
+
 	@Column(name = "tipo_pagamento")
 	@Enumerated(EnumType.ORDINAL)
 	private FormaPagamento formaPagamento;
@@ -58,12 +58,9 @@ public class Pedido {
 	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
 
-	/**
-	 * cancelar json loop
-	 */
-	@JsonManagedReference
+	@JsonManagedReference // cancelar JSON loop
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
-	
+
 	private List<PedidoItem> itens;
 
 	public Pedido() {
@@ -71,7 +68,7 @@ public class Pedido {
 	}
 
 	public Pedido(Long id, StatusCompra status, LocalDate dataCompra, LocalDate dataEntrega, BigDecimal valortotal,
-			Cliente cliente,FormaPagamento tipoPagamento, List<PedidoItem> itens) {
+			Cliente cliente, FormaPagamento tipoPagamento, List<PedidoItem> itens) {
 		this.id = id;
 		this.status = status;
 		this.dataCompra = dataCompra;
@@ -82,7 +79,7 @@ public class Pedido {
 	}
 
 	public Pedido(PedidoRequestDTO pedidoRequest) {
-		this.cliente = pedidoRequest.getCliente();
+		this.cliente.setId(pedidoRequest.getIdCliente());
 	}
 
 	public Pedido(PedidoResponseDTO pedidoResponse) {

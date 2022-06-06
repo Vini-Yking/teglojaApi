@@ -6,13 +6,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.tegloja.dto.EnderecoDTO;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @Entity
 public class Endereco {
 
@@ -21,8 +20,7 @@ public class Endereco {
 	@Column(name = "id_endereco")
 	private Long id;
 
-	@Pattern(regexp = "^[0-9]{8}", message = "precisam ser oito numeros")
-	@Size(min = 8, max = 8, message = "Cep precisa ter oito Digitos")
+	@Pattern(regexp = "^[0-9]{8}", message = "Cep precisa ter apenas números e 8 dígitos")
 	@Column(nullable = false, unique = true)
 	private String cep;
 

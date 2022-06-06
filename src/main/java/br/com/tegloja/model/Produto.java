@@ -2,8 +2,6 @@ package br.com.tegloja.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.DecimalMin;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -19,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import br.com.tegloja.dto.ProdutoRequestDTO;
 import br.com.tegloja.dto.ProdutoResponseDTO;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @Entity
 public class Produto {
 
@@ -31,7 +28,7 @@ public class Produto {
 	@Column(name = "nome_produto")
 	private String nomeProduto;
 
-	@DecimalMin(value = "0.0", message = "Valor mínimo é zero")
+	@DecimalMin(value = "0.0", message = "ValorUnitario mínimo é zero")
 	@Column(name = "valor_unit")
 	private BigDecimal valorUnitario;
 

@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.tegloja.dto.PedidoItemRequestDTO;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @Entity
 @Table(name = "pedido_item")
 public class PedidoItem {
@@ -30,9 +30,6 @@ public class PedidoItem {
 	@Min(value= 1, message= "Quantidade mínima é um ")
 	@Column(nullable = false)
 	private Integer quantidadeProduto;
-
-	// @Transient
-	// private BigDecimal subTotal;
 
 	@Column(name = "valor_desconto")
 	private BigDecimal valorDesconto;
@@ -67,7 +64,6 @@ public class PedidoItem {
 	}
 
 	public PedidoItem(PedidoItemRequestDTO pedidoItemRequest) {
-		this.produto = pedidoItemRequest.getProduto();
 		this.quantidadeProduto = pedidoItemRequest.getQuantidadeProduto();
 		this.valorDesconto = pedidoItemRequest.getValorDesconto();
 	}
@@ -119,5 +115,5 @@ public class PedidoItem {
 	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
 	}
-	
+
 }

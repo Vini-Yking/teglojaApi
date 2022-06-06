@@ -89,7 +89,7 @@ public class PedidoService {
 	}
 
 	public PedidoResponseDTO adicionar(PedidoRequestDTO pedidoRequest) {
-		ClienteResponseDTO clienteResponseDTO = clienteService.buscarPorId(pedidoRequest.getClienteId());
+		ClienteResponseDTO clienteResponseDTO = clienteService.buscarPorId(pedidoRequest.getIdCliente());
 
 		Cliente cliente = new Cliente(clienteResponseDTO);
 		Pedido pedido = new Pedido(pedidoRequest);
@@ -106,7 +106,7 @@ public class PedidoService {
 	}
 
 	public PedidoResponseDTO iniciarPedidoVazio(PedidoRequestDTO requestDTO) {
-		ClienteResponseDTO clienteDTO = clienteService.buscarPorId(requestDTO.getClienteId());
+		ClienteResponseDTO clienteDTO = clienteService.buscarPorId(requestDTO.getIdCliente());
 		Pedido pedido = new Pedido();
 		pedido.setCliente(new Cliente(clienteDTO));
 		pedido.setStatus(StatusCompra.NAO_FINALIZADO);
@@ -119,10 +119,9 @@ public class PedidoService {
 	public PedidoResponseDTO finalizarPedido(Long idPedido, PedidoRequestDTO requestDTO) {
 		PedidoResponseDTO pedidoResponse = buscarPorIdPedido(idPedido);
 		List<PedidoItemResponseDTO> itens = pedidoItemService.buscarPorIdPedido(idPedido);
-		
-		FormaPagamento pagamento = FormaPagamento.verificaPagamento(requestDTO.getFormaPagamento().intValue());
-		
-		
+
+		FormaPagamento pagamento = FormaPagamento.verificaPagamento(requestDTO.getCodigoPagamento().intValue());
+
 		// Verifica o estoque dos produtos
 		for (PedidoItemResponseDTO pedidoItemResponseDTO : itens) {
 			Long idProduto = pedidoItemResponseDTO.getProduto().getId();
@@ -146,7 +145,7 @@ public class PedidoService {
 				.map(x -> x.getValorVenda())
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
 		// @formatter:on
-		pagamento.verificaPagamentoFinalizado(requestDTO.getFormaPagamento().intValue());
+		pagamento.verificaPagamentoFinalizado(requestDTO.getCodigoPagamento().intValue());
 		total.setScale(2, RoundingMode.HALF_UP);
 		pedido.setValortotal(total);
 		pedido.setDataCompra(LocalDate.now());
@@ -160,7 +159,7 @@ public class PedidoService {
 
 	public PedidoResponseDTO atualizar(PedidoRequestDTO pedidoRequest, Long id) {
 		buscarPorIdPedido(id);
-		ClienteResponseDTO clienteResponseDTO = clienteService.buscarPorId(pedidoRequest.getClienteId());
+		ClienteResponseDTO clienteResponseDTO = clienteService.buscarPorId(pedidoRequest.getIdCliente());
 
 		Cliente cliente = new Cliente(clienteResponseDTO);
 		Pedido pedido = new Pedido(pedidoRequest);
