@@ -79,7 +79,7 @@ public class ProdutoService {
 	 * @return
 	 */
 	public ProdutoResponseDTO adicionar(ProdutoRequestDTO produtoRequest) {
-		CategoriaResponseDTO categoriaResponseDTO = categoriaService.buscarPorId(produtoRequest.getCategoria().getId());
+		CategoriaResponseDTO categoriaResponseDTO = categoriaService.buscarPorId(produtoRequest.getIdCategoria());
 
 		Categoria categoria = new Categoria(categoriaResponseDTO);
 		Produto produto = new Produto(produtoRequest);
@@ -111,7 +111,7 @@ public class ProdutoService {
 
 	public ProdutoResponseDTO atualizar(ProdutoRequestDTO produtoRequest, Long id) {
 		buscarPorId(id);
-		CategoriaResponseDTO categoriaResponseDTO = categoriaService.buscarPorId(produtoRequest.getCategoria().getId());
+		CategoriaResponseDTO categoriaResponseDTO = categoriaService.buscarPorId(produtoRequest.getIdCategoria());
 
 		Categoria categoria = new Categoria(categoriaResponseDTO);
 		Produto produto = new Produto(produtoRequest);

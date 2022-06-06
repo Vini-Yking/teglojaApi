@@ -27,8 +27,8 @@ public class Produto {
 
 	@Column(name = "nome_produto")
 	private String nomeProduto;
-    
-	@DecimalMin(value= "0.0", message= "Valor mínimo é zero")
+
+	@DecimalMin(value = "0.0", message = "Valor mínimo é zero")
 	@Column(name = "valor_unit")
 	private BigDecimal valorUnitario;
 
@@ -58,7 +58,6 @@ public class Produto {
 	}
 
 	public Produto(ProdutoRequestDTO produtoRequest) {
-		this.categoria = produtoRequest.getCategoria();
 		this.dataAlteracao = LocalDate.now();
 		this.nomeProduto = produtoRequest.getNomeProduto();
 		this.quantidadeEstoque = produtoRequest.getQuantidadeEstoque();
