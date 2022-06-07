@@ -1,8 +1,13 @@
 package br.com.tegloja.dto;
 
+import javax.validation.constraints.NotBlank;
+
 public class PedidoRequestDTO {
 
+	@NotBlank(message = "Informe idCliente.")
 	private Long idCliente;
+
+	@NotBlank(message = "Informe codigoPagamento.")
 	private Long codigoPagamento;
 
 	public PedidoRequestDTO() {

@@ -2,10 +2,21 @@ package br.com.tegloja.dto;
 
 import java.math.BigDecimal;
 
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 public class PedidoItemRequestDTO {
 
+	@NotNull(message = "Informe idProduto.")
 	private Long idProduto;
+
+	@NotNull(message = "Informe quantidadeProduto.")
+	@Min(value = 1, message = "quantidadeProduto mínima é 1.")
 	private Integer quantidadeProduto;
+
+	@NotNull(message = "Informe valorDesconto.")
+	@DecimalMin(value = "0.0", message = "valorDesconto mínimo é zero")
 	private BigDecimal valorDesconto;
 
 	public PedidoItemRequestDTO() {

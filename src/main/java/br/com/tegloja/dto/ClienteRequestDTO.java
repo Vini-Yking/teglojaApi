@@ -1,13 +1,32 @@
 package br.com.tegloja.dto;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.br.CPF;
+
 import br.com.tegloja.model.Cliente;
 
 public class ClienteRequestDTO {
 
+	@NotBlank(message = "Informe cpf")
+	@CPF(message = "Insira um cpf válido")
 	private String cpf;
+
+	@NotBlank(message = "Informe nome")
 	private String nome;
+
+	@NotBlank(message = "Informe email")
+	@Email(message = " Insira um e-mail válido")
 	private String email;
+
+	@NotBlank(message = "Informe cep")
+	@Pattern(regexp = "^[0-9]{8}", message = "Cep precisa ter apenas números e 8 dígitos")
 	private String cep;
+
+	@NotNull(message = "Informe numeroEndereco, caso não houver informe 0")
 	private Integer numeroEndereco;
 
 	public ClienteRequestDTO() {

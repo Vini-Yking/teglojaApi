@@ -1,7 +1,10 @@
 package br.com.tegloja.dto;
 
+import javax.validation.constraints.NotNull;
+
 public class CategoriaRequestDTO {
 
+	@NotNull(message = "Informe categoria")
 	private String categoria;
 
 	public CategoriaRequestDTO() {
