@@ -23,11 +23,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.com.tegloja.dto.PedidoItemResponseDTO;
 import br.com.tegloja.dto.ProdutoRequestDTO;
 import br.com.tegloja.dto.ProdutoResponseDTO;
+import br.com.tegloja.services.PedidoItemService;
 import br.com.tegloja.services.ProdutoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -40,6 +41,9 @@ public class ProdutoController {
 
 	@Autowired
 	private ProdutoService produtoService;
+
+	@Autowired
+	private PedidoItemService pedidoItemService;
 
 	/**
 	 * @Autowired private FotoService fotoService;
@@ -55,11 +59,11 @@ public class ProdutoController {
 	@ApiOperation(value = "Retorna uma lista paginada de todos os produtos")
 	public ResponseEntity<Page<ProdutoResponseDTO>> buscarPagina(@PageableDefault(
 	// @formatter:off
-					sort = "nomeProduto",
-					direction = Sort.Direction.ASC,
-					page = 0,
-					size = 8)Pageable pageable) {
-		// @formatter:on
+			sort = "nomeProduto",
+			direction = Sort.Direction.ASC,
+			page = 0,
+			size = 8)Pageable pageable) {
+	// @formatter:on
 		return ResponseEntity.ok(produtoService.buscarPagina(pageable));
 	}
 
@@ -67,11 +71,11 @@ public class ProdutoController {
 	@ApiOperation(value = "Retorna uma lista paginada de produtos pesquisados por nome")
 	public ResponseEntity<Page<ProdutoResponseDTO>> buscarPorNome(@PageableDefault(
 	// @formatter:off
-					sort = "nomeProduto",
-					direction = Sort.Direction.ASC,
-					page = 0,
-					size = 8)Pageable pageable, @RequestParam String nome) {
-		// @formatter:on
+			sort = "nomeProduto",
+			direction = Sort.Direction.ASC,
+			page = 0,
+			size = 8)Pageable pageable, @RequestParam String nome) {
+	// @formatter:on
 		return ResponseEntity.ok(produtoService.buscarPorNome(pageable, nome));
 	}
 
@@ -81,11 +85,15 @@ public class ProdutoController {
 		return ResponseEntity.ok(produtoService.buscarPorId(id));
 	}
 
-	// TODO
-	// @GetMapping("/{id}/pedidos")
-	// public ResponseEntity<ProdutoResponseDTO> buscarPedidosProduto(@PathVariable
-	// Long id) {
-	// }
+	@GetMapping("/{id}/pedidos")
+	@ApiOperation(value = "Retorna uma lista paginada de todos os itens de pedido contendo o produto")
+	public ResponseEntity<Page<PedidoItemResponseDTO>> buscarPedidosProduto(@PageableDefault(
+	// @formatter:off
+			page = 0,
+			size = 8)Pageable pageable, @PathVariable Long idProduto) {
+	// @formatter:on
+		return ResponseEntity.ok(pedidoItemService.buscarPorIdProduto(pageable, idProduto));
+	}
 
 	@PutMapping("/{id}")
 	@ApiOperation(value = "Atualiza um produto")

@@ -48,13 +48,23 @@ public class PedidoItemService {
 		Pedido pedido = new Pedido(pedidoResponse);
 		List<PedidoItem> itens = _pedidoItemRepository.findByPedido(pedido);
 		if (itens.isEmpty())
-			throw new ArgumentoInvalidoException("Não é possível finalizar um pedido sem itens.");
+			throw new ArgumentoInvalidoException("Não existem itens nesse pedido.");
 
 		// @formatter:off
 		return itens.stream()
 				.map(item -> new PedidoItemResponseDTO(item))
 				.collect(Collectors.toList());
 		// @formatter:on
+	}
+
+	public Page<PedidoItemResponseDTO> buscarPorIdProduto(Pageable pageable, Long idProduto) {
+		ProdutoResponseDTO produtoResponse = produtoService.buscarPorId(idProduto);
+		Produto produto = new Produto(produtoResponse);
+		Page<PedidoItem> itens = _pedidoItemRepository.findByProduto(pageable, produto);
+		if (itens.isEmpty())
+			throw new ArgumentoInvalidoException("Nenhum item encontrado com esse produto.");
+
+		return itens.map(item -> new PedidoItemResponseDTO(item));
 	}
 
 	public Page<PedidoItemResponseDTO> buscarPagina(Pageable page) {

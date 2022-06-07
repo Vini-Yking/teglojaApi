@@ -49,8 +49,8 @@ public class PedidoItemController {
 	@ApiOperation(value = "Retorna uma lista paginada de todos os pedidos")
 	public ResponseEntity<Page<PedidoItemResponseDTO>> buscarPagina(@PageableDefault(
 	// @formatter:off
-					page = 0,
-					size = 8) Pageable pageable) {
+			page = 0,
+			size = 8) Pageable pageable) {
 		// @formatter:on
 		return ResponseEntity.ok(pedidoItemService.buscarPagina(pageable));
 	}

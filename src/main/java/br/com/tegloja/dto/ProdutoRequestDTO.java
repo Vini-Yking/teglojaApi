@@ -3,9 +3,11 @@ package br.com.tegloja.dto;
 import java.math.BigDecimal;
 
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 
 public class ProdutoRequestDTO {
 
@@ -16,11 +18,12 @@ public class ProdutoRequestDTO {
 	private Long idCategoria;
 
 	@NotNull(message = "Informe valorUnitario")
-	@DecimalMin(value = "0.0", message = "ValorUnitario deve ser um número positivo")
+	@Digits(integer = 6, fraction = 2, message = "Máximo de 2 casas decimais para valorUnitario")
+	@PositiveOrZero(message = "valorUnitario deve ser um número positivo ou 0")
 	private BigDecimal valorUnitario;
 
 	@NotNull(message = "Informe quantidadeEstoque")
-	@Positive(message = "quantidadeEstoque deve ser um número positivo")
+	@PositiveOrZero(message = "quantidadeEstoque deve ser um número positivo ou 0")
 	private Integer quantidadeEstoque;
 
 	public ProdutoRequestDTO() {

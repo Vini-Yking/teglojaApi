@@ -3,8 +3,10 @@ package br.com.tegloja.dto;
 import java.math.BigDecimal;
 
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 
 public class PedidoItemRequestDTO {
 
@@ -16,7 +18,8 @@ public class PedidoItemRequestDTO {
 	private Integer quantidadeProduto;
 
 	@NotNull(message = "Informe valorDesconto.")
-	@DecimalMin(value = "0.0", message = "valorDesconto mínimo é zero")
+	@PositiveOrZero(message = "valorDesconto deve ser um número positivo ou 0")
+	@Digits(integer = 6, fraction = 2, message = "Máximo de 2 casas decimais para valorDesconto")
 	private BigDecimal valorDesconto;
 
 	public PedidoItemRequestDTO() {

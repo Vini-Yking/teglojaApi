@@ -58,12 +58,12 @@ public class CategoriaController {
 	@ApiOperation(value = "Retorna uma lista paginada de todos as categorias")
 	public ResponseEntity<Page<CategoriaResponseDTO>> buscarPagina(@PageableDefault(
 	// @formatter:off
-					sort = "categoria",
-					direction = Sort.Direction.ASC,
-					page = 0,
-					size = 8
-					)Pageable pageable) {
-		// @formatter:on
+		sort = "categoria",
+		direction = Sort.Direction.ASC,
+		page = 0,
+		size = 8
+		)Pageable pageable) {
+	// @formatter:on
 		return ResponseEntity.ok(categoriaService.buscarPagina(pageable));
 	}
 

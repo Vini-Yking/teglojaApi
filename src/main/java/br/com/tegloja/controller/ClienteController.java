@@ -62,12 +62,12 @@ public class ClienteController {
 	@ApiOperation(value = "Retorna uma lista paginada de todos os clientes")
 	public ResponseEntity<Page<ClienteResponseDTO>> buscarTodosPaginado(@PageableDefault(
 	// @formatter:off
-					sort = "nome",
-					direction = Sort.Direction.ASC,
-					page = 0,
-					size = 8
-					)Pageable pageable) {
-		// @formatter:on
+			sort = "nome",
+			direction = Sort.Direction.ASC,
+			page = 0,
+			size = 8
+			)Pageable pageable) {
+	// @formatter:on
 		return ResponseEntity.ok(clienteService.buscarPagina(pageable));
 	}
 
@@ -75,11 +75,11 @@ public class ClienteController {
 	@ApiOperation(value = "Retorna uma lista paginada de clientes pesquisados por nome")
 	public ResponseEntity<Page<ClienteResponseDTO>> buscarPorNome(@PageableDefault(
 	// @formatter:off
-					sort = "nome",
-					direction = Sort.Direction.ASC,
-					page = 0,
-					size = 8
-					)Pageable pageable, @RequestParam String nome) {
+			sort = "nome",
+			direction = Sort.Direction.ASC,
+			page = 0,
+			size = 8
+			)Pageable pageable, @RequestParam String nome) {
 		// @formatter:on
 		return ResponseEntity.ok(clienteService.buscarPorNome(pageable, nome));
 	}
