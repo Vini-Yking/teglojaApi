@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -21,7 +22,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
 	/**
 	 * Exceção que trata quando o usuario entra um parametro e ele não é encontrado
-	 (ex: id não encontrado)
+	 * (ex: id não encontrado)
 	 */
 	@ExceptionHandler(value = { NaoEncontradoException.class })
 	public ResponseEntity<Object> handle(NaoEncontradoException ex, WebRequest request) {
@@ -31,22 +32,24 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 
 	/**
-	 * exceção que trata os pagamentos do Enum caso na finalização da compra seja informado o pagamento em aberto ou diferente dos enums ele retorna mensagem
+	 * exceção que trata os pagamentos do Enum caso na finalização da compra seja
+	 * informado o pagamento em aberto ou diferente dos enums ele retorna mensagem
+	 * 
 	 * @param ex
 	 * @param request
 	 * @return
 	 */
 	@ExceptionHandler(value = { EnumValidationException.class })
-	public ResponseEntity<Object> handle(EnumValidationException ex, WebRequest request){
+	public ResponseEntity<Object> handle(EnumValidationException ex, WebRequest request) {
 		ErroResponseDTO erroResponse = new ErroResponseDTO(HttpStatus.NOT_FOUND.value(), "Forma de pagamento invalida",
 				LocalDateTime.now(), ex.getMessage());
 		return super.handleExceptionInternal(ex, erroResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
 	}
-	
-	 /**
-	  * 	Exceção que trata quando o usuario entra um parâmetro que contraria a regra
-	 de negócio (ex: passar quantidade de produto maior que estoque)
-	  */
+
+	/**
+	 * Exceção que trata quando o usuario entra um parâmetro que contraria a regra
+	 * de negócio (ex: passar quantidade de produto maior que estoque)
+	 */
 	@ExceptionHandler(value = { ArgumentoInvalidoException.class })
 	public ResponseEntity<Object> handle(ArgumentoInvalidoException ex, WebRequest request) {
 		ErroResponseDTO erroResponse = new ErroResponseDTO(HttpStatus.BAD_REQUEST.value(), "Argumento inválido.",
@@ -60,6 +63,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 				"Erro de constraint no banco de dados.", LocalDateTime.now(), ex.getMessage());
 		return super.handleExceptionInternal(ex, erroResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
 	}
+
 	/**
 	 * Exceção que trata os erros de validação do Request Body (@Valid ...)
 	 */
@@ -75,5 +79,20 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 				errors);
 		return super.handleExceptionInternal(ex, errorResponse, headers, status, request);
 	}
+
+	/**
+	 * Essa exception é acionada quando um parâmetro esta faltando na request
+	 */
+	@Override
+	protected ResponseEntity<Object> handleMissingServletRequestParameter(MissingServletRequestParameterException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
+		String error = ex.getParameterName() + ": parâmetro está faltando";
+
+		ErroResponseDTO apiError = new ErroResponseDTO(HttpStatus.BAD_REQUEST.value(), ex.getLocalizedMessage(),
+				LocalDateTime.now(), error);
+		return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+	}
+	
+	
 
 }
