@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.tegloja.dto.ProdutoRequestDTO;
@@ -114,18 +115,10 @@ public class ProdutoController {
 		return ResponseEntity.created(uri).body(produtoResponseDTO);
 	}
 
-	/**
-	 * @PostMapping
-	 * @ResponseStatus(HttpStatus.CREATED) public ResponseEntity<ProdutoResponseDTO>
-	 *                                     adicionarComFoto(@Valid @RequestParam
-	 *                                     MultipartFile file,
-	 * @RequestPart ProdutoRequestDTO produtoRequest) throws IOException {
-	 *              ProdutoResponseDTO produtoResponseDTO =
-	 *              produtoService.adicionarComFoto(produtoRequest, file); URI uri =
-	 *              ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-	 *              .buildAndExpand(produtoResponseDTO.getIdProduto()).toUri();
-	 *              return ResponseEntity.created(uri).body(produtoResponseDTO); }
-	 */
+	// @PostMapping("/{id}/foto")
+	// public ResponseEntity<byte[]> adicionarImagem(@PathVariable Long idProduto,
+	// @RequestParam MultipartFile file) {
+	// }
 
 	@DeleteMapping("/{id}")
 	@ApiOperation(value = "Apaga um produto")

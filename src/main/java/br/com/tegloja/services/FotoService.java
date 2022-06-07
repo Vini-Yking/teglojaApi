@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import br.com.tegloja.handler.NaoEncontradoException;
 import br.com.tegloja.model.Foto;
 import br.com.tegloja.model.Produto;
 import br.com.tegloja.repository.FotoRepository;
@@ -19,12 +20,15 @@ public class FotoService {
 	private FotoRepository fotoRepository;
 
 	public Foto inserir(Produto produto, MultipartFile file) throws IOException {
-		Foto foto = new Foto(file.getBytes(), file.getContentType(), file.getName(), produto);
+		Foto foto = new Foto(produto, file);
+
 		return fotoRepository.save(foto);
 	}
 
 	public Foto buscarPorId(Long id) {
 		Optional<Foto> foto = fotoRepository.findById(id);
-		return foto.isPresent() ? foto.get() : null;
+		if (foto.isEmpty())
+			throw new NaoEncontradoException("Imagem não encontrada.");
+		return foto.get();
 	}
 }

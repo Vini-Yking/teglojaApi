@@ -1,5 +1,7 @@
 package br.com.tegloja.model;
 
+import java.io.IOException;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,9 +11,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @Entity
 public class Foto {
 
@@ -44,6 +48,13 @@ public class Foto {
 		this.tipo = tipo;
 		this.nome = nome;
 		this.produto = produto;
+	}
+
+	public Foto(Produto produto, MultipartFile file) throws IOException {
+		this.dados = file.getBytes();
+		this.nome = file.getName();
+		this.produto = produto;
+		this.tipo = file.getContentType();
 	}
 
 	public Long getId() {
