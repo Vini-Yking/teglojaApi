@@ -14,8 +14,9 @@ import org.springframework.stereotype.Service;
 
 import br.com.tegloja.backend.config.MailConfig;
 import br.com.tegloja.dto.ClienteResponseDTO;
+import br.com.tegloja.dto.PedidoFinalizarRequestDTO;
+import br.com.tegloja.dto.PedidoIniciarRequestDTO;
 import br.com.tegloja.dto.PedidoItemResponseDTO;
-import br.com.tegloja.dto.PedidoRequestDTO;
 import br.com.tegloja.dto.PedidoResponseDTO;
 import br.com.tegloja.dto.ProdutoResponseDTO;
 import br.com.tegloja.enums.FormaPagamento;
@@ -88,7 +89,7 @@ public class PedidoService {
 		return pedidos.map(pedido -> new PedidoResponseDTO(pedido));
 	}
 
-	public PedidoResponseDTO adicionar(PedidoRequestDTO pedidoRequest) {
+	public PedidoResponseDTO adicionar(PedidoIniciarRequestDTO pedidoRequest) {
 		ClienteResponseDTO clienteResponseDTO = clienteService.buscarPorId(pedidoRequest.getIdCliente());
 
 		Cliente cliente = new Cliente(clienteResponseDTO);
@@ -105,7 +106,7 @@ public class PedidoService {
 		return new PedidoResponseDTO(pedido);
 	}
 
-	public PedidoResponseDTO iniciarPedidoVazio(PedidoRequestDTO requestDTO) {
+	public PedidoResponseDTO iniciarPedidoVazio(PedidoIniciarRequestDTO requestDTO) {
 		ClienteResponseDTO clienteDTO = clienteService.buscarPorId(requestDTO.getIdCliente());
 		Pedido pedido = new Pedido();
 		pedido.setCliente(new Cliente(clienteDTO));
@@ -116,7 +117,7 @@ public class PedidoService {
 		return new PedidoResponseDTO(pedido);
 	}
 
-	public PedidoResponseDTO finalizarPedido(Long idPedido, PedidoRequestDTO requestDTO) {
+	public PedidoResponseDTO finalizarPedido(Long idPedido, PedidoFinalizarRequestDTO requestDTO) {
 		PedidoResponseDTO pedidoResponse = buscarPorIdPedido(idPedido);
 		List<PedidoItemResponseDTO> itens = pedidoItemService.buscarPorIdPedido(idPedido);
 
@@ -157,7 +158,7 @@ public class PedidoService {
 		return new PedidoResponseDTO(pedido);
 	}
 
-	public PedidoResponseDTO atualizar(PedidoRequestDTO pedidoRequest, Long id) {
+	public PedidoResponseDTO atualizar(PedidoIniciarRequestDTO pedidoRequest, Long id) {
 		buscarPorIdPedido(id);
 		ClienteResponseDTO clienteResponseDTO = clienteService.buscarPorId(pedidoRequest.getIdCliente());
 

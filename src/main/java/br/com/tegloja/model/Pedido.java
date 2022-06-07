@@ -20,7 +20,7 @@ import javax.persistence.Transient;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import br.com.tegloja.dto.PedidoRequestDTO;
+import br.com.tegloja.dto.PedidoIniciarRequestDTO;
 import br.com.tegloja.dto.PedidoResponseDTO;
 import br.com.tegloja.enums.FormaPagamento;
 import br.com.tegloja.enums.StatusCompra;
@@ -78,7 +78,7 @@ public class Pedido {
 		this.itens = itens;
 	}
 
-	public Pedido(PedidoRequestDTO pedidoRequest) {
+	public Pedido(PedidoIniciarRequestDTO pedidoRequest) {
 		this.cliente.setId(pedidoRequest.getIdCliente());
 	}
 
