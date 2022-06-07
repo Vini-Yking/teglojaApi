@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import br.com.tegloja.dto.CategoriaRequestDTO;
 import br.com.tegloja.dto.CategoriaResponseDTO;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @Entity
 public class Categoria {
 
@@ -21,9 +21,8 @@ public class Categoria {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_categoria")
 	private Long id;
-     
 
-	@NotNull(message= "Entre um nome para categoria")
+	@NotNull(message = "Entre um nome para categoria")
 	@Column(name = "nome_categoria", nullable = false, unique = true)
 	@Size(max = 100)
 	private String categoria;

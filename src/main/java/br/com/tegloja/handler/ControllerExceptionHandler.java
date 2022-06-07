@@ -8,11 +8,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import br.com.tegloja.dto.ErroResponseDTO;
@@ -92,7 +95,62 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 				LocalDateTime.now(), error);
 		return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
 	}
-	
-	
+
+	/**
+	 * Exceção que é acionada quando o usuário insere um tipo inválido para um
+	 * campo.
+	 */
+	@ExceptionHandler({ MethodArgumentTypeMismatchException.class })
+	public ResponseEntity<Object> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex,
+			WebRequest request) {
+		String error = ex.getName() + " deveria ser do tipo " + ex.getRequiredType().getName();
+
+		ErroResponseDTO apiError = new ErroResponseDTO(HttpStatus.BAD_REQUEST.value(), ex.getLocalizedMessage(),
+				LocalDateTime.now(), error);
+		return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+	}
+
+	/**
+	 * Exceção que ocorre quando o usuário manda um método HTTP não suportado na
+	 * requisição.
+	 */
+	@Override
+	protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
+		StringBuilder builder = new StringBuilder();
+		builder.append(ex.getMethod());
+		builder.append(" não é um método suportado para essa requisição. Métodos suportados são: ");
+		ex.getSupportedHttpMethods().forEach(t -> builder.append(t + " "));
+
+		ErroResponseDTO apiError = new ErroResponseDTO(HttpStatus.METHOD_NOT_ALLOWED.value(), ex.getLocalizedMessage(),
+				LocalDateTime.now(), builder.toString());
+		return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+	}
+
+	/**
+	 * Exceção que ocorre quando o usuário manda um tipo de mídia não suportado.
+	 */
+	@Override
+	protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(HttpMediaTypeNotSupportedException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
+		StringBuilder builder = new StringBuilder();
+		builder.append(ex.getContentType());
+		builder.append(" é um tipo de mídia não suportado. Tipos suportados são ");
+		ex.getSupportedMediaTypes().forEach(t -> builder.append(t + ", "));
+
+		ErroResponseDTO apiError = new ErroResponseDTO(HttpStatus.UNSUPPORTED_MEDIA_TYPE.value(),
+				ex.getLocalizedMessage(), LocalDateTime.now(), builder.substring(0, builder.length() - 2));
+		return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+	}
+
+	/**
+	 * Exception Default: pega outras exceções não tratadas nos outros handlers.
+	 */
+	@ExceptionHandler({ Exception.class })
+	public ResponseEntity<Object> handleAll(Exception ex, WebRequest request) {
+		ErroResponseDTO apiError = new ErroResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+				ex.getLocalizedMessage(), LocalDateTime.now(), "Um erro ocorreu");
+		return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+	}
 
 }
