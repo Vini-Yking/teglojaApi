@@ -40,6 +40,7 @@ public class CategoriaController {
 	@Autowired
 	private CategoriaService categoriaService;
 
+	@Autowired
 	private ProdutoService produtoService;
 
 	@GetMapping
