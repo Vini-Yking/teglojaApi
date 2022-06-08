@@ -2,13 +2,14 @@ INSERT INTO tegloja.categoria (nome_categoria) VALUES ('Utilitário');
 INSERT INTO tegloja.categoria (nome_categoria) VALUES ('Material de construção');
 INSERT INTO tegloja.categoria (nome_categoria) VALUES ('Ferramentas');
 
-INSERT INTO tegloja.produto (nome_produto, quantidade_estoque, valor_unitario, id_categoria) VALUES ('Arruela', 1000, 2.42, 1);
-INSERT INTO tegloja.produto (nome_produto, quantidade_estoque, valor_unitario, id_categoria) VALUES ('Porca', 1000, 0.34, 1);
-INSERT INTO tegloja.produto (nome_produto, quantidade_estoque, valor_unitario, id_categoria) VALUES ('Bucha', 1000, 1.79, 1);
-INSERT INTO tegloja.produto (nome_produto, quantidade_estoque, valor_unitario, id_categoria) VALUES ('Barra rosqueada', 25, 4.44, 3);
-INSERT INTO tegloja.produto (nome_produto, quantidade_estoque, valor_unitario, id_categoria) VALUES ('Parafuso', 1000, 2.90, 1);
-INSERT INTO tegloja.produto (nome_produto, quantidade_estoque, valor_unitario, id_categoria) VALUES ('Chave de Fenda', 50, 12.90, 3);
-INSERT INTO tegloja.produto (nome_produto, quantidade_estoque, valor_unitario, id_categoria) VALUES ('Broca', 200, 8.28, 3);
+INSERT INTO tegloja.produto (data_ultima_alteracao ,nome_produto, quantidade_estoque, valor_unitario, id_categoria) VALUES (CURRENT_DATE,'Arruela', 1000, 2.42, 1);
+INSERT INTO tegloja.produto (data_ultima_alteracao ,nome_produto, quantidade_estoque, valor_unitario, id_categoria) VALUES (CURRENT_DATE,'Porca', 1000, 0.34, 1);
+INSERT INTO tegloja.produto (data_ultima_alteracao ,nome_produto, quantidade_estoque, valor_unitario, id_categoria) VALUES (CURRENT_DATE,'Bucha', 1000, 1.79, 1);
+INSERT INTO tegloja.produto (data_ultima_alteracao ,nome_produto, quantidade_estoque, valor_unitario, id_categoria) VALUES (CURRENT_DATE,'Barra rosqueada', 25, 4.44, 3);
+INSERT INTO tegloja.produto (data_ultima_alteracao ,nome_produto, quantidade_estoque, valor_unitario, id_categoria) VALUES (CURRENT_DATE,'Parafuso', 1000, 2.90, 1);
+INSERT INTO tegloja.produto (data_ultima_alteracao ,nome_produto, quantidade_estoque, valor_unitario, id_categoria) VALUES (CURRENT_DATE,'Chave de Fenda', 50, 12.90, 3);
+INSERT INTO tegloja.produto (data_ultima_alteracao ,nome_produto, quantidade_estoque, valor_unitario, id_categoria) VALUES (CURRENT_DATE,'Broca', 200, 8.28, 3);
+
 
 INSERT INTO tegloja.endereco (bairro, cep, localidade, logradouro, uf) VALUES ('Lagoa', '27925400', 'Macaé', 'Avenida Vereador Roberto Garrido de Souza', 'RJ');
 INSERT INTO tegloja.endereco (bairro, cep, localidade, logradouro, uf) VALUES ('Alto da Serra', '25635030', 'Petrópolis', 'Rua Fernando Fernandes Lima', 'RJ');
