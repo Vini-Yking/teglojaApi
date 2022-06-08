@@ -52,7 +52,8 @@
 		</dependency>
 
 		<!-- foi pego em https://medium.com/@hala3k/setting-up-swagger-3-with-spring-boot-2-a7c1c3151545 
-			http://localhost:8080/swagger-ui/index.html -->
+			http://localhost:8080/swagger-ui/index.html 
+			https://teg-store-api.herokuapp.com-->
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-boot-starter</artifactId>

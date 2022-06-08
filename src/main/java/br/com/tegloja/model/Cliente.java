@@ -39,7 +39,7 @@ public class Cliente {
 	private String cep;
 
 	@NotNull(message = "Numero endereço precisa ser preenchido caso não haja numero, informe 0")
-	@Column(name = "endereco_numero", nullable = false)
+	@Column(name = "numero_endereco", nullable = false)
 	private Integer numeroEndereco;
 
 	@NotNull(message = "Deve inserir um nome")

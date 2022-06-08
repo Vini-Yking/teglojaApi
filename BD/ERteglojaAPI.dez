@@ -12,7 +12,7 @@
 <PROJECTDESCRIPTION></PROJECTDESCRIPTION>
 <AUTHOR></AUTHOR>
 <COPYRIGHT></COPYRIGHT>
-<LASTGENERATEDFILES>C:\Users\Vinicios\Documents\create_postgresql.sql;C:\Users\Vinicios\Documents\drop_postgresql.sql;C:\Users\Vinicios\Documents\CreateDBLog_202206071.txt</LASTGENERATEDFILES>
+<LASTGENERATEDFILES>C:\Users\Vinicios\Documents\create_postgresql.sql;C:\Users\Vinicios\Documents\drop_postgresql.sql;C:\Users\Vinicios\Documents\CreateDBLog_202206072.txt</LASTGENERATEDFILES>
 <PRINTORIENTATION>PORTRAIT</PRINTORIENTATION>
 <PRINTPAGETYPE>A4</PRINTPAGETYPE>
 <DEFTABLEOPTIONS></DEFTABLEOPTIONS>
@@ -1678,7 +1678,7 @@
 <W>220</W>
 <H>138</H>
 <L>735</L>
-<T>188</T>
+<T>189</T>
 <BRUSH>0,16777215</BRUSH>
 <PEN>0,1,4,0</PEN>
 <FONT>Arial,8,,0,clWindowText,0</FONT>
@@ -1872,7 +1872,7 @@
 <POINTS>
 <POINT>
 <X>845</X>
-<Y>188</Y>
+<Y>189</Y>
 </POINT>
 <POINT>
 <X>845</X>
