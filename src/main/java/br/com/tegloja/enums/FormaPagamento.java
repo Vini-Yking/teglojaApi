@@ -21,12 +21,12 @@ public enum FormaPagamento {
 				return pagamento;
 			}
 		}
-		throw new EnumValidationException("Forma de pagamento inválida");
+		throw new EnumValidationException("Forma de pagamento inválida utilize codigo de 1 a 5");
 	}
 
 	public void verificaPagamentoFinalizado(Integer value) throws EnumValidationException {
 		if (value.equals(0)) {
-			throw new EnumValidationException("Não é possivel finalizar um pedido com pagamento em Aberto");
+			throw new EnumValidationException("Não é possivel finalizar um pedido com pagamento em Aberto utilize codigo de 1 a 5 para finalizar o pedido");
 		}
 	}
 
