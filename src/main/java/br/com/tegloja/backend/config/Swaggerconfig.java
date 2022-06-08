@@ -28,8 +28,8 @@ public class Swaggerconfig {
 		
 		private ApiInfo apiInfo() {
 			ApiInfo apiInfo = new ApiInfoBuilder()
-					.title("API - Tegloja")
-					.description("Api REST da TEGLOJA.")
+					.title("API - Tegstore")
+					.description("Api REST da Tegstore.")
 					.license("Apache License 2.0")
 					.termsOfServiceUrl("")
 					.version("1.01")
