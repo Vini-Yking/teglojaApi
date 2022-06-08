@@ -29,7 +29,7 @@ public class Produto {
 	private String nomeProduto;
 
 	@DecimalMin(value = "0.0", message = "ValorUnitario mínimo é zero")
-	@Column(name = "valor_unit")
+	@Column(name = "valor_unitario")
 	private BigDecimal valorUnitario;
 
 	@Column(name = "quantidade_estoque")
