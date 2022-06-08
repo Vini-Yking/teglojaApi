@@ -24,7 +24,7 @@ public class EnderecoService {
 	private EnderecoRepository enderecoRepository;
 
 	public EnderecoDTO buscarInserirCep(String cep) {
-		if (cep.matches("^[0-9]{8}"))
+		if (!cep.matches("^[0-9]{8}"))
 			throw new ArgumentoInvalidoException("cep inválido");
 
 		Optional<Endereco> endereco = enderecoRepository.findByCep(cep);
