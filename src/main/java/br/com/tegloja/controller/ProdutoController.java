@@ -1,5 +1,6 @@
 package br.com.tegloja.controller;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
@@ -23,11 +24,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.tegloja.dto.PedidoItemResponseDTO;
 import br.com.tegloja.dto.ProdutoRequestDTO;
 import br.com.tegloja.dto.ProdutoResponseDTO;
+import br.com.tegloja.model.Foto;
+import br.com.tegloja.services.FotoService;
 import br.com.tegloja.services.PedidoItemService;
 import br.com.tegloja.services.ProdutoService;
 import io.swagger.annotations.Api;
@@ -45,9 +49,8 @@ public class ProdutoController {
 	@Autowired
 	private PedidoItemService pedidoItemService;
 
-	/**
-	 * @Autowired private FotoService fotoService;
-	 */
+	@Autowired
+	private FotoService fotoService;
 
 	@GetMapping
 	@ApiOperation(value = "Retorna uma lista de todos os produtos")
@@ -101,21 +104,17 @@ public class ProdutoController {
 		return ResponseEntity.ok(produtoService.atualizar(produtoRequest, id));
 	}
 
-	/**
-	 * @GetMapping("/{id}/foto") public ResponseEntity<byte[]>
-	 * buscarPorFoto(@PathVariable Long id) { Foto foto =
-	 * fotoService.buscarPorId(id); // busco a foto no banco HttpHeaders headers =
-	 * new HttpHeaders();// crio o cabeçalho headers.add("content-type",
-	 * foto.getTipo());// tipo do arquivo png,jpge headers.add("content-length",
-	 * String.valueOf(foto.getDados().length));// tamanho do arquivo 1kb 2mb
-	 * 
-	 * return new ResponseEntity<>(foto.getDados(), headers, HttpStatus.OK);//
-	 * retorno na resposta a foto, o cabeçalho // e a resposta do servidor }
-	 */
+	@GetMapping("/{id}/foto")
+	@ApiOperation(value = "Retorna a foto de um produto")
+	public ResponseEntity<byte[]> buscarFoto(@PathVariable Long id) {
+		Foto foto = fotoService.buscarPorProduto(id);
+		return ResponseEntity.ok(foto.getDados());
+	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	@ApiOperation(value = "Adiciona um produto")
+
 	public ResponseEntity<ProdutoResponseDTO> adicionar(@Valid @RequestBody ProdutoRequestDTO produtoRequest) {
 		ProdutoResponseDTO produtoResponseDTO = produtoService.adicionar(produtoRequest);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -123,10 +122,13 @@ public class ProdutoController {
 		return ResponseEntity.created(uri).body(produtoResponseDTO);
 	}
 
-	// @PostMapping("/{id}/foto")
-	// public ResponseEntity<byte[]> adicionarImagem(@PathVariable Long idProduto,
-	// @RequestParam MultipartFile file) {
-	// }
+	@PostMapping("/{id}/foto")
+	@ApiOperation(value = "Adiciona uma imagem ao produto")
+	public ResponseEntity<Foto> adicionarImagem(Long idProduto, @RequestParam MultipartFile file) throws IOException {
+		Foto foto = fotoService.inserir(idProduto, file);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(foto.getId()).toUri();
+		return ResponseEntity.created(uri).body(foto);
+	}
 
 	@DeleteMapping("/{id}")
 	@ApiOperation(value = "Apaga um produto")
