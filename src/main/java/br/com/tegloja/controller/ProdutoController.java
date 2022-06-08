@@ -100,7 +100,7 @@ public class ProdutoController {
 
 	@PutMapping("/{id}")
 	@ApiOperation(value = "Atualiza um produto")
-	public ResponseEntity<ProdutoResponseDTO> atualizar(@RequestBody ProdutoRequestDTO produtoRequest, Long id) {
+	public ResponseEntity<ProdutoResponseDTO> atualizar(@RequestBody ProdutoRequestDTO produtoRequest,@PathVariable Long id) {
 		return ResponseEntity.ok(produtoService.atualizar(produtoRequest, id));
 	}
 

@@ -110,7 +110,7 @@ public class ProdutoService {
 	}
 
 	public ProdutoResponseDTO atualizar(ProdutoRequestDTO produtoRequest, Long id) {
-		buscarPorId(id);
+		 buscarPorId(id);
 		CategoriaResponseDTO categoriaResponseDTO = categoriaService.buscarPorId(produtoRequest.getIdCategoria());
 
 		Categoria categoria = new Categoria(categoriaResponseDTO);
