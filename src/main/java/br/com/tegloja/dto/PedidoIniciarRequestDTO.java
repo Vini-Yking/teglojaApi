@@ -1,10 +1,10 @@
 package br.com.tegloja.dto;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public class PedidoIniciarRequestDTO {
 
-	@NotBlank(message = "Informe idCliente.")
+	@NotNull(message = "Informe idCliente.")
 	private Long idCliente;
 
 	public PedidoIniciarRequestDTO() {
