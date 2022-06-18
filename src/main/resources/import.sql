@@ -1,6 +1,10 @@
-INSERT INTO tegloja.categoria (nome_categoria) VALUES ('Utilitário');
-INSERT INTO tegloja.categoria (nome_categoria) VALUES ('Material de construção');
-INSERT INTO tegloja.categoria (nome_categoria) VALUES ('Ferramentas');
+INSERT INTO tegloja.categoria (nome_categoria) VALUES ('Playstation');
+INSERT INTO tegloja.categoria (nome_categoria) VALUES ('Xbox');
+INSERT INTO tegloja.categoria (nome_categoria) VALUES ('Microsoft');
+INSERT INTO tegloja.categoria (nome_categoria) VALUES ('Android');
+INSERT INTO tegloja.categoria (nome_categoria) VALUES ('Apple');
+INSERT INTO tegloja.categoria (nome_categoria) VALUES ('Periféricos');
+INSERT INTO tegloja.categoria (nome_categoria) VALUES ('All games');
 
 INSERT INTO tegloja.produto (data_ultima_alteracao ,nome_produto, quantidade_estoque, valor_unitario, id_categoria) VALUES (CURRENT_DATE,'Arruela', 1000, 2.42, 1);
 INSERT INTO tegloja.produto (data_ultima_alteracao ,nome_produto, quantidade_estoque, valor_unitario, id_categoria) VALUES (CURRENT_DATE,'Porca', 1000, 0.34, 1);
