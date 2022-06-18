@@ -122,9 +122,9 @@ public class ProdutoController {
 		return ResponseEntity.created(uri).body(produtoResponseDTO);
 	}
 
-	@PostMapping("/{id}/foto")
+	@PostMapping("/{idProduto}/foto")
 	@ApiOperation(value = "Adiciona uma imagem ao produto")
-	public ResponseEntity<Foto> adicionarImagem(Long idProduto, @RequestParam MultipartFile file) throws IOException {
+	public ResponseEntity<Foto> adicionarImagem(@PathVariable Long idProduto, @RequestParam MultipartFile file) throws IOException {
 		Foto foto = fotoService.inserir(idProduto, file);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(foto.getId()).toUri();
 		return ResponseEntity.created(uri).body(foto);
