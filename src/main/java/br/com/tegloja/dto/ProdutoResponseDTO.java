@@ -14,29 +14,30 @@ public class ProdutoResponseDTO {
 	private BigDecimal valorUnitario;
 	private Integer quantidadeEstoque;
 	private LocalDate dataAlteracao;
+	private String urlFoto;
 
 	public ProdutoResponseDTO() {
 
 	}
 
-	public ProdutoResponseDTO(Produto produto,String urlFoto) {
-		this.dataAlteracao = produto.getDataAlteracao();
-		this.categoria = produto.getCategoria();
-		this.idProduto = produto.getId();
-		this.nomeProduto = produto.getNomeProduto();
-		this.quantidadeEstoque = produto.getQuantidadeEstoque();
-		this.valorUnitario = produto.getValorUnitario();	
-	}
-	
 	public ProdutoResponseDTO(Produto produto) {
 		this.dataAlteracao = produto.getDataAlteracao();
 		this.categoria = produto.getCategoria();
 		this.idProduto = produto.getId();
 		this.nomeProduto = produto.getNomeProduto();
 		this.quantidadeEstoque = produto.getQuantidadeEstoque();
-		this.valorUnitario = produto.getValorUnitario();		
+		this.valorUnitario = produto.getValorUnitario();	
+		this.urlFoto = produto.getUrlFoto();
 	}
-	
+
+	public String getUrlFoto() {
+		return urlFoto;
+	}
+
+	public void setUrlFoto(String urlFoto) {
+		this.urlFoto = urlFoto;
+	}
+
 	public Categoria getCategoria() {
 		return categoria;
 	}

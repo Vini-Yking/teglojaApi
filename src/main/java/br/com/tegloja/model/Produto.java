@@ -38,6 +38,9 @@ public class Produto {
 	@Column(name = "data_ultima_alteracao")
 	private LocalDate dataAlteracao;
 
+	@Column(name= "url")
+	private String urlFoto;
+	
 	@ManyToOne
 	@JoinColumn(name = "id_categoria")
 	private Categoria categoria;
@@ -46,7 +49,7 @@ public class Produto {
 
 	}
 
-	public Produto(Long id, String nomeProduto, BigDecimal valorUnit, Integer quantidadeEstoq, LocalDate dataAlteracao,
+	public Produto(Long id, String nomeProduto, BigDecimal valorUnit, Integer quantidadeEstoq, LocalDate dataAlteracao, String urlFoto,
 			Categoria categoria) {
 		super();
 		this.id = id;
@@ -54,6 +57,7 @@ public class Produto {
 		this.valorUnitario = valorUnit;
 		this.quantidadeEstoque = quantidadeEstoq;
 		this.dataAlteracao = dataAlteracao;
+		this.urlFoto = urlFoto;
 		this.categoria = categoria;
 	}
 
@@ -71,6 +75,7 @@ public class Produto {
 		this.nomeProduto = produtoResponseDTO.getNomeProduto();
 		this.quantidadeEstoque = produtoResponseDTO.getQuantidadeEstoque();
 		this.valorUnitario = produtoResponseDTO.getValorUnitario();
+		
 	}
 
 	public Long getId() {
@@ -119,6 +124,14 @@ public class Produto {
 
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
+	}
+
+	public String getUrlFoto() {
+		return urlFoto;
+	}
+
+	public void setUrlFoto(String urlFoto) {
+		this.urlFoto = urlFoto;
 	}
 
 }
