@@ -28,6 +28,8 @@ public class ClienteRequestDTO {
 
 	@NotNull(message = "Informe numeroEndereco, caso não houver informe 0")
 	private Integer numeroEndereco;
+	
+	private String urlFoto;
 
 	public ClienteRequestDTO() {
 
@@ -39,6 +41,15 @@ public class ClienteRequestDTO {
 		this.nome = cliente.getNome();
 		this.email = cliente.getEmail();
 		this.numeroEndereco = cliente.getNumeroEndereco();
+		this.urlFoto = cliente.getUrlFoto();
+	}
+
+	public String getUrlFoto() {
+		return urlFoto;
+	}
+
+	public void setUrlFoto(String urlFoto) {
+		this.urlFoto = urlFoto;
 	}
 
 	public Integer getNumeroEndereco() {

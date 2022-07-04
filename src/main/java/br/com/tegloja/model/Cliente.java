@@ -49,6 +49,10 @@ public class Cliente {
 	@Email(message = " Insira um e-mail válido")
 	@Column(nullable = false)
 	private String email;
+	
+	@Email(message = " Insira uma Url válida")
+	@Column(nullable = true)
+	private String urlFoto;
 
 	@ManyToOne(cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "id_endereco")
@@ -63,15 +67,17 @@ public class Cliente {
 		this.email = clienteRequest.getEmail();
 		this.nome = clienteRequest.getNome();
 		this.numeroEndereco = clienteRequest.getNumeroEndereco();
+		this.urlFoto = clienteRequest.getUrlFoto();
 	}
 
-	public Cliente(Long id, String cpf, String cep, String nome, String email, Integer numeroEndereco) {
+	public Cliente(Long id, String cpf, String cep, String nome, String email, Integer numeroEndereco, String urlFoto) {
 		this.id = id;
 		this.cpf = cpf;
 		this.cep = cep;
 		this.nome = nome;
 		this.email = email;
 		this.numeroEndereco = numeroEndereco;
+		this.urlFoto = urlFoto;
 	}
 
 	public Cliente(ClienteResponseDTO clienteResponse) {
@@ -81,11 +87,22 @@ public class Cliente {
 		this.id = clienteResponse.getId();
 		this.nome = clienteResponse.getNome();
 		this.numeroEndereco = clienteResponse.getNumeroEndereco();
+		this.urlFoto = clienteResponse.getUrlFoto();
 	}
 
 	@Override // Usado para enviar email
 	public String toString() {
 		return "Cliente " + nome + "\ncpf=" + cpf + "\ncep=" + cep + "\nemail=" + email + "";
+	}
+	
+	
+
+	public String getUrlFoto() {
+		return urlFoto;
+	}
+
+	public void setUrlFoto(String urlFoto) {
+		this.urlFoto = urlFoto;
 	}
 
 	public Endereco getEndereco() {

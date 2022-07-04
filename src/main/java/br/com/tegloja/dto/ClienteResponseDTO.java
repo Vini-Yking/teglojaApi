@@ -12,6 +12,7 @@ public class ClienteResponseDTO {
 	private String cep;
 	private Integer numeroEndereco;
 	private Endereco endereco;
+	private String urlFoto;
 	
 	
 	public ClienteResponseDTO(Cliente cliente) {
@@ -22,10 +23,20 @@ public class ClienteResponseDTO {
 		this.email = cliente.getEmail();
 		this.numeroEndereco = cliente.getNumeroEndereco();
 		this.endereco = cliente.getEndereco();
+		this.urlFoto = cliente.getUrlFoto();
 	}
 	
 	public ClienteResponseDTO() {
 		super();
+	}
+	
+	
+	public String getUrlFoto() {
+		return urlFoto;
+	}
+
+	public void setUrlFoto(String urlFoto) {
+		this.urlFoto = urlFoto;
 	}
 
 	public Endereco getEndereco() {

@@ -71,9 +71,9 @@ INSERT INTO tegloja.endereco (bairro, cep, localidade, logradouro, uf) VALUES ('
 INSERT INTO tegloja.cliente (cep, cpf, email, nome_cliente, numero_endereco, id_endereco) VALUES ('27925400', '80501507043', 'thiago@serratec.com', 'Thiago Paes', 222, 9);
 INSERT INTO tegloja.cliente (cep, cpf, email, nome_cliente, numero_endereco, id_endereco) VALUES ('25635030', '30632596082', 'vinicios@serratec.com', 'Marcos Vinicios', 111, 2);
 INSERT INTO tegloja.cliente (cep, cpf, email, nome_cliente, numero_endereco, id_endereco) VALUES ('25953000', '06773117020', 'hitalo@serratec.com', 'Hítalo Taverna', 333, 3);
-INSERT INTO tegloja.cliente (cep, cpf, email, nome_cliente, numero_endereco, id_endereco) VALUES ('25954020', '38890628065', 'silvia_patricia@serratec.com', 'Sílvia Patrícia', 232, 4);
+INSERT INTO tegloja.cliente (cep, cpf, email, nome_cliente, numero_endereco, id_endereco) VALUES ('25954020', '38890628065', 'patricia@serratec.com', 'Sílvia Patrícia', 232, 4);
 INSERT INTO tegloja.cliente (cep, cpf, email, nome_cliente, numero_endereco, id_endereco) VALUES ('25955230', '27474817004', 'nicolas@serratec.com', 'Nícolas', 987, 5);
-INSERT INTO tegloja.cliente (cep, cpf, email, nome_cliente, numero_endereco, id_endereco) VALUES ('25956250', '39198868012', 'gabriel@serratec.com', 'Gabriel Bochimpani', 987, 6);
+INSERT INTO tegloja.cliente (cep, cpf, email, nome_cliente, numero_endereco, id_endereco) VALUES ('25956250', '39198868012', 'wendell@serratec.com', 'Wendel Perroud', 987, 6);
 
 INSERT INTO tegloja.endereco (bairro, cep, localidade, logradouro, uf) VALUES ('Lagoa', '27925400', 'Macaé', 'Avenida Vereador Roberto Garrido de Souza', 'RJ');
 INSERT INTO tegloja.endereco (bairro, cep, localidade, logradouro, uf) VALUES ('Alto da Serra', '25635030', 'Petrópolis', 'Rua Fernando Fernandes Lima', 'RJ');
