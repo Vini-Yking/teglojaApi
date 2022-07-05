@@ -66,6 +66,7 @@ public class Produto {
 		this.nomeProduto = produtoRequest.getNomeProduto();
 		this.quantidadeEstoque = produtoRequest.getQuantidadeEstoque();
 		this.valorUnitario = produtoRequest.getValorUnitario();
+		this.urlFoto = produtoRequest.getUrlFoto();
 	}
 
 	public Produto(ProdutoResponseDTO produtoResponseDTO) {
@@ -75,7 +76,7 @@ public class Produto {
 		this.nomeProduto = produtoResponseDTO.getNomeProduto();
 		this.quantidadeEstoque = produtoResponseDTO.getQuantidadeEstoque();
 		this.valorUnitario = produtoResponseDTO.getValorUnitario();
-		
+		this.urlFoto = produtoResponseDTO.getUrlFoto();
 	}
 
 	public Long getId() {

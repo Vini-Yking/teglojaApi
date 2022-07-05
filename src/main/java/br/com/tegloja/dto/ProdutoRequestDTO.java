@@ -40,8 +40,6 @@ public class ProdutoRequestDTO {
 		this.quantidadeEstoque = quantidadeEstoque;
 		this.urlFoto = urlFoto;
 	}
-	
-	
 
 	public String getUrlFoto() {
 		return urlFoto;

@@ -90,17 +90,6 @@ public class ProdutoService {
 		return new ProdutoResponseDTO(produto);
 	}
 
-//	public ProdutoResponseDTO adicionarComFoto(ProdutoRequestDTO produtoRequest, MultipartFile file)
-//			throws IOException {
-//		CategoriaResponseDTO categoriaResponseDTO = categoriaService.buscarPorId(produtoRequest.getCategoria().getId());
-//		Categoria categoria = new Categoria(categoriaResponseDTO);
-//		Produto produto = new Produto(produtoRequest);
-//		produto.setCategoria(categoria);
-//		if()
-//		fotoService.inserir(produtoRepository.save(produto), file);
-//		return new ProdutoResponseDTO(produto);
-//	}
-
 	public ProdutoResponseDTO buscarPorId(Long id) {
 		Optional<Produto> produto = produtoRepository.findById(id);
 		if (produto.isEmpty()) {
