@@ -26,16 +26,29 @@ public class ProdutoRequestDTO {
 	@PositiveOrZero(message = "quantidadeEstoque deve ser um número positivo ou 0")
 	private Integer quantidadeEstoque;
 
+	private String urlFoto;
+	
 	public ProdutoRequestDTO() {
 	}
 
 	public ProdutoRequestDTO(String nomeProduto, Long idCategoria, BigDecimal valorUnitario,
-			Integer quantidadeEstoque) {
+			Integer quantidadeEstoque, String urlFoto) {
 		super();
 		this.nomeProduto = nomeProduto;
 		this.idCategoria = idCategoria;
 		this.valorUnitario = valorUnitario;
 		this.quantidadeEstoque = quantidadeEstoque;
+		this.urlFoto = urlFoto;
+	}
+	
+	
+
+	public String getUrlFoto() {
+		return urlFoto;
+	}
+
+	public void setUrlFoto(String urlFoto) {
+		this.urlFoto = urlFoto;
 	}
 
 	public Long getIdCategoria() {
